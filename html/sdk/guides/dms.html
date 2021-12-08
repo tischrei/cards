@@ -1,0 +1,891 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Distributed Message Service (DMS) &#8212; otcextensions 0.24.3.dev2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/basic.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Domain Name Service (DNS)" href="dns.html" />
+    <link rel="prev" title="Dedicated Hosts (DeH)" href="deh.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap CSS -->
+<link href="../../_static/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../../_static/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="../../_static/css/combined.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../../_static/pygments.css" rel="stylesheet">
+
+<!-- Telekom Scale -->
+<link href="https://unpkg.com/@telekom/scale-components@3.0.0-beta.32/dist/scale-components/scale-components.css" rel="stylesheet">
+
+<!-- Otcdocstheme CSS -->
+<link href="../../_static/css/otcdocstheme.css" rel="stylesheet">
+
+
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-17511903-1', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+  </head><body>
+  
+<!-- SOURCE_FILE: sdk/guides/dms.rst -->
+
+
+<scale-app-shell
+  id="app-shell"
+  claim-lang="en"
+  logo-title="PAGENAME"
+  logo-href="/"
+>
+
+
+
+<script>
+  const app_shell = document.getElementById(
+  'app-shell');
+  app_shell.mainNavigation = [
+    {
+      "name": "Software",
+      "id": "Software",
+      "children": [
+        {
+          "name": "Automation",
+          "id": "Automation",
+          "children": [
+            {
+              "name": "Terraform OTC Driver",
+              "id": "Terraform OTC Driver",
+              "href": "https://docs.otc-service.com/terraform-provider-opentelekomcloud"
+            },
+                      {
+              "name": "Ansible Collection Cloud",
+              "id": "Ansible Collection Cloud",
+              "href": "https://docs.otc-service.com/ansible-collection-cloud"
+            },
+          ]
+        },
+        {
+          "name": "Client Tools",
+          "id": "Client Tools",
+          "children": [
+            {
+              "name": "OTC Extensions",
+              "id": "OTC Extensions",
+              "href": "https://docs.otc-service.com/python-otcextensions"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Release Notes",
+      "id": "Release Notes",
+      "children": [
+        {
+          "name": "Automation",
+          "id": "Automation",
+          "children": [
+            {
+              "name": "Terraform OTC Driver",
+              "id": "Terraform OTC Driver",
+              "href": "https://docs.otc-service.com/releasenotes/terraform-provider-opentelekomcloud"
+            }
+          ]
+        },
+        {
+          "name": "Client Tools",
+          "id": "Client Tools",
+          "children": [
+            {
+              "name": "OTC Extensions",
+              "id": "OTC Extensions",
+              "href": "https://docs.otc-service.com/releasenotes/python-otcextensions"
+            }
+          ]
+        }
+      ]
+    }
+  ];
+</script>
+  
+      <div class="container docs-book-wrapper">
+        <div class="row">
+          <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
+  <div class="row docs-title">
+  <div class="col-lg-8">
+      <h1>Distributed Message Service (DMS)</h1>
+    
+  </div>
+  <div class="docs-actions">
+    
+    <a href="deh.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Dedicated Hosts (DeH)"></i></a>
+    
+    
+    <a href="dns.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Domain Name Service (DNS)"></i></a>
+    
+  </div>
+</div>
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="docs-body" role="main">
+  
+  <section id="distributed-message-service-dms">
+<h1>Distributed Message Service (DMS)<a class="headerlink" href="#distributed-message-service-dms" title="Permalink to this headline">¶</a></h1>
+<nav class="contents local" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#dms-queues" id="id1">DMS Queues</a></p>
+<ul>
+<li><p><a class="reference internal" href="#list-queues" id="id2">List Queues</a></p></li>
+<li><p><a class="reference internal" href="#create-queue" id="id3">Create Queue</a></p></li>
+<li><p><a class="reference internal" href="#get-queue" id="id4">Get Queue</a></p></li>
+<li><p><a class="reference internal" href="#find-queue" id="id5">Find Queue</a></p></li>
+<li><p><a class="reference internal" href="#delete-queue" id="id6">Delete Queue</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#dms-queue-groups" id="id7">DMS Queue Groups</a></p>
+<ul>
+<li><p><a class="reference internal" href="#list-queue-groups" id="id8">List Queue Groups</a></p></li>
+<li><p><a class="reference internal" href="#create-queue-group" id="id9">Create Queue Group</a></p></li>
+<li><p><a class="reference internal" href="#find-queue-group" id="id10">Find Queue Group</a></p></li>
+<li><p><a class="reference internal" href="#delete-queue-group" id="id11">Delete Queue Group</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#dms-messages" id="id12">DMS messages</a></p>
+<ul>
+<li><p><a class="reference internal" href="#send-message" id="id13">Send message</a></p></li>
+<li><p><a class="reference internal" href="#consume-message" id="id14">Consume message</a></p></li>
+<li><p><a class="reference internal" href="#confirm-message" id="id15">Confirm message</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#dms-instances" id="id16">DMS Instances</a></p>
+<ul>
+<li><p><a class="reference internal" href="#list-instances" id="id17">List Instances</a></p></li>
+<li><p><a class="reference internal" href="#find-instance" id="id18">Find Instance</a></p></li>
+<li><p><a class="reference internal" href="#get-instance" id="id19">Get Instance</a></p></li>
+<li><p><a class="reference internal" href="#create-instance" id="id20">Create Instance</a></p></li>
+<li><p><a class="reference internal" href="#delete-instance" id="id21">Delete Instance</a></p></li>
+<li><p><a class="reference internal" href="#update-instance" id="id22">Update Instance</a></p></li>
+<li><p><a class="reference internal" href="#restart-instance" id="id23">Restart Instance</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#dms-instance-topics" id="id24">DMS Instance Topics</a></p>
+<ul>
+<li><p><a class="reference internal" href="#list-instance-topics" id="id25">List Instance Topics</a></p></li>
+<li><p><a class="reference internal" href="#create-instance-topic" id="id26">Create Instance Topic</a></p></li>
+<li><p><a class="reference internal" href="#delete-instance-topic" id="id27">Delete Instance Topic</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#misc" id="id28">Misc</a></p>
+<ul>
+<li><p><a class="reference internal" href="#list-instance-availability-zones" id="id29">List Instance Availability Zones</a></p></li>
+<li><p><a class="reference internal" href="#list-products" id="id30">List Products</a></p></li>
+<li><p><a class="reference internal" href="#list-maintenance-windows" id="id31">List Maintenance Windows</a></p></li>
+</ul>
+</li>
+</ul>
+</nav>
+<p>DMS is a fully-managed, high-performance message queuing service that
+supports normal queues, first-in-first-out (FIFO) queues,
+Kafka queues, and Kafka premium instances.
+It is compatible with HTTP and TCP, and provides a flexible
+and reliable asynchronous communication mechanism
+for distributed applications.
+Normal and FIFO queues feature low-latency and high reliability.
+They support dead letter messages for handling exceptions.
+In normal queues, partitions ensure higher concurrency.
+Kafka queues support high-throughput and high-reliability modes.
+A Kafka queue is equivalent to a topic. The storage space and
+network bandwidth resources are allocated by the system,
+without requiring you to make choices.
+Kafka premium instances use physically isolated computing,
+storage, and bandwidth resources.
+You can customize partitions and replicas for Kafka topics in the instances,
+and configure the network bandwidth as required.
+The instances can be used right out of the box,
+taking off the deployment and O&amp;M pressure for you
+so that you can focus on developing your services.</p>
+<section id="dms-queues">
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">DMS Queues</a><a class="headerlink" href="#dms-queues" title="Permalink to this headline">¶</a></h2>
+<p>A message queue is a container that receives and stores message files.
+By default, 5 queues can be created under a project.
+Different messages in one queue can be retrieved
+by multiple consumers at the same time.</p>
+<section id="list-queues">
+<h3><a class="toc-backref" href="#id2" role="doc-backlink">List Queues</a><a class="headerlink" href="#list-queues" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to query all DMS Queues and to filter
+the output with query parameters.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">raw</span> <span class="ow">in</span> <span class="n">conn</span><span class="o">.</span><span class="n">dms</span><span class="o">.</span><span class="n">queues</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="create-queue">
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">Create Queue</a><a class="headerlink" href="#create-queue" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to create a Queue with
+parameters.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;test-queue&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;queue_mode&#39;</span><span class="p">:</span> <span class="s1">&#39;NORMAL&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;No need for a description&#39;</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="k">for</span> <span class="n">raw</span> <span class="ow">in</span> <span class="n">conn</span><span class="o">.</span><span class="n">dms</span><span class="o">.</span><span class="n">create_queue</span><span class="p">(</span><span class="o">**</span><span class="n">attrs</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="get-queue">
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">Get Queue</a><a class="headerlink" href="#get-queue" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to get a Queue by ID
+or an instance of class
+<a class="reference internal" href="../resources/dms/v1/queue.html#otcextensions.sdk.dms.v1.queue.Queue" title="otcextensions.sdk.dms.v1.queue.Queue"><code class="xref py py-class docutils literal notranslate"><span class="pre">Queue</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="n">queue</span> <span class="o">=</span> <span class="s1">&#39;queue_id&#39;</span>
+<span class="n">raw</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">dms</span><span class="o">.</span><span class="n">get_queue</span><span class="p">(</span><span class="n">queue</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="find-queue">
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Find Queue</a><a class="headerlink" href="#find-queue" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to find a Queue by ID
+or name.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="n">queue</span> <span class="o">=</span> <span class="s1">&#39;name_or_id&#39;</span>
+<span class="n">raw</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">dms</span><span class="o">.</span><span class="n">find_queue</span><span class="p">(</span><span class="n">name_or_id</span><span class="o">=</span><span class="n">queue</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="delete-queue">
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">Delete Queue</a><a class="headerlink" href="#delete-queue" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to delete a Queue by ID
+or an instance of class
+<a class="reference internal" href="../resources/dms/v1/queue.html#otcextensions.sdk.dms.v1.queue.Queue" title="otcextensions.sdk.dms.v1.queue.Queue"><code class="xref py py-class docutils literal notranslate"><span class="pre">Queue</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="n">queue_id</span> <span class="o">=</span> <span class="s1">&#39;queue_id&#39;</span>
+<span class="n">raw</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">dms</span><span class="o">.</span><span class="n">delete_queue</span><span class="p">(</span><span class="n">queue_id</span><span class="p">,</span> <span class="n">ignore_missing</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="dms-queue-groups">
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">DMS Queue Groups</a><a class="headerlink" href="#dms-queue-groups" title="Permalink to this headline">¶</a></h2>
+<p>A consumer group is used to group consumers.
+A maximum of three consumer groups can be created in each queue.
+Messages in one queue can be retrieved once by each consumer group.
+Messages acknowledged by one consumer group are no longer available
+to that consumer group but still available to other consumer groups.
+Consumers in the same consumer group can retrieve
+different messages from one queue at the same time.</p>
+<section id="list-queue-groups">
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">List Queue Groups</a><a class="headerlink" href="#list-queue-groups" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to query all groups of a Queue
+and to filter the output with query parameters.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="n">queue_id</span> <span class="o">=</span> <span class="s1">&#39;queue_id&#39;</span>
+<span class="k">for</span> <span class="n">raw</span> <span class="ow">in</span> <span class="n">conn</span><span class="o">.</span><span class="n">dms</span><span class="o">.</span><span class="n">groups</span><span class="p">(</span><span class="n">queue_id</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="create-queue-group">
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">Create Queue Group</a><a class="headerlink" href="#create-queue-group" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to create a Queue Group with
+parameters.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;queue&#39;</span><span class="p">:</span> <span class="s1">&#39;queue_id&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;test&#39;</span>
+<span class="p">}</span>
+<span class="k">for</span> <span class="n">raw</span> <span class="ow">in</span> <span class="n">conn</span><span class="o">.</span><span class="n">dms</span><span class="o">.</span><span class="n">create_group</span><span class="p">(</span><span class="o">**</span><span class="n">attrs</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="find-queue-group">
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">Find Queue Group</a><a class="headerlink" href="#find-queue-group" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to find a Queue Group by ID
+or name.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="n">queue</span> <span class="o">=</span> <span class="s1">&#39;name_or_id&#39;</span>
+<span class="n">queue</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">dms</span><span class="o">.</span><span class="n">find_queue</span><span class="p">(</span><span class="n">name_or_id</span><span class="o">=</span><span class="n">queue</span><span class="p">)</span>
+<span class="n">group</span> <span class="o">=</span> <span class="s1">&#39;name_or_id&#39;</span>
+<span class="n">raw</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">dms</span><span class="o">.</span><span class="n">find_group</span><span class="p">(</span><span class="n">queue</span><span class="o">=</span><span class="n">queue</span><span class="p">,</span> <span class="n">name_or_id</span><span class="o">=</span><span class="n">group</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="delete-queue-group">
+<h3><a class="toc-backref" href="#id11" role="doc-backlink">Delete Queue Group</a><a class="headerlink" href="#delete-queue-group" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to delete a Queue Group by ID
+or an instance of class
+<a class="reference internal" href="../resources/dms/v1/group.html#otcextensions.sdk.dms.v1.group.Group" title="otcextensions.sdk.dms.v1.group.Group"><code class="xref py py-class docutils literal notranslate"><span class="pre">Group</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="n">cluster</span> <span class="o">=</span> <span class="s2">&quot;cluster_name_or_id&quot;</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cce</span><span class="o">.</span><span class="n">find_cluster</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span>
+<span class="n">node_id</span> <span class="o">=</span> <span class="s2">&quot;node_id&quot;</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">cce</span><span class="o">.</span><span class="n">delete_cluster_node</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span> <span class="n">node_id</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="dms-messages">
+<h2><a class="toc-backref" href="#id12" role="doc-backlink">DMS messages</a><a class="headerlink" href="#dms-messages" title="Permalink to this headline">¶</a></h2>
+<p>Messages are JavaScript object notation (JSON) objects
+used for transmitting information.
+They can be sent one by one or in batches.
+Sending messages in batches can be achieved only
+through calling DMS application programming interfaces (APIs).</p>
+<section id="send-message">
+<h3><a class="toc-backref" href="#id13" role="doc-backlink">Send message</a><a class="headerlink" href="#send-message" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to send a message with
+parameters.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;queue&#39;</span><span class="p">:</span> <span class="s1">&#39;queue_id&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;messages&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s1">&#39;body&#39;</span><span class="p">:</span> <span class="s1">&#39;test1&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;attributes&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;attribute1&#39;</span><span class="p">:</span> <span class="s1">&#39;value1&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;attribute2&#39;</span><span class="p">:</span> <span class="s1">&#39;value2&#39;</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s1">&#39;body&#39;</span><span class="p">:</span> <span class="s1">&#39;test2&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;attributes&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;attribute1&#39;</span><span class="p">:</span> <span class="s1">&#39;value1&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;attribute2&#39;</span><span class="p">:</span> <span class="s1">&#39;value2&#39;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+<span class="k">for</span> <span class="n">raw</span> <span class="ow">in</span> <span class="n">conn</span><span class="o">.</span><span class="n">dms</span><span class="o">.</span><span class="n">send_messages</span><span class="p">(</span><span class="o">**</span><span class="n">attrs</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="consume-message">
+<h3><a class="toc-backref" href="#id14" role="doc-backlink">Consume message</a><a class="headerlink" href="#consume-message" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to consume a queue’s message by Queue- and Group-ID
+or an instance of class
+<a class="reference internal" href="../resources/dms/v1/queue.html#otcextensions.sdk.dms.v1.queue.Queue" title="otcextensions.sdk.dms.v1.queue.Queue"><code class="xref py py-class docutils literal notranslate"><span class="pre">Queue</span></code></a>
+and
+<a class="reference internal" href="../resources/dms/v1/group.html#otcextensions.sdk.dms.v1.group.Group" title="otcextensions.sdk.dms.v1.group.Group"><code class="xref py py-class docutils literal notranslate"><span class="pre">Group</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;queue&#39;</span><span class="p">:</span> <span class="s1">&#39;queue_id&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;group&#39;</span><span class="p">:</span> <span class="s1">&#39;group_id&#39;</span>
+<span class="p">}</span>
+<span class="k">for</span> <span class="n">raw</span> <span class="ow">in</span> <span class="n">conn</span><span class="o">.</span><span class="n">dms</span><span class="o">.</span><span class="n">consume_message</span><span class="p">(</span><span class="o">**</span><span class="n">attrs</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="confirm-message">
+<h3><a class="toc-backref" href="#id15" role="doc-backlink">Confirm message</a><a class="headerlink" href="#confirm-message" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to confirm consumed messages by a list of
+class
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Messages</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="n">queue_name_or_id</span> <span class="o">=</span> <span class="s1">&#39;queue_name_or_id&#39;</span>
+<span class="n">queue</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">dms</span><span class="o">.</span><span class="n">find_queue</span><span class="p">(</span><span class="n">name_or_id</span><span class="o">=</span><span class="n">queue_name_or_id</span><span class="p">)</span>
+<span class="n">group_name_or_id</span> <span class="o">=</span> <span class="s1">&#39;group_name_or_id&#39;</span>
+<span class="n">group</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">dms</span><span class="o">.</span><span class="n">find_group</span><span class="p">(</span><span class="n">queue</span><span class="p">,</span> <span class="n">name_or_id</span><span class="o">=</span><span class="n">group_name_or_id</span><span class="p">)</span>
+
+
+<span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;queue&#39;</span><span class="p">:</span> <span class="n">queue</span><span class="p">,</span>
+    <span class="s1">&#39;group&#39;</span><span class="p">:</span> <span class="n">group</span><span class="p">,</span>
+    <span class="s1">&#39;messages&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s1">&#39;handler&#39;</span><span class="p">:</span> <span class="s1">&#39;handler_id&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="s1">&#39;success&#39;</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+<span class="k">for</span> <span class="n">raw</span> <span class="ow">in</span> <span class="n">conn</span><span class="o">.</span><span class="n">dms</span><span class="o">.</span><span class="n">ack_message</span><span class="p">(</span><span class="o">**</span><span class="n">attrs</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="dms-instances">
+<h2><a class="toc-backref" href="#id16" role="doc-backlink">DMS Instances</a><a class="headerlink" href="#dms-instances" title="Permalink to this headline">¶</a></h2>
+<p>Kafka premium instances use physically isolated computing,
+storage, and bandwidth resources.
+You can customize partitions and replicas
+for Kafka topics in the instances,
+and configure the network bandwidth as required.
+The instances can be used right out of the box,
+taking off the deployment and O&amp;M pressure for you
+so that you can focus on developing your services.</p>
+<section id="list-instances">
+<h3><a class="toc-backref" href="#id17" role="doc-backlink">List Instances</a><a class="headerlink" href="#list-instances" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to query all instances
+with query parameters</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">raw</span> <span class="ow">in</span> <span class="n">conn</span><span class="o">.</span><span class="n">dms</span><span class="o">.</span><span class="n">instances</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="find-instance">
+<h3><a class="toc-backref" href="#id18" role="doc-backlink">Find Instance</a><a class="headerlink" href="#find-instance" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to find an Instance by ID
+or name</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="n">instance</span> <span class="o">=</span> <span class="s1">&#39;name_or_id&#39;</span>
+<span class="n">raw</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">dms</span><span class="o">.</span><span class="n">find_instance</span><span class="p">(</span><span class="n">name_or_id</span><span class="o">=</span><span class="n">instance</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="get-instance">
+<h3><a class="toc-backref" href="#id19" role="doc-backlink">Get Instance</a><a class="headerlink" href="#get-instance" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to get Instance by ID
+or an instance of class
+<a class="reference internal" href="../resources/dms/v1/instance.html#otcextensions.sdk.dms.v1.instance.Instance" title="otcextensions.sdk.dms.v1.instance.Instance"><code class="xref py py-class docutils literal notranslate"><span class="pre">Instance</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="n">job_id</span> <span class="o">=</span> <span class="s2">&quot;123456_job_id&quot;</span>
+<span class="n">job</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cce</span><span class="o">.</span><span class="n">get_job</span><span class="p">(</span><span class="n">job_id</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">job</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="create-instance">
+<h3><a class="toc-backref" href="#id20" role="doc-backlink">Create Instance</a><a class="headerlink" href="#create-instance" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to create an Instance with
+parameters.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;test-instance-2&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;engine&#39;</span><span class="p">:</span> <span class="s1">&#39;kafka&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;engine_version&#39;</span><span class="p">:</span> <span class="s1">&#39;2.3.0&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;storage_space&#39;</span><span class="p">:</span> <span class="s1">&#39;600&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;vpc_id&#39;</span><span class="p">:</span> <span class="s1">&#39;vpc_id&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;security_group_id&#39;</span><span class="p">:</span> <span class="s1">&#39;sec_group_id&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;subnet_id&#39;</span><span class="p">:</span> <span class="s1">&#39;network_id&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;available_zones&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;az_id&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;product_id&#39;</span><span class="p">:</span> <span class="s1">&#39;product_id&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;storage_spec_code&#39;</span><span class="p">:</span> <span class="s1">&#39;dms.physical.storage.ultra&#39;</span>
+<span class="p">}</span>
+<span class="k">for</span> <span class="n">raw</span> <span class="ow">in</span> <span class="n">conn</span><span class="o">.</span><span class="n">dms</span><span class="o">.</span><span class="n">create_instance</span><span class="p">(</span><span class="o">**</span><span class="n">attrs</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="delete-instance">
+<h3><a class="toc-backref" href="#id21" role="doc-backlink">Delete Instance</a><a class="headerlink" href="#delete-instance" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to delete an Instance by ID
+or an instance of class
+<a class="reference internal" href="../resources/dms/v1/instance.html#otcextensions.sdk.dms.v1.instance.Instance" title="otcextensions.sdk.dms.v1.instance.Instance"><code class="xref py py-class docutils literal notranslate"><span class="pre">Instance</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="n">instance</span> <span class="o">=</span> <span class="s1">&#39;name_or_id&#39;</span>
+<span class="n">instance</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">dms</span><span class="o">.</span><span class="n">find_instance</span><span class="p">(</span><span class="n">name_or_id</span><span class="o">=</span><span class="n">instance</span><span class="p">)</span>
+
+<span class="n">raw</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">dms</span><span class="o">.</span><span class="n">delete_instance</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="update-instance">
+<h3><a class="toc-backref" href="#id22" role="doc-backlink">Update Instance</a><a class="headerlink" href="#update-instance" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to update an Instance by ID
+or an instance of class
+<a class="reference internal" href="../resources/dms/v1/instance.html#otcextensions.sdk.dms.v1.instance.Instance" title="otcextensions.sdk.dms.v1.instance.Instance"><code class="xref py py-class docutils literal notranslate"><span class="pre">Instance</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;test-instance-2&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;engine&#39;</span><span class="p">:</span> <span class="s1">&#39;kafka&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;engine_version&#39;</span><span class="p">:</span> <span class="s1">&#39;2.3.0&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;storage_space&#39;</span><span class="p">:</span> <span class="s1">&#39;600&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;vpc_id&#39;</span><span class="p">:</span> <span class="s1">&#39;vpc_id&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;security_group_id&#39;</span><span class="p">:</span> <span class="s1">&#39;sec_group_id&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;subnet_id&#39;</span><span class="p">:</span> <span class="s1">&#39;network_id&#39;</span><span class="p">,</span>
+</pre></div>
+</div>
+</section>
+<section id="restart-instance">
+<h3><a class="toc-backref" href="#id23" role="doc-backlink">Restart Instance</a><a class="headerlink" href="#restart-instance" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to restart an Instance by ID
+or an instance of class
+<a class="reference internal" href="../resources/dms/v1/instance.html#otcextensions.sdk.dms.v1.instance.Instance" title="otcextensions.sdk.dms.v1.instance.Instance"><code class="xref py py-class docutils literal notranslate"><span class="pre">Instance</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="n">instance</span> <span class="o">=</span> <span class="s1">&#39;name_or_id&#39;</span>
+<span class="n">instance</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">dms</span><span class="o">.</span><span class="n">find_instance</span><span class="p">(</span><span class="n">name_or_id</span><span class="o">=</span><span class="n">instance</span><span class="p">)</span>
+
+<span class="n">raw</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">dms</span><span class="o">.</span><span class="n">restart_instance</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="dms-instance-topics">
+<h2><a class="toc-backref" href="#id24" role="doc-backlink">DMS Instance Topics</a><a class="headerlink" href="#dms-instance-topics" title="Permalink to this headline">¶</a></h2>
+<p>After creating a Kafka premium instance,
+you must create a topic in the instance
+for creating and retrieving messages.</p>
+<section id="list-instance-topics">
+<h3><a class="toc-backref" href="#id25" role="doc-backlink">List Instance Topics</a><a class="headerlink" href="#list-instance-topics" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to query all instance topics
+with query parameters</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="n">instance</span> <span class="o">=</span> <span class="s1">&#39;name_or_id&#39;</span>
+<span class="n">instance</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">dms</span><span class="o">.</span><span class="n">find_instance</span><span class="p">(</span><span class="n">name_or_id</span><span class="o">=</span><span class="n">instance</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">raw</span> <span class="ow">in</span> <span class="n">conn</span><span class="o">.</span><span class="n">dms</span><span class="o">.</span><span class="n">topics</span><span class="p">(</span><span class="n">instance</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="create-instance-topic">
+<h3><a class="toc-backref" href="#id26" role="doc-backlink">Create Instance Topic</a><a class="headerlink" href="#create-instance-topic" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to create an Instance topic with
+parameters.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;topic_name&#39;</span>  <span class="c1"># Required</span>
+<span class="p">}</span>
+<span class="n">instance</span> <span class="o">=</span> <span class="s1">&#39;name_or_id&#39;</span>
+<span class="n">instance</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">dms</span><span class="o">.</span><span class="n">find_instance</span><span class="p">(</span><span class="n">name_or_id</span><span class="o">=</span><span class="n">instance</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">raw</span> <span class="ow">in</span> <span class="n">conn</span><span class="o">.</span><span class="n">dms</span><span class="o">.</span><span class="n">create_topic</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="o">**</span><span class="n">attrs</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="delete-instance-topic">
+<h3><a class="toc-backref" href="#id27" role="doc-backlink">Delete Instance Topic</a><a class="headerlink" href="#delete-instance-topic" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to delete an Instance topic by ID
+or an instance of class
+<a class="reference internal" href="../resources/dms/v1/instance.html#otcextensions.sdk.dms.v1.instance.Instance" title="otcextensions.sdk.dms.v1.instance.Instance"><code class="xref py py-class docutils literal notranslate"><span class="pre">Instance</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="n">instance</span> <span class="o">=</span> <span class="s1">&#39;name_or_id&#39;</span>
+<span class="n">instance</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">dms</span><span class="o">.</span><span class="n">find_instance</span><span class="p">(</span><span class="n">name_or_id</span><span class="o">=</span><span class="n">instance</span><span class="p">)</span>
+
+<span class="n">raw</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">dms</span><span class="o">.</span><span class="n">delete_instance</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="misc">
+<h2><a class="toc-backref" href="#id28" role="doc-backlink">Misc</a><a class="headerlink" href="#misc" title="Permalink to this headline">¶</a></h2>
+<p>Extra APIs allow querying of DMS specific data.</p>
+<section id="list-instance-availability-zones">
+<h3><a class="toc-backref" href="#id29" role="doc-backlink">List Instance Availability Zones</a><a class="headerlink" href="#list-instance-availability-zones" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to query all instance AZ’s.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">raw</span> <span class="ow">in</span> <span class="n">conn</span><span class="o">.</span><span class="n">dms</span><span class="o">.</span><span class="n">availability_zones</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="list-products">
+<h3><a class="toc-backref" href="#id30" role="doc-backlink">List Products</a><a class="headerlink" href="#list-products" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to query all supported DMS products.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">raw</span> <span class="ow">in</span> <span class="n">conn</span><span class="o">.</span><span class="n">dms</span><span class="o">.</span><span class="n">products</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="list-maintenance-windows">
+<h3><a class="toc-backref" href="#id31" role="doc-backlink">List Maintenance Windows</a><a class="headerlink" href="#list-maintenance-windows" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to query all Maintenance Windows.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">raw</span> <span class="ow">in</span> <span class="n">conn</span><span class="o">.</span><span class="n">dms</span><span class="o">.</span><span class="n">maintenance_windows</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+                </div>
+              </div>
+            </div>
+            <div class="docs-actions">
+            
+              <a href="deh.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Dedicated Hosts (DeH)"></i></a>
+            
+            
+              <a href="dns.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Domain Name Service (DNS)"></i></a>
+            
+            </div>
+            <div class="row docs-byline bottom">
+              <div class="docs-updated">updated: 2021-12-08 13:15</div>
+            </div>
+          </div>
+  <div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 docs-sidebar">
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <a href="../../index.html" class="docs-sidebar-section-title"><h4>otcextensions 0.24.3.dev2</h4></a>
+      <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../install/index.html">1. Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../install/configuration.html">2. Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cli/index.html">3. OpenStack Client (CLI)</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">4. Using the OpenStack SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../architecture.html">Architecture Overview and Important Terms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Guides for SDK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proxies/index.html">Service Proxies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../resources/index.html">Resources and Attributes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributor/index.html">5. Contributing to the OTC Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../coverage.html">6. Service Coverage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendices/index.html">7. Appendices</a></li>
+</ul>
+
+    </div>
+
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="local-table-of-contents">
+      <h4 class="docs-sidebar-section-title">Page Contents</h4>
+      <ul>
+<li><a class="reference internal" href="#">Distributed Message Service (DMS)</a><ul>
+<li><a class="reference internal" href="#dms-queues">DMS Queues</a><ul>
+<li><a class="reference internal" href="#list-queues">List Queues</a></li>
+<li><a class="reference internal" href="#create-queue">Create Queue</a></li>
+<li><a class="reference internal" href="#get-queue">Get Queue</a></li>
+<li><a class="reference internal" href="#find-queue">Find Queue</a></li>
+<li><a class="reference internal" href="#delete-queue">Delete Queue</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#dms-queue-groups">DMS Queue Groups</a><ul>
+<li><a class="reference internal" href="#list-queue-groups">List Queue Groups</a></li>
+<li><a class="reference internal" href="#create-queue-group">Create Queue Group</a></li>
+<li><a class="reference internal" href="#find-queue-group">Find Queue Group</a></li>
+<li><a class="reference internal" href="#delete-queue-group">Delete Queue Group</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#dms-messages">DMS messages</a><ul>
+<li><a class="reference internal" href="#send-message">Send message</a></li>
+<li><a class="reference internal" href="#consume-message">Consume message</a></li>
+<li><a class="reference internal" href="#confirm-message">Confirm message</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#dms-instances">DMS Instances</a><ul>
+<li><a class="reference internal" href="#list-instances">List Instances</a></li>
+<li><a class="reference internal" href="#find-instance">Find Instance</a></li>
+<li><a class="reference internal" href="#get-instance">Get Instance</a></li>
+<li><a class="reference internal" href="#create-instance">Create Instance</a></li>
+<li><a class="reference internal" href="#delete-instance">Delete Instance</a></li>
+<li><a class="reference internal" href="#update-instance">Update Instance</a></li>
+<li><a class="reference internal" href="#restart-instance">Restart Instance</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#dms-instance-topics">DMS Instance Topics</a><ul>
+<li><a class="reference internal" href="#list-instance-topics">List Instance Topics</a></li>
+<li><a class="reference internal" href="#create-instance-topic">Create Instance Topic</a></li>
+<li><a class="reference internal" href="#delete-instance-topic">Delete Instance Topic</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#misc">Misc</a><ul>
+<li><a class="reference internal" href="#list-instance-availability-zones">List Instance Availability Zones</a></li>
+<li><a class="reference internal" href="#list-products">List Products</a></li>
+<li><a class="reference internal" href="#list-maintenance-windows">List Maintenance Windows</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+  </div>
+</div>
+        </div>
+      </div>
+  </scale-app-shell>
+<scale-app-footer id="footer-shell" variant="standard" claim-lang="en">
+</scale-app-footer>
+<script>
+  const footer_shell = document.getElementById("footer-shell");
+  footer_shell.footerNavigation = [{"name":"Contact","id":"Contact","href":"https://cloud.telekom.de/en/contact/"},{"name":"Legal notice","id":"Legal notice","href":"https://cloud.telekom.de/en/imprint-adress"},{"name":"Data privacy","id":"Data privacy","href":"https://open-telekom-cloud.com/en/data-protection","icon":"alert-imprint-dataprivacy"}]</script>
+  <!-- jQuery -->
+<script type="text/javascript" src="../../_static/js/jquery-3.2.1.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script type="text/javascript" src="../../_static/js/bootstrap.min.js"></script>
+
+<!-- Telekom Scale -->
+<script type="module" src="https://unpkg.com/@telekom/scale-components@3.0.0-beta.32/dist/scale-components/scale-components.esm.js"></script>
+
+<!-- The rest of the JS -->
+<script type="text/javascript" src="../../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script type="text/javascript" src="../../_static/js/docs.js"></script>
+
+<!-- Popovers -->
+<script type="text/javascript" src="../../_static/js/webui-popover.js"></script>
+
+<!-- standard sphinx include libraries, which allow search highlighting -->
+<script type="text/javascript" src="../../_static/underscore.js"></script>
+<script type="text/javascript" src="../../_static/doctools.js"></script>
+<script type="text/javascript" src="../../_static/searchtools.js"></script>
+
+<script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.24.3.dev2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+</script>
+
+
+<!-- Javascript for page -->
+<script language="JavaScript">
+/* build a description of this page including SHA, source location on git repo,
+   build time and the project's launchpad bug tag. Set the HREF of the bug
+   buttons */
+</script>
+  
+  </body>
+</html>

@@ -1,0 +1,1030 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Distributed Message Service (DMS) &#8212; otcextensions 0.24.3.dev2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/basic.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Domain Name Service (DNS)" href="dns.html" />
+    <link rel="prev" title="Dedicated Host Service (DeH)" href="deh.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap CSS -->
+<link href="../_static/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../_static/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="../_static/css/combined.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../_static/pygments.css" rel="stylesheet">
+
+<!-- Telekom Scale -->
+<link href="https://unpkg.com/@telekom/scale-components@3.0.0-beta.32/dist/scale-components/scale-components.css" rel="stylesheet">
+
+<!-- Otcdocstheme CSS -->
+<link href="../_static/css/otcdocstheme.css" rel="stylesheet">
+
+
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-17511903-1', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+  </head><body>
+  
+<!-- SOURCE_FILE: cli/dms.rst -->
+
+
+<scale-app-shell
+  id="app-shell"
+  claim-lang="en"
+  logo-title="PAGENAME"
+  logo-href="/"
+>
+
+
+
+<script>
+  const app_shell = document.getElementById(
+  'app-shell');
+  app_shell.mainNavigation = [
+    {
+      "name": "Software",
+      "id": "Software",
+      "children": [
+        {
+          "name": "Automation",
+          "id": "Automation",
+          "children": [
+            {
+              "name": "Terraform OTC Driver",
+              "id": "Terraform OTC Driver",
+              "href": "https://docs.otc-service.com/terraform-provider-opentelekomcloud"
+            },
+                      {
+              "name": "Ansible Collection Cloud",
+              "id": "Ansible Collection Cloud",
+              "href": "https://docs.otc-service.com/ansible-collection-cloud"
+            },
+          ]
+        },
+        {
+          "name": "Client Tools",
+          "id": "Client Tools",
+          "children": [
+            {
+              "name": "OTC Extensions",
+              "id": "OTC Extensions",
+              "href": "https://docs.otc-service.com/python-otcextensions"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Release Notes",
+      "id": "Release Notes",
+      "children": [
+        {
+          "name": "Automation",
+          "id": "Automation",
+          "children": [
+            {
+              "name": "Terraform OTC Driver",
+              "id": "Terraform OTC Driver",
+              "href": "https://docs.otc-service.com/releasenotes/terraform-provider-opentelekomcloud"
+            }
+          ]
+        },
+        {
+          "name": "Client Tools",
+          "id": "Client Tools",
+          "children": [
+            {
+              "name": "OTC Extensions",
+              "id": "OTC Extensions",
+              "href": "https://docs.otc-service.com/releasenotes/python-otcextensions"
+            }
+          ]
+        }
+      ]
+    }
+  ];
+</script>
+  
+      <div class="container docs-book-wrapper">
+        <div class="row">
+          <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
+  <div class="row docs-title">
+  <div class="col-lg-8">
+      <h1>Distributed Message Service (DMS)</h1>
+    
+  </div>
+  <div class="docs-actions">
+    
+    <a href="deh.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Dedicated Host Service (DeH)"></i></a>
+    
+    
+    <a href="dns.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Domain Name Service (DNS)"></i></a>
+    
+  </div>
+</div>
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="docs-body" role="main">
+  
+  <section id="distributed-message-service-dms">
+<h1>Distributed Message Service (DMS)<a class="headerlink" href="#distributed-message-service-dms" title="Permalink to this headline">¶</a></h1>
+<p>The DMS client is the command-line interface (CLI) for
+the Distributed Message Service (DMS) API and its extensions.</p>
+<p>For help on a specific <cite>dms</cite> command, enter:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>openstack dms <span class="nb">help</span> SUBCOMMAND
+</pre></div>
+</div>
+<section id="queue-operations">
+<span id="dms-queue"></span><h2>Queue operations<a class="headerlink" href="#queue-operations" title="Permalink to this headline">¶</a></h2>
+<section id="dms-queue-create">
+<h3>dms queue create<a class="headerlink" href="#dms-queue-create" title="Permalink to this headline">¶</a></h3>
+<p>Create DMS Queue</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack dms queue create
+    <span class="o">[</span>--description &lt;description&gt;<span class="o">]</span>
+    <span class="o">[</span>--redrive_policy &lt;redrive_policy&gt;<span class="o">]</span>
+    <span class="o">[</span>--max_consume_count &lt;max_consume_count&gt;<span class="o">]</span>
+    <span class="o">[</span>--retention_hours &lt;retention_hours&gt;<span class="o">]</span>
+    &lt;name&gt;
+    &lt;queue_mode&gt;
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-queue-create-description">
+<span class="sig-name descname"><span class="pre">--description</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;description&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-dms-queue-create-description" title="Permalink to this definition">¶</a></dt>
+<dd><p>Indicates the basic information about a queue.
+The queue description must be 0 to 160 characters in length, and does not contain angle brackets (&lt;) and (&gt;).
+NOTE: “&quot; is defined as an escape character in the queue description. If you need to enter a backward slash () or a double quotation mark (”) in the queue description, enter or &quot;</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-queue-create-redrive_policy">
+<span id="cmdoption-openstack-dms-queue-create-redrive-policy"></span><span class="sig-name descname"><span class="pre">--redrive_policy</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;redrive_policy&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-dms-queue-create-redrive_policy" title="Permalink to this definition">¶</a></dt>
+<dd><p>This parameter is mandatory only when queue_mode is NORMAL or FIFO.
+Indicates whether to enable dead letter messages. Dead letter messages indicate messages that cannot be normally consumed.
+If a message fails to be consumed after the number of consumption attempts of this message reaches the maximum value, DMS stores this message into the dead letter queue.This message will be retained in the deal letter queue for 72 hours. During this period, consumers can consume the dead letter message.
+Dead letter messages can be consumed only by the consumer group that generates these dead letter messages.
+Dead letter messages of a FIFO queue are stored and consumed based on the FIFO sequence.
+Options:
+* <cite>enable</cite>
+* <cite>disable</cite>
+Default value: disable.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-queue-create-max_consume_count">
+<span id="cmdoption-openstack-dms-queue-create-max-consume-count"></span><span class="sig-name descname"><span class="pre">--max_consume_count</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;max_consume_count&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-dms-queue-create-max_consume_count" title="Permalink to this definition">¶</a></dt>
+<dd><p>This parameter is mandatory only when redrive_policy is set to enable.
+This parameter indicates the maximum number of allowed message consumption failures. When a message fails to be consumed after the number of consumption attempts of this message reaches this value, DMS stores this message into the dead letter queue.
+Value range: 1-100.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-queue-create-retention_hours">
+<span id="cmdoption-openstack-dms-queue-create-retention-hours"></span><span class="sig-name descname"><span class="pre">--retention_hours</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;retention_hours&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-dms-queue-create-retention_hours" title="Permalink to this definition">¶</a></dt>
+<dd><p>This parameter is mandatory only when queue_mode is set to KAFKA_HA or KAFKA_HT.
+This parameter indicates the retention time of messages in Kafka queues.
+Value range: 1 to 72 hours.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-queue-create-arg-name">
+<span class="sig-name descname"><span class="pre">name</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-dms-queue-create-arg-name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name of the cluster.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-queue-create-arg-queue_mode">
+<span id="cmdoption-openstack-dms-queue-create-arg-queue-mode"></span><span class="sig-name descname"><span class="pre">queue_mode</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-dms-queue-create-arg-queue_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Indicates the queue type.
+Options:
+* <cite>NORMAL</cite>: Standard queue. Best-effort ordering. Messages might be retrieved in an order different from which they were sent. Select standard queues when throughput is important.
+* <cite>FIFO</cite>: First-ln-First-out (FIFO) queue. FIFO delivery. Messages are retrieved in the order they were sent. Select FIFO queues when the order of messages is important.
+* <cite>KAFKA_HA</cite>: High-availability Kafka queue. All message replicas are flushed to a disk synchronously. Select the high availability mode when message reliability is important.
+* <cite>KAFKA_HT</cite>: High-throughput Kafka queue. All message replicas are flushed to a disk asynchronously. Select the high throughput mode when message delivery performance is important.
+Default value: <cite>NORMAL</cite>.</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="dms-queue-delete">
+<h3>dms queue delete<a class="headerlink" href="#dms-queue-delete" title="Permalink to this headline">¶</a></h3>
+<p>Delete DMS Queue</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack dms queue delete &lt;queue&gt; <span class="o">[</span>&lt;queue&gt; ...<span class="o">]</span>
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-queue-delete-arg-queue">
+<span class="sig-name descname"><span class="pre">queue</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-dms-queue-delete-arg-queue" title="Permalink to this definition">¶</a></dt>
+<dd><p>ID of the queue</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="dms-queue-list">
+<h3>dms queue list<a class="headerlink" href="#dms-queue-list" title="Permalink to this headline">¶</a></h3>
+<p>List DMS Queues</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack dms queue list
+    <span class="o">[</span>--sort-column SORT_COLUMN<span class="o">]</span>
+    <span class="o">[</span>--sort-ascending <span class="p">|</span> --sort-descending<span class="o">]</span>
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-queue-list-sort-column">
+<span class="sig-name descname"><span class="pre">--sort-column</span></span><span class="sig-prename descclassname"> <span class="pre">SORT_COLUMN</span></span><a class="headerlink" href="#cmdoption-openstack-dms-queue-list-sort-column" title="Permalink to this definition">¶</a></dt>
+<dd><p>specify the column(s) to sort the data (columns specified first have a priority, non-existing columns are ignored), can be repeated</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-queue-list-sort-ascending">
+<span class="sig-name descname"><span class="pre">--sort-ascending</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-dms-queue-list-sort-ascending" title="Permalink to this definition">¶</a></dt>
+<dd><p>sort the column(s) in ascending order</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-queue-list-sort-descending">
+<span class="sig-name descname"><span class="pre">--sort-descending</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-dms-queue-list-sort-descending" title="Permalink to this definition">¶</a></dt>
+<dd><p>sort the column(s) in descending order</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="dms-queue-show">
+<h3>dms queue show<a class="headerlink" href="#dms-queue-show" title="Permalink to this headline">¶</a></h3>
+<p>Show single Queue details</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack dms queue show &lt;queue&gt;
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-queue-show-arg-queue">
+<span class="sig-name descname"><span class="pre">queue</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-dms-queue-show-arg-queue" title="Permalink to this definition">¶</a></dt>
+<dd><p>ID of the queue</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+</section>
+<section id="group-operations">
+<span id="dms-group"></span><h2>Group operations<a class="headerlink" href="#group-operations" title="Permalink to this headline">¶</a></h2>
+<section id="dms-group-create">
+<h3>dms group create<a class="headerlink" href="#dms-group-create" title="Permalink to this headline">¶</a></h3>
+<p>Create DMS Group</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack dms group create &lt;queue&gt; &lt;name&gt;
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-group-create-arg-queue">
+<span class="sig-name descname"><span class="pre">queue</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-dms-group-create-arg-queue" title="Permalink to this definition">¶</a></dt>
+<dd><p>ID of the queue</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-group-create-arg-name">
+<span class="sig-name descname"><span class="pre">name</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-dms-group-create-arg-name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name of the cluster.</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="dms-group-delete">
+<h3>dms group delete<a class="headerlink" href="#dms-group-delete" title="Permalink to this headline">¶</a></h3>
+<p>Delete DMS Group</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack dms group delete &lt;queue&gt; &lt;group&gt; <span class="o">[</span>&lt;group&gt; ...<span class="o">]</span>
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-group-delete-arg-queue">
+<span class="sig-name descname"><span class="pre">queue</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-dms-group-delete-arg-queue" title="Permalink to this definition">¶</a></dt>
+<dd><p>ID of the queue</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-group-delete-arg-group">
+<span class="sig-name descname"><span class="pre">group</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-dms-group-delete-arg-group" title="Permalink to this definition">¶</a></dt>
+<dd><p>ID of the Group</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="dms-group-list">
+<h3>dms group list<a class="headerlink" href="#dms-group-list" title="Permalink to this headline">¶</a></h3>
+<p>List DMS Groups</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack dms group list
+    <span class="o">[</span>--sort-column SORT_COLUMN<span class="o">]</span>
+    <span class="o">[</span>--sort-ascending <span class="p">|</span> --sort-descending<span class="o">]</span>
+    <span class="o">[</span>--include_deadletter<span class="o">]</span>
+    &lt;queue&gt;
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-group-list-sort-column">
+<span class="sig-name descname"><span class="pre">--sort-column</span></span><span class="sig-prename descclassname"> <span class="pre">SORT_COLUMN</span></span><a class="headerlink" href="#cmdoption-openstack-dms-group-list-sort-column" title="Permalink to this definition">¶</a></dt>
+<dd><p>specify the column(s) to sort the data (columns specified first have a priority, non-existing columns are ignored), can be repeated</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-group-list-sort-ascending">
+<span class="sig-name descname"><span class="pre">--sort-ascending</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-dms-group-list-sort-ascending" title="Permalink to this definition">¶</a></dt>
+<dd><p>sort the column(s) in ascending order</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-group-list-sort-descending">
+<span class="sig-name descname"><span class="pre">--sort-descending</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-dms-group-list-sort-descending" title="Permalink to this definition">¶</a></dt>
+<dd><p>sort the column(s) in descending order</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-group-list-include_deadletter">
+<span id="cmdoption-openstack-dms-group-list-include-deadletter"></span><span class="sig-name descname"><span class="pre">--include_deadletter</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-dms-group-list-include_deadletter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Indicates whether to list dead letter parameters in the response message.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-group-list-arg-queue">
+<span class="sig-name descname"><span class="pre">queue</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-dms-group-list-arg-queue" title="Permalink to this definition">¶</a></dt>
+<dd><p>ID of the queue</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+</section>
+<section id="instance-operations">
+<span id="dms-instance"></span><h2>Instance operations<a class="headerlink" href="#instance-operations" title="Permalink to this headline">¶</a></h2>
+<section id="dms-instance-create">
+<h3>dms instance create<a class="headerlink" href="#dms-instance-create" title="Permalink to this headline">¶</a></h3>
+<p>Create DMS Instance</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack dms instance create
+    <span class="o">[</span>--description &lt;description&gt;<span class="o">]</span>
+    <span class="o">[</span>--engine-name &lt;engine&gt;<span class="o">]</span>
+    <span class="o">[</span>--engine-version &lt;engine-ver&gt;<span class="o">]</span>
+    --storage &lt;GB&gt;
+    <span class="o">[</span>--access-user &lt;access_user&gt;<span class="o">]</span>
+    <span class="o">[</span>--password &lt;password&gt;<span class="o">]</span>
+    --router &lt;router&gt;
+    --security-group &lt;sg&gt;
+    --network &lt;net&gt;
+    --availability-zone &lt;AZ&gt;
+    --product-id &lt;product&gt;
+    <span class="o">[</span>--maintenance-begin &lt;HH24:MM&gt;<span class="o">]</span>
+    <span class="o">[</span>--maintenance-end &lt;HH24:MM&gt;<span class="o">]</span>
+    <span class="o">[</span>--enable-public-access<span class="o">]</span>
+    <span class="o">[</span>--enable-ssl<span class="o">]</span>
+    <span class="o">[</span>--public-bandwidth &lt;Mbit/s&gt;<span class="o">]</span>
+    <span class="o">[</span>--retention-policy <span class="o">{</span>produce_reject,time_base<span class="o">}]</span>
+    <span class="o">[</span>--storage-spec-code <span class="o">{</span>dms.physical.storage.high,dms.physical.storage.ultra<span class="o">}]</span>
+    &lt;name&gt;
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-instance-create-description">
+<span class="sig-name descname"><span class="pre">--description</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;description&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-dms-instance-create-description" title="Permalink to this definition">¶</a></dt>
+<dd><p>Description of the instance.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-instance-create-engine-name">
+<span class="sig-name descname"><span class="pre">--engine-name</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;engine&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-dms-instance-create-engine-name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Engine name. Currently only Kafka is supported.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-instance-create-engine-version">
+<span class="sig-name descname"><span class="pre">--engine-version</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;engine-ver&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-dms-instance-create-engine-version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Engine version. Currently only “2.3.0” is supported.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-instance-create-storage">
+<span class="sig-name descname"><span class="pre">--storage</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;GB&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-dms-instance-create-storage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Indicates the message storage space with increments of 100 GB:
+Instance with specification being 100MB: 600–90,000 GB
+Instance with specification being 300MB: 1,200–90,000 GB
+Instance with specification being 600MB: 2,400–90,000 GB
+Instance with specification being 1200MB: 4,800–90,000 GB</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-instance-create-access-user">
+<span class="sig-name descname"><span class="pre">--access-user</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;access_user&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-dms-instance-create-access-user" title="Permalink to this definition">¶</a></dt>
+<dd><p>This parameter is mandatory when engine is set to kafka and ssl_enable is set to true. This parameter is invalid when ssl_enable is set to false.
+Indicates a username. A username consists of 4 to 64 characters and supports only letters, digits, hyphens (-), and underscores (_).</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-instance-create-password">
+<span class="sig-name descname"><span class="pre">--password</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;password&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-dms-instance-create-password" title="Permalink to this definition">¶</a></dt>
+<dd><p>This parameter is mandatory when engine is set to kafka and ssl_enable is set to true. This parameter is invalid when ssl_enable is set to false.
+An instance password must meet the following complexity requirements:
+- Must be a string consisting of 8 to 32 characters.
+- Must contain at least two of the following character types:
+– Lowercase letters
+– Uppercase letters
+– Digits
+– Special characters</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-instance-create-router">
+<span class="sig-name descname"><span class="pre">--router</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;router&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-dms-instance-create-router" title="Permalink to this definition">¶</a></dt>
+<dd><p>Router ID or Name</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-instance-create-security-group">
+<span class="sig-name descname"><span class="pre">--security-group</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;sg&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-dms-instance-create-security-group" title="Permalink to this definition">¶</a></dt>
+<dd><p>Security group ID or Name</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-instance-create-network">
+<span class="sig-name descname"><span class="pre">--network</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;net&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-dms-instance-create-network" title="Permalink to this definition">¶</a></dt>
+<dd><p>Neutron network ID or Name</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-instance-create-availability-zone">
+<span class="sig-name descname"><span class="pre">--availability-zone</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;AZ&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-dms-instance-create-availability-zone" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of availability zones</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-instance-create-product-id">
+<span class="sig-name descname"><span class="pre">--product-id</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;product&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-dms-instance-create-product-id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Product ID of the DMS instance</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-instance-create-maintenance-begin">
+<span class="sig-name descname"><span class="pre">--maintenance-begin</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;HH24:MM&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-dms-instance-create-maintenance-begin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start of the instance maintenance window</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-instance-create-maintenance-end">
+<span class="sig-name descname"><span class="pre">--maintenance-end</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;HH24:MM&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-dms-instance-create-maintenance-end" title="Permalink to this definition">¶</a></dt>
+<dd><p>End of the instance maintenance window</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-instance-create-enable-public-access">
+<span class="sig-name descname"><span class="pre">--enable-public-access</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-dms-instance-create-enable-public-access" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assign public ip to the instance</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-instance-create-enable-ssl">
+<span class="sig-name descname"><span class="pre">--enable-ssl</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-dms-instance-create-enable-ssl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable SSL for the public access</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-instance-create-public-bandwidth">
+<span class="sig-name descname"><span class="pre">--public-bandwidth</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;Mbit/s&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-dms-instance-create-public-bandwidth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Public network bandwidth in Mbit/s:
+When specification 100MB: 3-900
+When 300MB: 3-900
+When 600MB: 4-1200
+When 1200MB: 8-2400</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-instance-create-retention-policy">
+<span class="sig-name descname"><span class="pre">--retention-policy</span></span><span class="sig-prename descclassname"> <span class="pre">{produce_reject,time_base}</span></span><a class="headerlink" href="#cmdoption-openstack-dms-instance-create-retention-policy" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Action to be taken when the memory usage reaches the disk capacity threshold. Options:</dt><dd><p><cite>produce_reject</cite>: New messages cannot be created.
+<cite>time_base</cite>: The earliest messages are deleted.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-instance-create-storage-spec-code">
+<span class="sig-name descname"><span class="pre">--storage-spec-code</span></span><span class="sig-prename descclassname"> <span class="pre">{dms.physical.storage.high,dms.physical.storage.ultra}</span></span><a class="headerlink" href="#cmdoption-openstack-dms-instance-create-storage-spec-code" title="Permalink to this definition">¶</a></dt>
+<dd><p>The storage I/O specification of a Kafka instance.
+When specification is 100MB, the storage I/O can be:[<cite>dms.physical.storage.high</cite>, <cite>dms.physical.storage.ultra</cite>]
+When specification is 300MB, the storage I/O can be:[<cite>dms.physical.storage.high</cite>, <cite>dms.physical.storage.ultra</cite>]
+When specification is 600MB, the storage I/O is <cite>dms.physical.storage.ultra</cite>.
+When specification is 1200MB, the storage I/O is <cite>dms.physical.storage.ultra</cite>.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-instance-create-arg-name">
+<span class="sig-name descname"><span class="pre">name</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-dms-instance-create-arg-name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name of the instance.</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="dms-instance-list">
+<h3>dms instance list<a class="headerlink" href="#dms-instance-list" title="Permalink to this headline">¶</a></h3>
+<p>List DMS Instances</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack dms instance list
+    <span class="o">[</span>--sort-column SORT_COLUMN<span class="o">]</span>
+    <span class="o">[</span>--sort-ascending <span class="p">|</span> --sort-descending<span class="o">]</span>
+    <span class="o">[</span>--engine-name &lt;engine&gt;<span class="o">]</span>
+    <span class="o">[</span>--status <span class="o">{</span>CREATING,CREATEFAILED,RUNNING,ERROR,STARTING,RESTARTING,CLOSING,FROZEN<span class="o">}]</span>
+    <span class="o">[</span>--include-failure<span class="o">]</span>
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-instance-list-sort-column">
+<span class="sig-name descname"><span class="pre">--sort-column</span></span><span class="sig-prename descclassname"> <span class="pre">SORT_COLUMN</span></span><a class="headerlink" href="#cmdoption-openstack-dms-instance-list-sort-column" title="Permalink to this definition">¶</a></dt>
+<dd><p>specify the column(s) to sort the data (columns specified first have a priority, non-existing columns are ignored), can be repeated</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-instance-list-sort-ascending">
+<span class="sig-name descname"><span class="pre">--sort-ascending</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-dms-instance-list-sort-ascending" title="Permalink to this definition">¶</a></dt>
+<dd><p>sort the column(s) in ascending order</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-instance-list-sort-descending">
+<span class="sig-name descname"><span class="pre">--sort-descending</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-dms-instance-list-sort-descending" title="Permalink to this definition">¶</a></dt>
+<dd><p>sort the column(s) in descending order</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-instance-list-engine-name">
+<span class="sig-name descname"><span class="pre">--engine-name</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;engine&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-dms-instance-list-engine-name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Engine name</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-instance-list-status">
+<span class="sig-name descname"><span class="pre">--status</span></span><span class="sig-prename descclassname"> <span class="pre">{CREATING,CREATEFAILED,RUNNING,ERROR,STARTING,RESTARTING,CLOSING,FROZEN}</span></span><a class="headerlink" href="#cmdoption-openstack-dms-instance-list-status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Instance status</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-instance-list-include-failure">
+<span class="sig-name descname"><span class="pre">--include-failure</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-dms-instance-list-include-failure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Include instances failed to create</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="dms-instance-restart">
+<h3>dms instance restart<a class="headerlink" href="#dms-instance-restart" title="Permalink to this headline">¶</a></h3>
+<p>Restart single Instance</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack dms instance restart &lt;instance&gt;
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-instance-restart-arg-instance">
+<span class="sig-name descname"><span class="pre">instance</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-dms-instance-restart-arg-instance" title="Permalink to this definition">¶</a></dt>
+<dd><p>ID of the instance</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="dms-instance-set">
+<h3>dms instance set<a class="headerlink" href="#dms-instance-set" title="Permalink to this headline">¶</a></h3>
+<p>Update DMS Instance</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack dms instance <span class="nb">set</span>
+    <span class="o">[</span>--name &lt;name&gt;<span class="o">]</span>
+    <span class="o">[</span>--description &lt;description&gt;<span class="o">]</span>
+    --security-group &lt;sg&gt;
+    <span class="o">[</span>--maintenance-begin &lt;HH24:MM&gt;<span class="o">]</span>
+    <span class="o">[</span>--maintenance-end &lt;HH24:MM&gt;<span class="o">]</span>
+    &lt;inst&gt;
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-instance-set-name">
+<span class="sig-name descname"><span class="pre">--name</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;name&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-dms-instance-set-name" title="Permalink to this definition">¶</a></dt>
+<dd><p>New name of the instance.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-instance-set-description">
+<span class="sig-name descname"><span class="pre">--description</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;description&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-dms-instance-set-description" title="Permalink to this definition">¶</a></dt>
+<dd><p>New description of the instance.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-instance-set-security-group">
+<span class="sig-name descname"><span class="pre">--security-group</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;sg&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-dms-instance-set-security-group" title="Permalink to this definition">¶</a></dt>
+<dd><p>Security group ID or Name</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-instance-set-maintenance-begin">
+<span class="sig-name descname"><span class="pre">--maintenance-begin</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;HH24:MM&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-dms-instance-set-maintenance-begin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start of the instance maintenance window</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-instance-set-maintenance-end">
+<span class="sig-name descname"><span class="pre">--maintenance-end</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;HH24:MM&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-dms-instance-set-maintenance-end" title="Permalink to this definition">¶</a></dt>
+<dd><p>End of the instance maintenance window</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-instance-set-arg-inst">
+<span class="sig-name descname"><span class="pre">inst</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-dms-instance-set-arg-inst" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name or ID of the DMS instance</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="dms-instance-show">
+<h3>dms instance show<a class="headerlink" href="#dms-instance-show" title="Permalink to this headline">¶</a></h3>
+<p>Show single Instance details</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack dms instance show &lt;instance&gt;
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-instance-show-arg-instance">
+<span class="sig-name descname"><span class="pre">instance</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-dms-instance-show-arg-instance" title="Permalink to this definition">¶</a></dt>
+<dd><p>ID of the instance</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="dms-instance-topic-create">
+<h3>dms instance topic create<a class="headerlink" href="#dms-instance-topic-create" title="Permalink to this headline">¶</a></h3>
+<p>Create DMS Instance Topic</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack dms instance topic create
+    <span class="o">[</span>--partition &lt;part&gt;<span class="o">]</span>
+    <span class="o">[</span>--replication &lt;repl&gt;<span class="o">]</span>
+    <span class="o">[</span>--retention-time &lt;hours&gt;<span class="o">]</span>
+    <span class="o">[</span>--enable-sync-flush<span class="o">]</span>
+    <span class="o">[</span>--enable-sync-replication<span class="o">]</span>
+    &lt;instance&gt;
+    &lt;id&gt;
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-instance-topic-create-partition">
+<span class="sig-name descname"><span class="pre">--partition</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;part&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-dms-instance-topic-create-partition" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of topic partitions, which is used to set the number of concurrently consumed messages. Value range: 1–20. Default value: 3.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-instance-topic-create-replication">
+<span class="sig-name descname"><span class="pre">--replication</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;repl&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-dms-instance-topic-create-replication" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of replicas, which is configured to ensure data reliability. Value range: 1–3. Default value: 3.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-instance-topic-create-retention-time">
+<span class="sig-name descname"><span class="pre">--retention-time</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;hours&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-dms-instance-topic-create-retention-time" title="Permalink to this definition">¶</a></dt>
+<dd><p>The retention period of a message. Its default value is 72. Value range: 1–168. Default value: 72. Unit: hour.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-instance-topic-create-enable-sync-flush">
+<span class="sig-name descname"><span class="pre">--enable-sync-flush</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-dms-instance-topic-create-enable-sync-flush" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether to enable synchronous flushing. Default value: false. Synchronous flushing compromises performance.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-instance-topic-create-enable-sync-replication">
+<span class="sig-name descname"><span class="pre">--enable-sync-replication</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-dms-instance-topic-create-enable-sync-replication" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether to enable synchronous replication. After this function is enabled, the acks parameter on the producer client must be set to –1. Otherwise, this parameter does not take effect.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-instance-topic-create-arg-instance">
+<span class="sig-name descname"><span class="pre">instance</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-dms-instance-topic-create-arg-instance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Instance ID or Name.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-instance-topic-create-arg-id">
+<span class="sig-name descname"><span class="pre">id</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-dms-instance-topic-create-arg-id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name/ID of the topic.</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="dms-instance-topic-delete">
+<h3>dms instance topic delete<a class="headerlink" href="#dms-instance-topic-delete" title="Permalink to this headline">¶</a></h3>
+<p>Delete DMS Instance Topic</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack dms instance topic delete &lt;instance&gt; &lt;topic&gt; <span class="o">[</span>&lt;topic&gt; ...<span class="o">]</span>
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-instance-topic-delete-arg-instance">
+<span class="sig-name descname"><span class="pre">instance</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-dms-instance-topic-delete-arg-instance" title="Permalink to this definition">¶</a></dt>
+<dd><p>ID or name of the Instance</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-instance-topic-delete-arg-topic">
+<span class="sig-name descname"><span class="pre">topic</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-dms-instance-topic-delete-arg-topic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Topic ID</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="dms-instance-topic-list">
+<h3>dms instance topic list<a class="headerlink" href="#dms-instance-topic-list" title="Permalink to this headline">¶</a></h3>
+<p>List DMS Instance topics</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack dms instance topic list
+    <span class="o">[</span>--sort-column SORT_COLUMN<span class="o">]</span>
+    <span class="o">[</span>--sort-ascending <span class="p">|</span> --sort-descending<span class="o">]</span>
+    &lt;instance&gt;
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-instance-topic-list-sort-column">
+<span class="sig-name descname"><span class="pre">--sort-column</span></span><span class="sig-prename descclassname"> <span class="pre">SORT_COLUMN</span></span><a class="headerlink" href="#cmdoption-openstack-dms-instance-topic-list-sort-column" title="Permalink to this definition">¶</a></dt>
+<dd><p>specify the column(s) to sort the data (columns specified first have a priority, non-existing columns are ignored), can be repeated</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-instance-topic-list-sort-ascending">
+<span class="sig-name descname"><span class="pre">--sort-ascending</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-dms-instance-topic-list-sort-ascending" title="Permalink to this definition">¶</a></dt>
+<dd><p>sort the column(s) in ascending order</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-instance-topic-list-sort-descending">
+<span class="sig-name descname"><span class="pre">--sort-descending</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-dms-instance-topic-list-sort-descending" title="Permalink to this definition">¶</a></dt>
+<dd><p>sort the column(s) in descending order</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-instance-topic-list-arg-instance">
+<span class="sig-name descname"><span class="pre">instance</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-dms-instance-topic-list-arg-instance" title="Permalink to this definition">¶</a></dt>
+<dd><p>DMS Instance name or ID</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+</section>
+<section id="misc-operations">
+<span id="dms-misq"></span><h2>Misc operations<a class="headerlink" href="#misc-operations" title="Permalink to this headline">¶</a></h2>
+<section id="dms-az-list">
+<h3>dms az list<a class="headerlink" href="#dms-az-list" title="Permalink to this headline">¶</a></h3>
+<p>List Availability zones</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack dms az list
+    <span class="o">[</span>--sort-column SORT_COLUMN<span class="o">]</span>
+    <span class="o">[</span>--sort-ascending <span class="p">|</span> --sort-descending<span class="o">]</span>
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-az-list-sort-column">
+<span class="sig-name descname"><span class="pre">--sort-column</span></span><span class="sig-prename descclassname"> <span class="pre">SORT_COLUMN</span></span><a class="headerlink" href="#cmdoption-openstack-dms-az-list-sort-column" title="Permalink to this definition">¶</a></dt>
+<dd><p>specify the column(s) to sort the data (columns specified first have a priority, non-existing columns are ignored), can be repeated</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-az-list-sort-ascending">
+<span class="sig-name descname"><span class="pre">--sort-ascending</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-dms-az-list-sort-ascending" title="Permalink to this definition">¶</a></dt>
+<dd><p>sort the column(s) in ascending order</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-az-list-sort-descending">
+<span class="sig-name descname"><span class="pre">--sort-descending</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-dms-az-list-sort-descending" title="Permalink to this definition">¶</a></dt>
+<dd><p>sort the column(s) in descending order</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="dms-maintenance-window-list">
+<h3>dms maintenance window list<a class="headerlink" href="#dms-maintenance-window-list" title="Permalink to this headline">¶</a></h3>
+<p>List Maintenance Windows</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack dms maintenance window list
+    <span class="o">[</span>--sort-column SORT_COLUMN<span class="o">]</span>
+    <span class="o">[</span>--sort-ascending <span class="p">|</span> --sort-descending<span class="o">]</span>
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-maintenance-window-list-sort-column">
+<span class="sig-name descname"><span class="pre">--sort-column</span></span><span class="sig-prename descclassname"> <span class="pre">SORT_COLUMN</span></span><a class="headerlink" href="#cmdoption-openstack-dms-maintenance-window-list-sort-column" title="Permalink to this definition">¶</a></dt>
+<dd><p>specify the column(s) to sort the data (columns specified first have a priority, non-existing columns are ignored), can be repeated</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-maintenance-window-list-sort-ascending">
+<span class="sig-name descname"><span class="pre">--sort-ascending</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-dms-maintenance-window-list-sort-ascending" title="Permalink to this definition">¶</a></dt>
+<dd><p>sort the column(s) in ascending order</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-maintenance-window-list-sort-descending">
+<span class="sig-name descname"><span class="pre">--sort-descending</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-dms-maintenance-window-list-sort-descending" title="Permalink to this definition">¶</a></dt>
+<dd><p>sort the column(s) in descending order</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="dms-product-list">
+<h3>dms product list<a class="headerlink" href="#dms-product-list" title="Permalink to this headline">¶</a></h3>
+<p>List Product specs</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack dms product list
+    <span class="o">[</span>--sort-column SORT_COLUMN<span class="o">]</span>
+    <span class="o">[</span>--sort-ascending <span class="p">|</span> --sort-descending<span class="o">]</span>
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-product-list-sort-column">
+<span class="sig-name descname"><span class="pre">--sort-column</span></span><span class="sig-prename descclassname"> <span class="pre">SORT_COLUMN</span></span><a class="headerlink" href="#cmdoption-openstack-dms-product-list-sort-column" title="Permalink to this definition">¶</a></dt>
+<dd><p>specify the column(s) to sort the data (columns specified first have a priority, non-existing columns are ignored), can be repeated</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-product-list-sort-ascending">
+<span class="sig-name descname"><span class="pre">--sort-ascending</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-dms-product-list-sort-ascending" title="Permalink to this definition">¶</a></dt>
+<dd><p>sort the column(s) in ascending order</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-dms-product-list-sort-descending">
+<span class="sig-name descname"><span class="pre">--sort-descending</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-dms-product-list-sort-descending" title="Permalink to this definition">¶</a></dt>
+<dd><p>sort the column(s) in descending order</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+</section>
+</section>
+
+
+                </div>
+              </div>
+            </div>
+            <div class="docs-actions">
+            
+              <a href="deh.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Dedicated Host Service (DeH)"></i></a>
+            
+            
+              <a href="dns.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Domain Name Service (DNS)"></i></a>
+            
+            </div>
+            <div class="row docs-byline bottom">
+              <div class="docs-updated">updated: 2021-12-08 13:15</div>
+            </div>
+          </div>
+  <div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 docs-sidebar">
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <a href="../index.html" class="docs-sidebar-section-title"><h4>otcextensions 0.24.3.dev2</h4></a>
+      <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install/index.html">1. Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install/configuration.html">2. Configuration</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">3. OpenStack Client (CLI)</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="anti_ddos.html">Anti DDoS Service (Anti_DDoS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="auto_scaling.html">AutoScaling service (AS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cbr.html">Cloud Backup and Recovery (CBR)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cce_v2.html">Cloud Container Engine (CCE)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ces.html">Cloud Eye Service (CES)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="css.html">Cloud Search Service (CSS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cts.html">Cloud Trace Service (CTS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dcs.html">Distributed Cache Service (DCS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deh.html">Dedicated Host Service (DeH)</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Distributed Message Service (DMS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dns.html">Domain Name Service (DNS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="identity.html">Identity Service (IAM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kms.html">Key Management Service (KMS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="load_balancer.html">Elastic LoadBalancer (ELB)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nat.html">Network Address Translation (NAT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="obs.html">Object Storage service (OBS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rds_v3.html">Relational Database Service (RDS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="smn.html">Simple Message Notification Service (SMN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="volume_backup.html">Volume Backup Service (VBS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vpc.html">Virtual Private Cloud (VPC)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sdk/index.html">4. Using the OpenStack SDK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributor/index.html">5. Contributing to the OTC Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../coverage.html">6. Service Coverage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendices/index.html">7. Appendices</a></li>
+</ul>
+
+    </div>
+
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="local-table-of-contents">
+      <h4 class="docs-sidebar-section-title">Page Contents</h4>
+      <ul>
+<li><a class="reference internal" href="#">Distributed Message Service (DMS)</a><ul>
+<li><a class="reference internal" href="#queue-operations">Queue operations</a><ul>
+<li><a class="reference internal" href="#dms-queue-create">dms queue create</a></li>
+<li><a class="reference internal" href="#dms-queue-delete">dms queue delete</a></li>
+<li><a class="reference internal" href="#dms-queue-list">dms queue list</a></li>
+<li><a class="reference internal" href="#dms-queue-show">dms queue show</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#group-operations">Group operations</a><ul>
+<li><a class="reference internal" href="#dms-group-create">dms group create</a></li>
+<li><a class="reference internal" href="#dms-group-delete">dms group delete</a></li>
+<li><a class="reference internal" href="#dms-group-list">dms group list</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#instance-operations">Instance operations</a><ul>
+<li><a class="reference internal" href="#dms-instance-create">dms instance create</a></li>
+<li><a class="reference internal" href="#dms-instance-list">dms instance list</a></li>
+<li><a class="reference internal" href="#dms-instance-restart">dms instance restart</a></li>
+<li><a class="reference internal" href="#dms-instance-set">dms instance set</a></li>
+<li><a class="reference internal" href="#dms-instance-show">dms instance show</a></li>
+<li><a class="reference internal" href="#dms-instance-topic-create">dms instance topic create</a></li>
+<li><a class="reference internal" href="#dms-instance-topic-delete">dms instance topic delete</a></li>
+<li><a class="reference internal" href="#dms-instance-topic-list">dms instance topic list</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#misc-operations">Misc operations</a><ul>
+<li><a class="reference internal" href="#dms-az-list">dms az list</a></li>
+<li><a class="reference internal" href="#dms-maintenance-window-list">dms maintenance window list</a></li>
+<li><a class="reference internal" href="#dms-product-list">dms product list</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+  </div>
+</div>
+        </div>
+      </div>
+  </scale-app-shell>
+<scale-app-footer id="footer-shell" variant="standard" claim-lang="en">
+</scale-app-footer>
+<script>
+  const footer_shell = document.getElementById("footer-shell");
+  footer_shell.footerNavigation = [{"name":"Contact","id":"Contact","href":"https://cloud.telekom.de/en/contact/"},{"name":"Legal notice","id":"Legal notice","href":"https://cloud.telekom.de/en/imprint-adress"},{"name":"Data privacy","id":"Data privacy","href":"https://open-telekom-cloud.com/en/data-protection","icon":"alert-imprint-dataprivacy"}]</script>
+  <!-- jQuery -->
+<script type="text/javascript" src="../_static/js/jquery-3.2.1.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script type="text/javascript" src="../_static/js/bootstrap.min.js"></script>
+
+<!-- Telekom Scale -->
+<script type="module" src="https://unpkg.com/@telekom/scale-components@3.0.0-beta.32/dist/scale-components/scale-components.esm.js"></script>
+
+<!-- The rest of the JS -->
+<script type="text/javascript" src="../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script type="text/javascript" src="../_static/js/docs.js"></script>
+
+<!-- Popovers -->
+<script type="text/javascript" src="../_static/js/webui-popover.js"></script>
+
+<!-- standard sphinx include libraries, which allow search highlighting -->
+<script type="text/javascript" src="../_static/underscore.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+<script type="text/javascript" src="../_static/searchtools.js"></script>
+
+<script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.24.3.dev2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+</script>
+
+
+<!-- Javascript for page -->
+<script language="JavaScript">
+/* build a description of this page including SHA, source location on git repo,
+   build time and the project's launchpad bug tag. Set the HREF of the bug
+   buttons */
+</script>
+  
+  </body>
+</html>

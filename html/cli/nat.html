@@ -1,0 +1,957 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Network Address Translation (NAT) &#8212; otcextensions 0.24.3.dev2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/basic.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Object Storage service (OBS)" href="obs.html" />
+    <link rel="prev" title="Elastic LoadBalancer (ELB)" href="load_balancer.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap CSS -->
+<link href="../_static/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../_static/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="../_static/css/combined.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../_static/pygments.css" rel="stylesheet">
+
+<!-- Telekom Scale -->
+<link href="https://unpkg.com/@telekom/scale-components@3.0.0-beta.32/dist/scale-components/scale-components.css" rel="stylesheet">
+
+<!-- Otcdocstheme CSS -->
+<link href="../_static/css/otcdocstheme.css" rel="stylesheet">
+
+
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-17511903-1', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+  </head><body>
+  
+<!-- SOURCE_FILE: cli/nat.rst -->
+
+
+<scale-app-shell
+  id="app-shell"
+  claim-lang="en"
+  logo-title="PAGENAME"
+  logo-href="/"
+>
+
+
+
+<script>
+  const app_shell = document.getElementById(
+  'app-shell');
+  app_shell.mainNavigation = [
+    {
+      "name": "Software",
+      "id": "Software",
+      "children": [
+        {
+          "name": "Automation",
+          "id": "Automation",
+          "children": [
+            {
+              "name": "Terraform OTC Driver",
+              "id": "Terraform OTC Driver",
+              "href": "https://docs.otc-service.com/terraform-provider-opentelekomcloud"
+            },
+                      {
+              "name": "Ansible Collection Cloud",
+              "id": "Ansible Collection Cloud",
+              "href": "https://docs.otc-service.com/ansible-collection-cloud"
+            },
+          ]
+        },
+        {
+          "name": "Client Tools",
+          "id": "Client Tools",
+          "children": [
+            {
+              "name": "OTC Extensions",
+              "id": "OTC Extensions",
+              "href": "https://docs.otc-service.com/python-otcextensions"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Release Notes",
+      "id": "Release Notes",
+      "children": [
+        {
+          "name": "Automation",
+          "id": "Automation",
+          "children": [
+            {
+              "name": "Terraform OTC Driver",
+              "id": "Terraform OTC Driver",
+              "href": "https://docs.otc-service.com/releasenotes/terraform-provider-opentelekomcloud"
+            }
+          ]
+        },
+        {
+          "name": "Client Tools",
+          "id": "Client Tools",
+          "children": [
+            {
+              "name": "OTC Extensions",
+              "id": "OTC Extensions",
+              "href": "https://docs.otc-service.com/releasenotes/python-otcextensions"
+            }
+          ]
+        }
+      ]
+    }
+  ];
+</script>
+  
+      <div class="container docs-book-wrapper">
+        <div class="row">
+          <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
+  <div class="row docs-title">
+  <div class="col-lg-8">
+      <h1>Network Address Translation (NAT)</h1>
+    
+  </div>
+  <div class="docs-actions">
+    
+    <a href="load_balancer.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Elastic LoadBalancer (ELB)"></i></a>
+    
+    
+    <a href="obs.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Object Storage service (OBS)"></i></a>
+    
+  </div>
+</div>
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="docs-body" role="main">
+  
+  <section id="network-address-translation-nat">
+<h1>Network Address Translation (NAT)<a class="headerlink" href="#network-address-translation-nat" title="Permalink to this headline">¶</a></h1>
+<p>The NAT client is the command-line interface (CLI) for
+the Network Address Translation (NAT) API and its extensions.</p>
+<p>For help on a specific <cite>nat</cite> command, enter:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>openstack nat <span class="nb">help</span> SUBCOMMAND
+</pre></div>
+</div>
+<section id="nat-gateway-operations">
+<span id="gateway"></span><h2>Nat Gateway Operations<a class="headerlink" href="#nat-gateway-operations" title="Permalink to this headline">¶</a></h2>
+<section id="nat-gateway-create">
+<h3>nat gateway create<a class="headerlink" href="#nat-gateway-create" title="Permalink to this headline">¶</a></h3>
+<p>Create new NAT Gateway</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack nat gateway create
+    <span class="o">[</span>--description &lt;description&gt;<span class="o">]</span>
+    --spec &lt;spec&gt;
+    --router-id &lt;router_id&gt;
+    --internal-network-id &lt;internal_network_id&gt;
+    &lt;name&gt;
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-gateway-create-description">
+<span class="sig-name descname"><span class="pre">--description</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;description&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-gateway-create-description" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides supplementary information about the NAT Gateway.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-gateway-create-spec">
+<span class="sig-name descname"><span class="pre">--spec</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;spec&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-gateway-create-spec" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the type of the NAT Gateway. The value can be:
+1: small type, which supports up to 10,000 SNAT connections.
+2: medium type, which supports up to 50,000 SNAT connections.
+3: large type, which supports up to 200,000 SNAT connections.
+4: extra-large type, which supports up to 1,000,000 SNAT connections.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-gateway-create-router-id">
+<span class="sig-name descname"><span class="pre">--router-id</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;router_id&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-gateway-create-router-id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the VPC ID.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-gateway-create-internal-network-id">
+<span class="sig-name descname"><span class="pre">--internal-network-id</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;internal_network_id&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-gateway-create-internal-network-id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the network ID of the downstream interface (the next hop of the DVR) of the NAT Gateway.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-gateway-create-arg-name">
+<span class="sig-name descname"><span class="pre">name</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-nat-gateway-create-arg-name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the name of the NAT Gateway.</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="nat-gateway-delete">
+<h3>nat gateway delete<a class="headerlink" href="#nat-gateway-delete" title="Permalink to this headline">¶</a></h3>
+<p>Deletes NAT Gateway.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack nat gateway delete &lt;gateway&gt; <span class="o">[</span>&lt;gateway&gt; ...<span class="o">]</span>
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-gateway-delete-arg-gateway">
+<span class="sig-name descname"><span class="pre">gateway</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-nat-gateway-delete-arg-gateway" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nat Gateway(s) to delete (Name or ID)</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="nat-gateway-list">
+<h3>nat gateway list<a class="headerlink" href="#nat-gateway-list" title="Permalink to this headline">¶</a></h3>
+<p>List Nat Gateway.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack nat gateway list
+    <span class="o">[</span>--sort-column SORT_COLUMN<span class="o">]</span>
+    <span class="o">[</span>--sort-ascending <span class="p">|</span> --sort-descending<span class="o">]</span>
+    <span class="o">[</span>--id &lt;id&gt;<span class="o">]</span>
+    <span class="o">[</span>--limit &lt;limit&gt;<span class="o">]</span>
+    <span class="o">[</span>--project-id &lt;project_id&gt;<span class="o">]</span>
+    <span class="o">[</span>--name &lt;name&gt;<span class="o">]</span>
+    <span class="o">[</span>--spec &lt;spec&gt;<span class="o">]</span>
+    <span class="o">[</span>--router-id &lt;router_id&gt;<span class="o">]</span>
+    <span class="o">[</span>--internal-network-id &lt;internal_network_id&gt;<span class="o">]</span>
+    <span class="o">[</span>--status &lt;status&gt;<span class="o">]</span>
+    <span class="o">[</span>--admin-state-up &lt;admin_state_up&gt;<span class="o">]</span>
+    <span class="o">[</span>--created-at &lt;created_at&gt;<span class="o">]</span>
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-gateway-list-sort-column">
+<span class="sig-name descname"><span class="pre">--sort-column</span></span><span class="sig-prename descclassname"> <span class="pre">SORT_COLUMN</span></span><a class="headerlink" href="#cmdoption-openstack-nat-gateway-list-sort-column" title="Permalink to this definition">¶</a></dt>
+<dd><p>specify the column(s) to sort the data (columns specified first have a priority, non-existing columns are ignored), can be repeated</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-gateway-list-sort-ascending">
+<span class="sig-name descname"><span class="pre">--sort-ascending</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-nat-gateway-list-sort-ascending" title="Permalink to this definition">¶</a></dt>
+<dd><p>sort the column(s) in ascending order</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-gateway-list-sort-descending">
+<span class="sig-name descname"><span class="pre">--sort-descending</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-nat-gateway-list-sort-descending" title="Permalink to this definition">¶</a></dt>
+<dd><p>sort the column(s) in descending order</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-gateway-list-id">
+<span class="sig-name descname"><span class="pre">--id</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;id&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-gateway-list-id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the ID of the NAT Gateway.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-gateway-list-limit">
+<span class="sig-name descname"><span class="pre">--limit</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;limit&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-gateway-list-limit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Limit to fetch number of records.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-gateway-list-project-id">
+<span class="sig-name descname"><span class="pre">--project-id</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;project_id&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-gateway-list-project-id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the project ID.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-gateway-list-name">
+<span class="sig-name descname"><span class="pre">--name</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;name&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-gateway-list-name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the Name of the NAT Gateway.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-gateway-list-spec">
+<span class="sig-name descname"><span class="pre">--spec</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;spec&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-gateway-list-spec" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the type of the NAT Gateway. The value of spec can be:
+1: small type, which supports up to 10,000 SNAT connections.
+2: medium type, which supports up to 50,000 SNAT connections.
+3: large type, which supports up to 200,000 SNAT connections.
+4: extra-large type, which supports up to 1,000,000 SNAT connections.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-gateway-list-router-id">
+<span class="sig-name descname"><span class="pre">--router-id</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;router_id&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-gateway-list-router-id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the router ID.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-gateway-list-internal-network-id">
+<span class="sig-name descname"><span class="pre">--internal-network-id</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;internal_network_id&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-gateway-list-internal-network-id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the network ID of the downstream interface (the next hop of the DVR) of the NAT Gateway.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-gateway-list-status">
+<span class="sig-name descname"><span class="pre">--status</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;status&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-gateway-list-status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the status of the NAT Gateway.
+ACTIVE: The resource status is normal.
+PENDING_CREATE: The resource is being created.
+PENDING_UPDATE: The resource is being updated.
+PENDING_DELETE: The resource is being deleted.
+EIP_FREEZED: The EIP of the resource is frozen.
+INACTIVE: The resource status is abnormal.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-gateway-list-admin-state-up">
+<span class="sig-name descname"><span class="pre">--admin-state-up</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;admin_state_up&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-gateway-list-admin-state-up" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies whether the NAT Gateway is enabled or disabled. The value can be:
+true: The NAT gateway is up.
+false: The NAT gateway is down.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-gateway-list-created-at">
+<span class="sig-name descname"><span class="pre">--created-at</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;created_at&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-gateway-list-created-at" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies when the NAT Gateway is created (UTC time). Its valuerounds to 6 decimal places forseconds. The format is yyyy-mm-ddhh:mm:ss.</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="nat-gateway-show">
+<h3>nat gateway show<a class="headerlink" href="#nat-gateway-show" title="Permalink to this headline">¶</a></h3>
+<p>Show NAT Gateway details</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack nat gateway show &lt;gateway&gt;
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-gateway-show-arg-gateway">
+<span class="sig-name descname"><span class="pre">gateway</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-nat-gateway-show-arg-gateway" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the Name or ID of the NAT Gateway.</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="nat-gateway-update">
+<h3>nat gateway update<a class="headerlink" href="#nat-gateway-update" title="Permalink to this headline">¶</a></h3>
+<p>Update a NAT Gateway.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack nat gateway update
+    <span class="o">[</span>--name &lt;name&gt;<span class="o">]</span>
+    <span class="o">[</span>--description &lt;description&gt;<span class="o">]</span>
+    <span class="o">[</span>--spec &lt;spec&gt;<span class="o">]</span>
+    &lt;gateway&gt;
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-gateway-update-name">
+<span class="sig-name descname"><span class="pre">--name</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;name&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-gateway-update-name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the name of the NAT Gateway.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-gateway-update-description">
+<span class="sig-name descname"><span class="pre">--description</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;description&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-gateway-update-description" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides supplementary informationabout the NAT gateway.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-gateway-update-spec">
+<span class="sig-name descname"><span class="pre">--spec</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;spec&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-gateway-update-spec" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the type of the NAT Gateway.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-gateway-update-arg-gateway">
+<span class="sig-name descname"><span class="pre">gateway</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-nat-gateway-update-arg-gateway" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the Name or ID of the NAT Gateway.</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+</section>
+<section id="snat-rule-operations">
+<span id="snat"></span><h2>Snat Rule Operations<a class="headerlink" href="#snat-rule-operations" title="Permalink to this headline">¶</a></h2>
+<section id="nat-snat-rule-create">
+<h3>nat snat rule create<a class="headerlink" href="#nat-snat-rule-create" title="Permalink to this headline">¶</a></h3>
+<p>Create new SNAT Rule</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack nat snat rule create
+    --nat-gateway-id &lt;nat_gateway_id&gt;
+    --floating-ip-id &lt;floating_ip_id&gt;
+    <span class="o">[</span>--network-id &lt;network_id&gt;<span class="o">]</span>
+    <span class="o">[</span>--cidr &lt;cidr&gt;<span class="o">]</span>
+    <span class="o">[</span>--source-type &lt;source_type&gt;<span class="o">]</span>
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-snat-rule-create-nat-gateway-id">
+<span class="sig-name descname"><span class="pre">--nat-gateway-id</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;nat_gateway_id&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-snat-rule-create-nat-gateway-id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the ID of the NAT gateway.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-snat-rule-create-floating-ip-id">
+<span class="sig-name descname"><span class="pre">--floating-ip-id</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;floating_ip_id&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-snat-rule-create-floating-ip-id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the Floating IP ID. Multiple Floating IPs are separated using commas.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-snat-rule-create-network-id">
+<span class="sig-name descname"><span class="pre">--network-id</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;network_id&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-snat-rule-create-network-id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the network ID used by the SNAT rule. This parameter and cidr are alternative.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-snat-rule-create-cidr">
+<span class="sig-name descname"><span class="pre">--cidr</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;cidr&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-snat-rule-create-cidr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies CIDR, which can be in the format of a network segment or a host IP address.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-snat-rule-create-source-type">
+<span class="sig-name descname"><span class="pre">--source-type</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;source_type&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-snat-rule-create-source-type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the source type.
+0: Either network_id or cidr can be specified in a VPC.
+1: Only cidr can be specified over a Direct Connect connection.
+If no value is entered, the default value 0 (VPC) is used.</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="nat-snat-rule-delete">
+<h3>nat snat rule delete<a class="headerlink" href="#nat-snat-rule-delete" title="Permalink to this headline">¶</a></h3>
+<p>Deletes Snat Rule(s).</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack nat snat rule delete &lt;snat_id&gt; <span class="o">[</span>&lt;snat_id&gt; ...<span class="o">]</span>
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-snat-rule-delete-arg-snat_id">
+<span id="cmdoption-openstack-nat-snat-rule-delete-arg-snat-id"></span><span class="sig-name descname"><span class="pre">snat_id</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-nat-snat-rule-delete-arg-snat_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the SNAT rule(s) ID(s) to delete.</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="nat-snat-rule-list">
+<h3>nat snat rule list<a class="headerlink" href="#nat-snat-rule-list" title="Permalink to this headline">¶</a></h3>
+<p>List SNAT Rules.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack nat snat rule list
+    <span class="o">[</span>--sort-column SORT_COLUMN<span class="o">]</span>
+    <span class="o">[</span>--sort-ascending <span class="p">|</span> --sort-descending<span class="o">]</span>
+    <span class="o">[</span>--id &lt;id&gt;<span class="o">]</span>
+    <span class="o">[</span>--limit &lt;limit&gt;<span class="o">]</span>
+    <span class="o">[</span>--project-id &lt;project_id&gt;<span class="o">]</span>
+    <span class="o">[</span>--nat-gateway-id &lt;nat_gateway_id&gt;<span class="o">]</span>
+    <span class="o">[</span>--network-id &lt;network_id&gt;<span class="o">]</span>
+    <span class="o">[</span>--cidr &lt;cidr&gt;<span class="o">]</span>
+    <span class="o">[</span>--source-type &lt;source_type&gt;<span class="o">]</span>
+    <span class="o">[</span>--floating-ip-id &lt;floating_ip_id&gt;<span class="o">]</span>
+    <span class="o">[</span>--floating-ip-address &lt;floating_ip_address&gt;<span class="o">]</span>
+    <span class="o">[</span>--status &lt;status&gt;<span class="o">]</span>
+    <span class="o">[</span>--admin-state-up &lt;admin_state_up&gt;<span class="o">]</span>
+    <span class="o">[</span>--created-at &lt;created_at&gt;<span class="o">]</span>
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-snat-rule-list-sort-column">
+<span class="sig-name descname"><span class="pre">--sort-column</span></span><span class="sig-prename descclassname"> <span class="pre">SORT_COLUMN</span></span><a class="headerlink" href="#cmdoption-openstack-nat-snat-rule-list-sort-column" title="Permalink to this definition">¶</a></dt>
+<dd><p>specify the column(s) to sort the data (columns specified first have a priority, non-existing columns are ignored), can be repeated</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-snat-rule-list-sort-ascending">
+<span class="sig-name descname"><span class="pre">--sort-ascending</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-nat-snat-rule-list-sort-ascending" title="Permalink to this definition">¶</a></dt>
+<dd><p>sort the column(s) in ascending order</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-snat-rule-list-sort-descending">
+<span class="sig-name descname"><span class="pre">--sort-descending</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-nat-snat-rule-list-sort-descending" title="Permalink to this definition">¶</a></dt>
+<dd><p>sort the column(s) in descending order</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-snat-rule-list-id">
+<span class="sig-name descname"><span class="pre">--id</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;id&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-snat-rule-list-id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the ID of the SNAT rule.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-snat-rule-list-limit">
+<span class="sig-name descname"><span class="pre">--limit</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;limit&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-snat-rule-list-limit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Limit to fetch number of records.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-snat-rule-list-project-id">
+<span class="sig-name descname"><span class="pre">--project-id</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;project_id&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-snat-rule-list-project-id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the project ID.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-snat-rule-list-nat-gateway-id">
+<span class="sig-name descname"><span class="pre">--nat-gateway-id</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;nat_gateway_id&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-snat-rule-list-nat-gateway-id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the NAT gateway ID.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-snat-rule-list-network-id">
+<span class="sig-name descname"><span class="pre">--network-id</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;network_id&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-snat-rule-list-network-id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the network ID used by the SNAT rule.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-snat-rule-list-cidr">
+<span class="sig-name descname"><span class="pre">--cidr</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;cidr&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-snat-rule-list-cidr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies a subset of the VPC subnet CIDR block or a CIDR block of Direct Connect connection.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-snat-rule-list-source-type">
+<span class="sig-name descname"><span class="pre">--source-type</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;source_type&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-snat-rule-list-source-type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies Source Type.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-snat-rule-list-floating-ip-id">
+<span class="sig-name descname"><span class="pre">--floating-ip-id</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;floating_ip_id&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-snat-rule-list-floating-ip-id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the Floating IP ID.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-snat-rule-list-floating-ip-address">
+<span class="sig-name descname"><span class="pre">--floating-ip-address</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;floating_ip_address&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-snat-rule-list-floating-ip-address" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the Floating IP.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-snat-rule-list-status">
+<span class="sig-name descname"><span class="pre">--status</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;status&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-snat-rule-list-status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the status of the SNAT rule.
+ACTIVE: The resource status is normal.
+PENDING_CREATE: The resource is being created.
+PENDING_UPDATE: The resource is being updated.
+PENDING_DELETE: The resource is being deleted.
+EIP_FREEZED: The EIP of the resource is frozen.
+INACTIVE: The resource status is abnormal.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-snat-rule-list-admin-state-up">
+<span class="sig-name descname"><span class="pre">--admin-state-up</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;admin_state_up&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-snat-rule-list-admin-state-up" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies whether the SNAT rule is enabled or disabled. The value can be:
+true: The SNAT rule is enabled.
+false: The SNAT rule is disabled.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-snat-rule-list-created-at">
+<span class="sig-name descname"><span class="pre">--created-at</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;created_at&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-snat-rule-list-created-at" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies when the SNAT rule is created (UTC time). Its value rounds to 6 decimal places for seconds. The format is yyyy-mm-ddhh:mm:ss.</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="nat-snat-rule-show">
+<h3>nat snat rule show<a class="headerlink" href="#nat-snat-rule-show" title="Permalink to this headline">¶</a></h3>
+<p>Show Snat Rule details</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack nat snat rule show &lt;snat_id&gt;
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-snat-rule-show-arg-snat_id">
+<span id="cmdoption-openstack-nat-snat-rule-show-arg-snat-id"></span><span class="sig-name descname"><span class="pre">snat_id</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-nat-snat-rule-show-arg-snat_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the ID of the SNAT Rule.</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+</section>
+<section id="dnat-rule-operations">
+<span id="dnat"></span><h2>Dnat Rule Operations<a class="headerlink" href="#dnat-rule-operations" title="Permalink to this headline">¶</a></h2>
+<section id="nat-dnat-rule-create">
+<h3>nat dnat rule create<a class="headerlink" href="#nat-dnat-rule-create" title="Permalink to this headline">¶</a></h3>
+<p>Create new DNAT Rule</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack nat dnat rule create
+    --nat-gateway-id &lt;nat_gateway_id&gt;
+    <span class="o">[</span>--port-id &lt;port_id&gt;<span class="o">]</span>
+    <span class="o">[</span>--private-ip &lt;private_ip&gt;<span class="o">]</span>
+    --internal-service-port &lt;internal_service_port&gt;
+    --floating-ip-id &lt;floating_ip_id&gt;
+    --external-service-port &lt;external_service_port&gt;
+    --protocol &lt;protocol&gt;
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-dnat-rule-create-nat-gateway-id">
+<span class="sig-name descname"><span class="pre">--nat-gateway-id</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;nat_gateway_id&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-dnat-rule-create-nat-gateway-id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the ID of the NAT Gateway.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-dnat-rule-create-port-id">
+<span class="sig-name descname"><span class="pre">--port-id</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;port_id&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-dnat-rule-create-port-id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the port ID of an ECS or a BMS.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-dnat-rule-create-private-ip">
+<span class="sig-name descname"><span class="pre">--private-ip</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;private_ip&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-dnat-rule-create-private-ip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the private IP address, for example, the IP address of a Direct Connect connection.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-dnat-rule-create-internal-service-port">
+<span class="sig-name descname"><span class="pre">--internal-service-port</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;internal_service_port&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-dnat-rule-create-internal-service-port" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies port used by ECSs or BMSs to provide services for external systems.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-dnat-rule-create-floating-ip-id">
+<span class="sig-name descname"><span class="pre">--floating-ip-id</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;floating_ip_id&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-dnat-rule-create-floating-ip-id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the Floating IP ID. Multiple Floating IPs are separated using commas.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-dnat-rule-create-external-service-port">
+<span class="sig-name descname"><span class="pre">--external-service-port</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;external_service_port&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-dnat-rule-create-external-service-port" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the port for providing external services.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-dnat-rule-create-protocol">
+<span class="sig-name descname"><span class="pre">--protocol</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;protocol&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-dnat-rule-create-protocol" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the protocol type.</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="nat-dnat-rule-delete">
+<h3>nat dnat rule delete<a class="headerlink" href="#nat-dnat-rule-delete" title="Permalink to this headline">¶</a></h3>
+<p>Deletes Dnat Rule(s).</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack nat dnat rule delete &lt;dnat_id&gt; <span class="o">[</span>&lt;dnat_id&gt; ...<span class="o">]</span>
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-dnat-rule-delete-arg-dnat_id">
+<span id="cmdoption-openstack-nat-dnat-rule-delete-arg-dnat-id"></span><span class="sig-name descname"><span class="pre">dnat_id</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-nat-dnat-rule-delete-arg-dnat_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the DNAT Rule(s) ID(s) to delete.</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="nat-dnat-rule-list">
+<h3>nat dnat rule list<a class="headerlink" href="#nat-dnat-rule-list" title="Permalink to this headline">¶</a></h3>
+<p>List DNAT Rules.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack nat dnat rule list
+    <span class="o">[</span>--sort-column SORT_COLUMN<span class="o">]</span>
+    <span class="o">[</span>--sort-ascending <span class="p">|</span> --sort-descending<span class="o">]</span>
+    <span class="o">[</span>--id &lt;id&gt;<span class="o">]</span>
+    <span class="o">[</span>--limit &lt;limit&gt;<span class="o">]</span>
+    <span class="o">[</span>--project-id &lt;project_id&gt;<span class="o">]</span>
+    <span class="o">[</span>--nat-gateway-id &lt;nat_gateway_id&gt;<span class="o">]</span>
+    <span class="o">[</span>--port-id &lt;port_id&gt;<span class="o">]</span>
+    <span class="o">[</span>--private-ip &lt;private_ip&gt;<span class="o">]</span>
+    <span class="o">[</span>--internal-service-port &lt;internal_service_port&gt;<span class="o">]</span>
+    <span class="o">[</span>--floating-ip-id &lt;floating_ip_id&gt;<span class="o">]</span>
+    <span class="o">[</span>--floating-ip-address &lt;floating_ip_address&gt;<span class="o">]</span>
+    <span class="o">[</span>--external-service-port &lt;external_service_port&gt;<span class="o">]</span>
+    <span class="o">[</span>--protocol &lt;protocol&gt;<span class="o">]</span>
+    <span class="o">[</span>--status &lt;status&gt;<span class="o">]</span>
+    <span class="o">[</span>--admin-state-up &lt;admin_state_up&gt;<span class="o">]</span>
+    <span class="o">[</span>--created-at &lt;created_at&gt;<span class="o">]</span>
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-dnat-rule-list-sort-column">
+<span class="sig-name descname"><span class="pre">--sort-column</span></span><span class="sig-prename descclassname"> <span class="pre">SORT_COLUMN</span></span><a class="headerlink" href="#cmdoption-openstack-nat-dnat-rule-list-sort-column" title="Permalink to this definition">¶</a></dt>
+<dd><p>specify the column(s) to sort the data (columns specified first have a priority, non-existing columns are ignored), can be repeated</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-dnat-rule-list-sort-ascending">
+<span class="sig-name descname"><span class="pre">--sort-ascending</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-nat-dnat-rule-list-sort-ascending" title="Permalink to this definition">¶</a></dt>
+<dd><p>sort the column(s) in ascending order</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-dnat-rule-list-sort-descending">
+<span class="sig-name descname"><span class="pre">--sort-descending</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-nat-dnat-rule-list-sort-descending" title="Permalink to this definition">¶</a></dt>
+<dd><p>sort the column(s) in descending order</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-dnat-rule-list-id">
+<span class="sig-name descname"><span class="pre">--id</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;id&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-dnat-rule-list-id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the ID of the SNAT rule.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-dnat-rule-list-limit">
+<span class="sig-name descname"><span class="pre">--limit</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;limit&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-dnat-rule-list-limit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Limit to fetch number of records.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-dnat-rule-list-project-id">
+<span class="sig-name descname"><span class="pre">--project-id</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;project_id&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-dnat-rule-list-project-id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the project ID.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-dnat-rule-list-nat-gateway-id">
+<span class="sig-name descname"><span class="pre">--nat-gateway-id</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;nat_gateway_id&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-dnat-rule-list-nat-gateway-id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the NAT gateway ID.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-dnat-rule-list-port-id">
+<span class="sig-name descname"><span class="pre">--port-id</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;port_id&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-dnat-rule-list-port-id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the port ID of an ECS or a BMS.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-dnat-rule-list-private-ip">
+<span class="sig-name descname"><span class="pre">--private-ip</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;private_ip&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-dnat-rule-list-private-ip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the private IP address, for example, the IP address of a Direct Connect connection.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-dnat-rule-list-internal-service-port">
+<span class="sig-name descname"><span class="pre">--internal-service-port</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;internal_service_port&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-dnat-rule-list-internal-service-port" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies port used by ECSs or BMSs to provide services for external systems.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-dnat-rule-list-floating-ip-id">
+<span class="sig-name descname"><span class="pre">--floating-ip-id</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;floating_ip_id&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-dnat-rule-list-floating-ip-id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the Floating IP ID.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-dnat-rule-list-floating-ip-address">
+<span class="sig-name descname"><span class="pre">--floating-ip-address</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;floating_ip_address&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-dnat-rule-list-floating-ip-address" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the Floating IP.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-dnat-rule-list-external-service-port">
+<span class="sig-name descname"><span class="pre">--external-service-port</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;external_service_port&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-dnat-rule-list-external-service-port" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the port for providing external services.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-dnat-rule-list-protocol">
+<span class="sig-name descname"><span class="pre">--protocol</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;protocol&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-dnat-rule-list-protocol" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the protocol type.Currently, TCP, UDP, and ANY are supported.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-dnat-rule-list-status">
+<span class="sig-name descname"><span class="pre">--status</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;status&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-dnat-rule-list-status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the status of the DNAT rule.
+ACTIVE: The resource status is normal.
+PENDING_CREATE: The resource is being created.
+PENDING_UPDATE: The resource is being updated.
+PENDING_DELETE: The resource is being deleted.
+EIP_FREEZED: The EIP of the resource is frozen.
+INACTIVE: The resource status is abnormal.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-dnat-rule-list-admin-state-up">
+<span class="sig-name descname"><span class="pre">--admin-state-up</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;admin_state_up&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-dnat-rule-list-admin-state-up" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies whether the DNAT rule is enabled or disabled. The value can be:
+true: The DNAT rule is enabled.
+false: The DNAT rule is disabled.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-dnat-rule-list-created-at">
+<span class="sig-name descname"><span class="pre">--created-at</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;created_at&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-nat-dnat-rule-list-created-at" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies when the DNAT rule is created (UTC time). Its value rounds to 6 decimal places forseconds. The format is yyyy-mm-ddhh:mm:ss.</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="nat-dnat-rule-show">
+<h3>nat dnat rule show<a class="headerlink" href="#nat-dnat-rule-show" title="Permalink to this headline">¶</a></h3>
+<p>Show Dnat Rule details</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack nat dnat rule show &lt;dnat_id&gt;
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-nat-dnat-rule-show-arg-dnat_id">
+<span id="cmdoption-openstack-nat-dnat-rule-show-arg-dnat-id"></span><span class="sig-name descname"><span class="pre">dnat_id</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-nat-dnat-rule-show-arg-dnat_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the ID of the SNAT Rule</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+</section>
+</section>
+
+
+                </div>
+              </div>
+            </div>
+            <div class="docs-actions">
+            
+              <a href="load_balancer.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Elastic LoadBalancer (ELB)"></i></a>
+            
+            
+              <a href="obs.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Object Storage service (OBS)"></i></a>
+            
+            </div>
+            <div class="row docs-byline bottom">
+              <div class="docs-updated">updated: 2021-12-08 13:15</div>
+            </div>
+          </div>
+  <div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 docs-sidebar">
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <a href="../index.html" class="docs-sidebar-section-title"><h4>otcextensions 0.24.3.dev2</h4></a>
+      <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install/index.html">1. Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install/configuration.html">2. Configuration</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">3. OpenStack Client (CLI)</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="anti_ddos.html">Anti DDoS Service (Anti_DDoS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="auto_scaling.html">AutoScaling service (AS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cbr.html">Cloud Backup and Recovery (CBR)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cce_v2.html">Cloud Container Engine (CCE)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ces.html">Cloud Eye Service (CES)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="css.html">Cloud Search Service (CSS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cts.html">Cloud Trace Service (CTS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dcs.html">Distributed Cache Service (DCS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deh.html">Dedicated Host Service (DeH)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dms.html">Distributed Message Service (DMS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dns.html">Domain Name Service (DNS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="identity.html">Identity Service (IAM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kms.html">Key Management Service (KMS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="load_balancer.html">Elastic LoadBalancer (ELB)</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Network Address Translation (NAT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="obs.html">Object Storage service (OBS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rds_v3.html">Relational Database Service (RDS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="smn.html">Simple Message Notification Service (SMN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="volume_backup.html">Volume Backup Service (VBS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vpc.html">Virtual Private Cloud (VPC)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sdk/index.html">4. Using the OpenStack SDK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributor/index.html">5. Contributing to the OTC Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../coverage.html">6. Service Coverage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendices/index.html">7. Appendices</a></li>
+</ul>
+
+    </div>
+
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="local-table-of-contents">
+      <h4 class="docs-sidebar-section-title">Page Contents</h4>
+      <ul>
+<li><a class="reference internal" href="#">Network Address Translation (NAT)</a><ul>
+<li><a class="reference internal" href="#nat-gateway-operations">Nat Gateway Operations</a><ul>
+<li><a class="reference internal" href="#nat-gateway-create">nat gateway create</a></li>
+<li><a class="reference internal" href="#nat-gateway-delete">nat gateway delete</a></li>
+<li><a class="reference internal" href="#nat-gateway-list">nat gateway list</a></li>
+<li><a class="reference internal" href="#nat-gateway-show">nat gateway show</a></li>
+<li><a class="reference internal" href="#nat-gateway-update">nat gateway update</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#snat-rule-operations">Snat Rule Operations</a><ul>
+<li><a class="reference internal" href="#nat-snat-rule-create">nat snat rule create</a></li>
+<li><a class="reference internal" href="#nat-snat-rule-delete">nat snat rule delete</a></li>
+<li><a class="reference internal" href="#nat-snat-rule-list">nat snat rule list</a></li>
+<li><a class="reference internal" href="#nat-snat-rule-show">nat snat rule show</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#dnat-rule-operations">Dnat Rule Operations</a><ul>
+<li><a class="reference internal" href="#nat-dnat-rule-create">nat dnat rule create</a></li>
+<li><a class="reference internal" href="#nat-dnat-rule-delete">nat dnat rule delete</a></li>
+<li><a class="reference internal" href="#nat-dnat-rule-list">nat dnat rule list</a></li>
+<li><a class="reference internal" href="#nat-dnat-rule-show">nat dnat rule show</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+  </div>
+</div>
+        </div>
+      </div>
+  </scale-app-shell>
+<scale-app-footer id="footer-shell" variant="standard" claim-lang="en">
+</scale-app-footer>
+<script>
+  const footer_shell = document.getElementById("footer-shell");
+  footer_shell.footerNavigation = [{"name":"Contact","id":"Contact","href":"https://cloud.telekom.de/en/contact/"},{"name":"Legal notice","id":"Legal notice","href":"https://cloud.telekom.de/en/imprint-adress"},{"name":"Data privacy","id":"Data privacy","href":"https://open-telekom-cloud.com/en/data-protection","icon":"alert-imprint-dataprivacy"}]</script>
+  <!-- jQuery -->
+<script type="text/javascript" src="../_static/js/jquery-3.2.1.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script type="text/javascript" src="../_static/js/bootstrap.min.js"></script>
+
+<!-- Telekom Scale -->
+<script type="module" src="https://unpkg.com/@telekom/scale-components@3.0.0-beta.32/dist/scale-components/scale-components.esm.js"></script>
+
+<!-- The rest of the JS -->
+<script type="text/javascript" src="../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script type="text/javascript" src="../_static/js/docs.js"></script>
+
+<!-- Popovers -->
+<script type="text/javascript" src="../_static/js/webui-popover.js"></script>
+
+<!-- standard sphinx include libraries, which allow search highlighting -->
+<script type="text/javascript" src="../_static/underscore.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+<script type="text/javascript" src="../_static/searchtools.js"></script>
+
+<script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.24.3.dev2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+</script>
+
+
+<!-- Javascript for page -->
+<script language="JavaScript">
+/* build a description of this page including SHA, source location on git repo,
+   build time and the project's launchpad bug tag. Set the HREF of the bug
+   buttons */
+</script>
+  
+  </body>
+</html>

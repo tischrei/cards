@@ -1,0 +1,1528 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>DLB v3 API &#8212; otcextensions 0.24.3.dev2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/basic.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="DMS API" href="dms.html" />
+    <link rel="prev" title="DeH API" href="deh.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap CSS -->
+<link href="../../_static/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../../_static/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="../../_static/css/combined.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../../_static/pygments.css" rel="stylesheet">
+
+<!-- Telekom Scale -->
+<link href="https://unpkg.com/@telekom/scale-components@3.0.0-beta.32/dist/scale-components/scale-components.css" rel="stylesheet">
+
+<!-- Otcdocstheme CSS -->
+<link href="../../_static/css/otcdocstheme.css" rel="stylesheet">
+
+
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-17511903-1', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+  </head><body>
+  
+<!-- SOURCE_FILE: sdk/proxies/vlb_v3.rst -->
+
+
+<scale-app-shell
+  id="app-shell"
+  claim-lang="en"
+  logo-title="PAGENAME"
+  logo-href="/"
+>
+
+
+
+<script>
+  const app_shell = document.getElementById(
+  'app-shell');
+  app_shell.mainNavigation = [
+    {
+      "name": "Software",
+      "id": "Software",
+      "children": [
+        {
+          "name": "Automation",
+          "id": "Automation",
+          "children": [
+            {
+              "name": "Terraform OTC Driver",
+              "id": "Terraform OTC Driver",
+              "href": "https://docs.otc-service.com/terraform-provider-opentelekomcloud"
+            },
+                      {
+              "name": "Ansible Collection Cloud",
+              "id": "Ansible Collection Cloud",
+              "href": "https://docs.otc-service.com/ansible-collection-cloud"
+            },
+          ]
+        },
+        {
+          "name": "Client Tools",
+          "id": "Client Tools",
+          "children": [
+            {
+              "name": "OTC Extensions",
+              "id": "OTC Extensions",
+              "href": "https://docs.otc-service.com/python-otcextensions"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Release Notes",
+      "id": "Release Notes",
+      "children": [
+        {
+          "name": "Automation",
+          "id": "Automation",
+          "children": [
+            {
+              "name": "Terraform OTC Driver",
+              "id": "Terraform OTC Driver",
+              "href": "https://docs.otc-service.com/releasenotes/terraform-provider-opentelekomcloud"
+            }
+          ]
+        },
+        {
+          "name": "Client Tools",
+          "id": "Client Tools",
+          "children": [
+            {
+              "name": "OTC Extensions",
+              "id": "OTC Extensions",
+              "href": "https://docs.otc-service.com/releasenotes/python-otcextensions"
+            }
+          ]
+        }
+      ]
+    }
+  ];
+</script>
+  
+      <div class="container docs-book-wrapper">
+        <div class="row">
+          <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
+  <div class="row docs-title">
+  <div class="col-lg-8">
+      <h1>DLB v3 API</h1>
+    
+  </div>
+  <div class="docs-actions">
+    
+    <a href="deh.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: DeH API"></i></a>
+    
+    
+    <a href="dms.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: DMS API"></i></a>
+    
+  </div>
+</div>
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="docs-body" role="main">
+  
+  <section id="dlb-v3-api">
+<h1>DLB v3 API<a class="headerlink" href="#dlb-v3-api" title="Permalink to this headline">¶</a></h1>
+<p>For details on how to use database, see /sdk/guides/vlb (NEEDS TO BE DONE)</p>
+<span class="target" id="module-otcextensions.sdk.vlb.v3._proxy"></span><section id="the-vlb-class">
+<h2>The VLB Class<a class="headerlink" href="#the-vlb-class" title="Permalink to this headline">¶</a></h2>
+<p>The database high-level interface is available through the <code class="docutils literal notranslate"><span class="pre">vlb</span></code> member of a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code> object.  The <code class="docutils literal notranslate"><span class="pre">vlb</span></code> member will only
+be added if the <code class="docutils literal notranslate"><span class="pre">otcextensions.sdk.register_otc_extensions(conn)</span></code> method is
+called.</p>
+<section id="availabilityzone-operations">
+<h3>AvailabilityZone Operations<a class="headerlink" href="#availabilityzone-operations" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">otcextensions.sdk.vlb.v3._proxy.</span></span><span class="sig-name descname"><span class="pre">Proxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">statsd_client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">statsd_prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prometheus_counter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prometheus_histogram</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">influxdb_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">influxdb_client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">availability_zones</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Retrieve a generator of availability zones</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A AvailabilityZone instance</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">AvailabilityZone</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="certificate-operations">
+<h3>Certificate Operations<a class="headerlink" href="#certificate-operations" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">otcextensions.sdk.vlb.v3._proxy.</span></span><span class="sig-name descname"><span class="pre">Proxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">statsd_client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">statsd_prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prometheus_counter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prometheus_histogram</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">influxdb_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">influxdb_client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">create_certificate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Create a new certificate from attributes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>attrs</strong> (<em>dict</em>) – Keyword arguments which will be used to create
+a <a class="reference internal" href="../resources/vlb/v3/certificate.html#otcextensions.sdk.vlb.v3.certificate.Certificate" title="otcextensions.sdk.vlb.v3.certificate.Certificate"><code class="xref py py-class docutils literal notranslate"><span class="pre">Certificate</span></code></a>,
+comprised of the properties on the Certificate class.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The results of the Certificate Creation</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../resources/vlb/v3/certificate.html#otcextensions.sdk.vlb.v3.certificate.Certificate" title="otcextensions.sdk.vlb.v3.certificate.Certificate"><code class="xref py py-class docutils literal notranslate"><span class="pre">Certificate</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">certificates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Return a generator of certificates</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>query</strong> (<em>dict</em>) – Optional query parameters to be sent to limit
+the resources being returned.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A generator of certificates objects.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">delete_certificate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">certificate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Delete a certificate</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>certificate</strong> – The value can be the ID of a ELB certificate or a
+<a class="reference internal" href="../resources/vlb/v3/certificate.html#otcextensions.sdk.vlb.v3.certificate.Certificate" title="otcextensions.sdk.vlb.v3.certificate.Certificate"><code class="xref py py-class docutils literal notranslate"><span class="pre">Certificate</span></code></a>
+instance.</p></li>
+<li><p><strong>ignore_missing</strong> (<em>bool</em>) – When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code> will be raised
+when the certificate does not exist.
+When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, no exception will be set when attempting to
+delete a nonexistent certificate.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_certificate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">certificate</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Get a single certificate</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>certificate</strong> – The value can be the ID of a ELB certificate or a
+<a class="reference internal" href="../resources/vlb/v3/certificate.html#otcextensions.sdk.vlb.v3.certificate.Certificate" title="otcextensions.sdk.vlb.v3.certificate.Certificate"><code class="xref py py-class docutils literal notranslate"><span class="pre">Certificate</span></code></a>
+instance.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>One :class:
+<cite>~otcextensions.sdk.vlb.v3.certificate.Certificate</cite></p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code>
+when no resource can be found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">update_certificate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">certificate</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Update a certificate</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>certificate</strong> – The value can be either the ID of a ELB certificate
+or a <a class="reference internal" href="../resources/vlb/v3/certificate.html#otcextensions.sdk.vlb.v3.certificate.Certificate" title="otcextensions.sdk.vlb.v3.certificate.Certificate"><code class="xref py py-class docutils literal notranslate"><span class="pre">Certificate</span></code></a>
+instance.</p></li>
+<li><p><strong>attrs</strong> (<em>dict</em>) – The attributes to update on the certificate
+represented by <code class="docutils literal notranslate"><span class="pre">certificate</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The updated certificate.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Certificate</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">find_certificate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_or_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Find a single certificate</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name_or_id</strong> – The name or ID of a ELB certificate</p></li>
+<li><p><strong>ignore_missing</strong> (<em>bool</em>) – When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code> will be raised
+when the certificate does not exist.
+When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, no exception will be set when attempting
+to find a nonexistent certificate.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>One <a class="reference internal" href="../resources/vlb/v3/certificate.html#otcextensions.sdk.vlb.v3.certificate.Certificate" title="otcextensions.sdk.vlb.v3.certificate.Certificate"><code class="xref py py-class docutils literal notranslate"><span class="pre">Certificate</span></code></a>
+or <code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="flavor-operations">
+<h3>Flavor Operations<a class="headerlink" href="#flavor-operations" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">otcextensions.sdk.vlb.v3._proxy.</span></span><span class="sig-name descname"><span class="pre">Proxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">statsd_client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">statsd_prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prometheus_counter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prometheus_histogram</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">influxdb_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">influxdb_client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">flavors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>List all load balancer flavors that are
+available to a specific user in a specific region.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>engine_name</strong> – database engine name</p></li>
+<li><p><strong>region</strong> – region</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A generator of flavor</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../resources/vlb/v3/flavor.html#otcextensions.sdk.vlb.v3.flavor.Flavor" title="otcextensions.sdk.vlb.v3.flavor.Flavor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Flavor</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_flavor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">flavor</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Get a single flavor</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>flavor</strong> – The value can be either the ID of an flavor or a
+<a class="reference internal" href="../resources/vlb/v3/flavor.html#otcextensions.sdk.vlb.v3.flavor.Flavor" title="otcextensions.sdk.vlb.v3.flavor.Flavor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Flavor</span></code></a>.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>One <a class="reference internal" href="../resources/vlb/v3/flavor.html#otcextensions.sdk.vlb.v3.flavor.Flavor" title="otcextensions.sdk.vlb.v3.flavor.Flavor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Flavor</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">find_flavor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_or_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Find a single flavor</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name_or_id</strong> – The name or ID of a flavor</p></li>
+<li><p><strong>ignore_missing</strong> (<em>bool</em>) – When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code> will be raised
+when the flavor does not exist.
+When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, no exception will be set when attempting
+to delete a nonexistent flavor.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="healthmonitor-operations">
+<h3>HealthMonitor Operations<a class="headerlink" href="#healthmonitor-operations" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">otcextensions.sdk.vlb.v3._proxy.</span></span><span class="sig-name descname"><span class="pre">Proxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">statsd_client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">statsd_prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prometheus_counter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prometheus_histogram</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">influxdb_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">influxdb_client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">find_health_monitor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_or_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Find a single health monitor</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name_or_id</strong> (<em>str</em>) – The name or ID of a health monitor.</p></li>
+<li><p><strong>ignore_missing</strong> (<em>bool</em>) – When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code> will be
+raised when the resource does not exist.
+When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, None will be returned when
+attempting to find a nonexistent resource.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>One
+<code class="xref py py-class docutils literal notranslate"><span class="pre">HealthMonitor</span></code>
+or None</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">openstack.exceptions.DuplicateResource</span></code> if more
+than one resource is found for this request.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">openstack.exceptions.ResourceNotFound</span></code> if nothing
+is found and ignore_missing is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">create_health_monitor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Create a new health monitor from attributes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>attrs</strong> (<em>dict</em>) – Keyword arguments which will be used to create
+a <code class="xref py py-class docutils literal notranslate"><span class="pre">HealthMonitor</span></code>,
+comprised of the properties on the Member class.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The results of health monitor creation</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">HealthMonitor</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_health_monitor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">healthmonitor</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Get a single health monitor</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>healthmonitor</strong> – The value can be the ID of a health monitor or a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">HealthMonitor</span></code>
+instance.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>One
+<code class="xref py py-class docutils literal notranslate"><span class="pre">HealthMonitor</span></code></p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code>
+when no resource can be found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">health_monitors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Return a generator of health monitors</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>query</strong> (<em>dict</em>) – Optional query parameters to be sent to limit
+the resources being returned.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A generator of health monitor objects</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">HealthMonitor</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">delete_health_monitor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">healthmonitor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Delete a health monitor</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>healthmonitor</strong> – The value can be either the ID of a health monitor or a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">HealthMonitor</span></code>
+instance.</p></li>
+<li><p><strong>ignore_missing</strong> (<em>bool</em>) – When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code> will be
+raised when the member does not exist.
+When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, no exception will be set when
+attempting to delete a nonexistent health monitor.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">update_health_monitor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">healthmonitor</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Update a health monitor</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>healthmonitor</strong> – The healthmonitor can be either the ID of the
+health monitor or a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">HealthMonitor</span></code>
+instance</p></li>
+<li><p><strong>attrs</strong> (<em>dict</em>) – The attributes to update on the health monitor
+represented by <code class="docutils literal notranslate"><span class="pre">healthmonitor</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The updated health monitor</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">HealthMonitor</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="l7policy-operations">
+<h3>L7Policy Operations<a class="headerlink" href="#l7policy-operations" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">otcextensions.sdk.vlb.v3._proxy.</span></span><span class="sig-name descname"><span class="pre">Proxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">statsd_client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">statsd_prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prometheus_counter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prometheus_histogram</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">influxdb_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">influxdb_client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">create_l7_policy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Create a new l7policy from attributes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>attrs</strong> (<em>dict</em>) – Keyword arguments which will be used to create
+a <a class="reference internal" href="../resources/vlb/v3/l7_policy.html#otcextensions.sdk.vlb.v3.l7_policy.L7Policy" title="otcextensions.sdk.vlb.v3.l7_policy.L7Policy"><code class="xref py py-class docutils literal notranslate"><span class="pre">L7Policy</span></code></a>,
+comprised of the properties on the L7Policy class.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The results of l7policy creation</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../resources/vlb/v3/l7_policy.html#otcextensions.sdk.vlb.v3.l7_policy.L7Policy" title="otcextensions.sdk.vlb.v3.l7_policy.L7Policy"><code class="xref py py-class docutils literal notranslate"><span class="pre">L7Policy</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">delete_l7_policy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">l7_policy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Delete a l7policy</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>l7_policy</strong> – The value can be either the ID of a l7policy or a
+<a class="reference internal" href="../resources/vlb/v3/l7_policy.html#otcextensions.sdk.vlb.v3.l7_policy.L7Policy" title="otcextensions.sdk.vlb.v3.l7_policy.L7Policy"><code class="xref py py-class docutils literal notranslate"><span class="pre">L7Policy</span></code></a>
+instance.</p></li>
+<li><p><strong>ignore_missing</strong> (<em>bool</em>) – When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code> will be
+raised when the l7policy does not exist.
+When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, no exception will be set when
+attempting to delete a nonexistent l7policy.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">find_l7_policy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_or_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Find a single l7policy</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name_or_id</strong> (<em>str</em>) – The name or ID of a l7policy.</p></li>
+<li><p><strong>ignore_missing</strong> (<em>bool</em>) – When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code> will be
+raised when the resource does not exist.
+When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, None will be returned when
+attempting to find a nonexistent resource.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>One
+<a class="reference internal" href="../resources/vlb/v3/l7_policy.html#otcextensions.sdk.vlb.v3.l7_policy.L7Policy" title="otcextensions.sdk.vlb.v3.l7_policy.L7Policy"><code class="xref py py-class docutils literal notranslate"><span class="pre">L7Policy</span></code></a>
+or None</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">openstack.exceptions.DuplicateResource</span></code> if more
+than one resource is found for this request.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">openstack.exceptions.ResourceNotFound</span></code> if nothing
+is found and ignore_missing is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_l7_policy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">l7_policy</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Get a single l7policy</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>healthmonitor</strong> – The value can be the ID of a l7policy or a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">L7Policy</span></code>
+instance.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>One
+<a class="reference internal" href="../resources/vlb/v3/l7_policy.html#otcextensions.sdk.vlb.v3.l7_policy.L7Policy" title="otcextensions.sdk.vlb.v3.l7_policy.L7Policy"><code class="xref py py-class docutils literal notranslate"><span class="pre">L7Policy</span></code></a></p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code>
+when no resource can be found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">l7_policies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Return a generator of l7policies</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>query</strong> (<em>dict</em>) – Optional query parameters to be sent to limit
+the resources being returned.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A generator of l7policies objects</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../resources/vlb/v3/l7_policy.html#otcextensions.sdk.vlb.v3.l7_policy.L7Policy" title="otcextensions.sdk.vlb.v3.l7_policy.L7Policy"><code class="xref py py-class docutils literal notranslate"><span class="pre">L7Policy</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">update_l7_policy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">l7_policy</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Update a l7policy</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>l7_policy</strong> – The l7policy can be either the ID of the
+l7policy or a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">L7Policy</span></code>
+instance</p></li>
+<li><p><strong>attrs</strong> (<em>dict</em>) – The attributes to update on the l7policy
+represented by <code class="docutils literal notranslate"><span class="pre">L7policy</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The updated l7policy</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../resources/vlb/v3/l7_policy.html#otcextensions.sdk.vlb.v3.l7_policy.L7Policy" title="otcextensions.sdk.vlb.v3.l7_policy.L7Policy"><code class="xref py py-class docutils literal notranslate"><span class="pre">L7Policy</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="l7rule-operations">
+<h3>L7Rule Operations<a class="headerlink" href="#l7rule-operations" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">otcextensions.sdk.vlb.v3._proxy.</span></span><span class="sig-name descname"><span class="pre">Proxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">statsd_client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">statsd_prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prometheus_counter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prometheus_histogram</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">influxdb_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">influxdb_client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">create_l7_rule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">l7_policy</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Create a new l7rule from attributes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>l7_policy</strong> – The l7_policy can be either the ID of a l7policy or
+<a class="reference internal" href="../resources/vlb/v3/l7_policy.html#otcextensions.sdk.vlb.v3.l7_policy.L7Policy" title="otcextensions.sdk.vlb.v3.l7_policy.L7Policy"><code class="xref py py-class docutils literal notranslate"><span class="pre">L7Policy</span></code></a>
+instance that the l7rule will be created in.</p></li>
+<li><p><strong>attrs</strong> (<em>dict</em>) – Keyword arguments which will be used to create
+a <a class="reference internal" href="../resources/vlb/v3/l7_rule.html#otcextensions.sdk.vlb.v3.l7_rule.L7Rule" title="otcextensions.sdk.vlb.v3.l7_rule.L7Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">L7Rule</span></code></a>,
+comprised of the properties on the L7Rule class.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The results of l7rule creation</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../resources/vlb/v3/l7_rule.html#otcextensions.sdk.vlb.v3.l7_rule.L7Rule" title="otcextensions.sdk.vlb.v3.l7_rule.L7Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">L7Rule</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">delete_l7_rule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">l7rule</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l7_policy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Delete a l7rule</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>l7rule</strong> – The l7rule can be either the ID of a l7rule or a
+<a class="reference internal" href="../resources/vlb/v3/l7_rule.html#otcextensions.sdk.vlb.v3.l7_rule.L7Rule" title="otcextensions.sdk.vlb.v3.l7_rule.L7Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">L7Rule</span></code></a> instance.</p></li>
+<li><p><strong>l7_policy</strong> – The l7_policy can be either the ID of a l7policy or
+<a class="reference internal" href="../resources/vlb/v3/l7_policy.html#otcextensions.sdk.vlb.v3.l7_policy.L7Policy" title="otcextensions.sdk.vlb.v3.l7_policy.L7Policy"><code class="xref py py-class docutils literal notranslate"><span class="pre">L7Policy</span></code></a>
+instance that the l7rule belongs to.</p></li>
+<li><p><strong>ignore_missing</strong> (<em>bool</em>) – When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code> will be
+raised when the l7rule does not exist.
+When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, no exception will be set when
+attempting to delete a nonexistent l7rule.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">find_l7_rule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_or_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l7_policy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Find a single l7rule</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name_or_id</strong> (<em>str</em>) – The name or ID of a l7rule.</p></li>
+<li><p><strong>l7_policy</strong> – The l7_policy can be either the ID of a l7policy or
+<a class="reference internal" href="../resources/vlb/v3/l7_policy.html#otcextensions.sdk.vlb.v3.l7_policy.L7Policy" title="otcextensions.sdk.vlb.v3.l7_policy.L7Policy"><code class="xref py py-class docutils literal notranslate"><span class="pre">L7Policy</span></code></a>
+instance that the l7rule belongs to.</p></li>
+<li><p><strong>ignore_missing</strong> (<em>bool</em>) – When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code> will be
+raised when the resource does not exist.
+When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, None will be returned when
+attempting to find a nonexistent resource.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>One <a class="reference internal" href="../resources/vlb/v3/l7_rule.html#otcextensions.sdk.vlb.v3.l7_rule.L7Rule" title="otcextensions.sdk.vlb.v3.l7_rule.L7Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">L7Rule</span></code></a>
+or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_l7_rule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">l7rule</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l7_policy</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Get a single l7rule</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>l7rule</strong> – The l7rule can be the ID of a l7rule or a
+<a class="reference internal" href="../resources/vlb/v3/l7_rule.html#otcextensions.sdk.vlb.v3.l7_rule.L7Rule" title="otcextensions.sdk.vlb.v3.l7_rule.L7Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">L7Rule</span></code></a>
+instance.</p></li>
+<li><p><strong>l7_policy</strong> – The l7_policy can be either the ID of a l7policy or
+<a class="reference internal" href="../resources/vlb/v3/l7_policy.html#otcextensions.sdk.vlb.v3.l7_policy.L7Policy" title="otcextensions.sdk.vlb.v3.l7_policy.L7Policy"><code class="xref py py-class docutils literal notranslate"><span class="pre">L7Policy</span></code></a>
+instance that the l7rule belongs to.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>One <a class="reference internal" href="../resources/vlb/v3/l7_rule.html#otcextensions.sdk.vlb.v3.l7_rule.L7Rule" title="otcextensions.sdk.vlb.v3.l7_rule.L7Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">L7Rule</span></code></a></p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code>
+when no resource can be found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">l7_rules</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">l7_policy</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Return a generator of l7rules</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>l7_policy</strong> – The l7_policy can be either the ID of a l7_policy or
+<a class="reference internal" href="../resources/vlb/v3/l7_policy.html#otcextensions.sdk.vlb.v3.l7_policy.L7Policy" title="otcextensions.sdk.vlb.v3.l7_policy.L7Policy"><code class="xref py py-class docutils literal notranslate"><span class="pre">L7Policy</span></code></a>
+instance that the l7rule belongs to.</p></li>
+<li><p><strong>query</strong> (<em>dict</em>) – Optional query parameters to be sent to limit
+the resources being returned. Valid parameters are:</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A generator of l7rule objects</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../resources/vlb/v3/l7_rule.html#otcextensions.sdk.vlb.v3.l7_rule.L7Rule" title="otcextensions.sdk.vlb.v3.l7_rule.L7Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">L7Rule</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">update_l7_rule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">l7rule</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l7_policy</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Update a l7rule</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>l7rule</strong> – Either the ID of a l7rule or a
+<a class="reference internal" href="../resources/vlb/v3/l7_rule.html#otcextensions.sdk.vlb.v3.l7_rule.L7Rule" title="otcextensions.sdk.vlb.v3.l7_rule.L7Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">L7Rule</span></code></a>
+instance.</p></li>
+<li><p><strong>l7_policy</strong> – The l7_policy can be either the ID of a l7policy or
+<a class="reference internal" href="../resources/vlb/v3/l7_policy.html#otcextensions.sdk.vlb.v3.l7_policy.L7Policy" title="otcextensions.sdk.vlb.v3.l7_policy.L7Policy"><code class="xref py py-class docutils literal notranslate"><span class="pre">L7Policy</span></code></a>
+instance that the l7rule belongs to.</p></li>
+<li><p><strong>attrs</strong> (<em>dict</em>) – The attributes to update on the l7rule
+represented by <code class="docutils literal notranslate"><span class="pre">l7rule</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The updated l7rule</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../resources/vlb/v3/l7_rule.html#otcextensions.sdk.vlb.v3.l7_rule.L7Rule" title="otcextensions.sdk.vlb.v3.l7_rule.L7Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">L7Rule</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="listener-operations">
+<h3>Listener Operations<a class="headerlink" href="#listener-operations" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">otcextensions.sdk.vlb.v3._proxy.</span></span><span class="sig-name descname"><span class="pre">Proxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">statsd_client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">statsd_prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prometheus_counter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prometheus_histogram</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">influxdb_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">influxdb_client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">create_listener</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Create a new listener from attributes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>attrs</strong> (<em>dict</em>) – Keyword arguments which will be used to create
+a <code class="xref py py-class docutils literal notranslate"><span class="pre">Listener</span></code>, comprised of the properties on the
+Listener class.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The results of listener creation</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../resources/vlb/v3/listener.html#otcextensions.sdk.vlb.v3.listener.Listener" title="otcextensions.sdk.vlb.v3.listener.Listener"><code class="xref py py-class docutils literal notranslate"><span class="pre">Listener</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">delete_listener</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">listener</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Delete a listener</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>listener</strong> – The value can be either the ID of a listner or a
+<a class="reference internal" href="../resources/vlb/v3/listener.html#otcextensions.sdk.vlb.v3.listener.Listener" title="otcextensions.sdk.vlb.v3.listener.Listener"><code class="xref py py-class docutils literal notranslate"><span class="pre">Listener</span></code></a> instance.</p></li>
+<li><p><strong>ignore_missing</strong> (<em>bool</em>) – When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code> will be
+raised when the listner does not exist.
+When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, no exception will be set when
+attempting to delete a nonexistent listener.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">update_listener</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">listener</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Update a listener</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>listener</strong> – Either the id of a listener or a
+<a class="reference internal" href="../resources/vlb/v3/listener.html#otcextensions.sdk.vlb.v3.listener.Listener" title="otcextensions.sdk.vlb.v3.listener.Listener"><code class="xref py py-class docutils literal notranslate"><span class="pre">Listener</span></code></a>
+instance.</p></li>
+<li><p><strong>attrs</strong> (<em>dict</em>) – The attributes to update on the listener
+represented by <code class="docutils literal notranslate"><span class="pre">listener</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The updated listener</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../resources/vlb/v3/listener.html#otcextensions.sdk.vlb.v3.listener.Listener" title="otcextensions.sdk.vlb.v3.listener.Listener"><code class="xref py py-class docutils literal notranslate"><span class="pre">Listener</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">find_listener</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_or_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Find a single listener</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name_or_id</strong> – The name or ID of a listener.</p></li>
+<li><p><strong>ignore_missing</strong> (<em>bool</em>) – When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code> will be
+raised when the resource does not exist.
+When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, None will be returned when
+attempting to find a nonexistent resource.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>One <a class="reference internal" href="../resources/vlb/v3/listener.html#otcextensions.sdk.vlb.v3.listener.Listener" title="otcextensions.sdk.vlb.v3.listener.Listener"><code class="xref py py-class docutils literal notranslate"><span class="pre">Listener</span></code></a>
+or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_listener</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">listener</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Get a single listener</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>listener</strong> – The value can be the ID of a listener or a
+<a class="reference internal" href="../resources/vlb/v3/listener.html#otcextensions.sdk.vlb.v3.listener.Listener" title="otcextensions.sdk.vlb.v3.listener.Listener"><code class="xref py py-class docutils literal notranslate"><span class="pre">Listener</span></code></a>
+instance.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>One <a class="reference internal" href="../resources/vlb/v3/listener.html#otcextensions.sdk.vlb.v3.listener.Listener" title="otcextensions.sdk.vlb.v3.listener.Listener"><code class="xref py py-class docutils literal notranslate"><span class="pre">Listener</span></code></a></p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code>
+when no resource can be found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">listeners</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Retrieve a generator of listeners</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A generator of listeners instances</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="../resources/vlb/v3/listener.html#otcextensions.sdk.vlb.v3.listener.Listener" title="otcextensions.sdk.vlb.v3.listener.Listener"><code class="xref py py-class docutils literal notranslate"><span class="pre">Listener</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="loadbalancer-operations">
+<h3>LoadBalancer Operations<a class="headerlink" href="#loadbalancer-operations" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">otcextensions.sdk.vlb.v3._proxy.</span></span><span class="sig-name descname"><span class="pre">Proxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">statsd_client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">statsd_prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prometheus_counter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prometheus_histogram</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">influxdb_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">influxdb_client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">create_load_balancer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Create a new load balancer from attributes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>attrs</strong> (<em>dict</em>) – Keyword arguments which will be used to create
+a <code class="xref py py-class docutils literal notranslate"><span class="pre">LoadBalancer</span></code>, comprised of the properties on the
+LoadBalancer class.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The results of load balancer creation</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../resources/vlb/v3/load_balancer.html#otcextensions.sdk.vlb.v3.load_balancer.LoadBalancer" title="otcextensions.sdk.vlb.v3.load_balancer.LoadBalancer"><code class="xref py py-class docutils literal notranslate"><span class="pre">LoadBalancer</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_load_balancer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Get a load balancer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>load_balancer</strong> – The value can be the name of a load balancer
+or <a class="reference internal" href="../resources/vlb/v3/load_balancer.html#otcextensions.sdk.vlb.v3.load_balancer.LoadBalancer" title="otcextensions.sdk.vlb.v3.load_balancer.LoadBalancer"><code class="xref py py-class docutils literal notranslate"><span class="pre">LoadBalancer</span></code></a>
+instance.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>One
+<a class="reference internal" href="../resources/vlb/v3/load_balancer.html#otcextensions.sdk.vlb.v3.load_balancer.LoadBalancer" title="otcextensions.sdk.vlb.v3.load_balancer.LoadBalancer"><code class="xref py py-class docutils literal notranslate"><span class="pre">LoadBalancer</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_load_balancer_statistics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_or_id</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Get the load balancer statistics</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name_or_id</strong> – The name or ID of a load balancer</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>One <code class="xref py py-class docutils literal notranslate">
+<span class="pre">LoadBalancerStats</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">load_balancers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Retrieve a generator of load balancers</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A generator of load balancer instances</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">delete_load_balancer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">load_balancer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Delete a load balancer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>load_balancer</strong> – The load_balancer can be either the name or a
+<a class="reference internal" href="../resources/vlb/v3/load_balancer.html#otcextensions.sdk.vlb.v3.load_balancer.LoadBalancer" title="otcextensions.sdk.vlb.v3.load_balancer.LoadBalancer"><code class="xref py py-class docutils literal notranslate"><span class="pre">LoadBalancer</span></code></a>
+instance</p></li>
+<li><p><strong>ignore_missing</strong> (<em>bool</em>) – When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code> will be raised when
+the load balancer does not exist.
+When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, no exception will be set when attempting to
+delete a nonexistent load balancer.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">find_load_balancer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_or_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Find a single load balancer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name_or_id</strong> – The name or ID of a load balancer</p></li>
+<li><p><strong>ignore_missing</strong> (<em>bool</em>) – When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code> will be raised
+when the load balancer does not exist.
+When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, no exception will be set when attempting
+to delete a nonexistent load balancer.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">update_load_balancer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">load_balancer</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Update a load balancer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>load_balancer</strong> – The load_balancer can be either the name or a
+<a class="reference internal" href="../resources/vlb/v3/load_balancer.html#otcextensions.sdk.vlb.v3.load_balancer.LoadBalancer" title="otcextensions.sdk.vlb.v3.load_balancer.LoadBalancer"><code class="xref py py-class docutils literal notranslate"><span class="pre">LoadBalancer</span></code></a>
+instance</p></li>
+<li><p><strong>attrs</strong> (<em>dict</em>) – The attributes to update on the load balancer
+represented by <code class="docutils literal notranslate"><span class="pre">load_balancer</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The updated load_balancer</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../resources/vlb/v3/load_balancer.html#otcextensions.sdk.vlb.v3.load_balancer.LoadBalancer" title="otcextensions.sdk.vlb.v3.load_balancer.LoadBalancer"><code class="xref py py-class docutils literal notranslate"><span class="pre">LoadBalancer</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="member-operations">
+<h3>Member Operations<a class="headerlink" href="#member-operations" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">otcextensions.sdk.vlb.v3._proxy.</span></span><span class="sig-name descname"><span class="pre">Proxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">statsd_client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">statsd_prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prometheus_counter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prometheus_histogram</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">influxdb_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">influxdb_client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">create_member</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pool</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Create a new member from attributes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pool</strong> – The pool can be either the ID of a pool or a
+<a class="reference internal" href="../resources/vlb/v3/pool.html#otcextensions.sdk.vlb.v3.pool.Pool" title="otcextensions.sdk.vlb.v3.pool.Pool"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pool</span></code></a> instance
+that the member will be created in.</p></li>
+<li><p><strong>attrs</strong> (<em>dict</em>) – Keyword arguments which will be used to create
+a <a class="reference internal" href="../resources/vlb/v3/member.html#otcextensions.sdk.vlb.v3.member.Member" title="otcextensions.sdk.vlb.v3.member.Member"><code class="xref py py-class docutils literal notranslate"><span class="pre">Member</span></code></a>,
+comprised of the properties on the Member class.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The results of member creation</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../resources/vlb/v3/member.html#otcextensions.sdk.vlb.v3.member.Member" title="otcextensions.sdk.vlb.v3.member.Member"><code class="xref py py-class docutils literal notranslate"><span class="pre">Member</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">delete_member</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">member</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Delete a member</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>member</strong> – The member can be either the ID of a member or a
+<a class="reference internal" href="../resources/vlb/v3/member.html#otcextensions.sdk.vlb.v3.member.Member" title="otcextensions.sdk.vlb.v3.member.Member"><code class="xref py py-class docutils literal notranslate"><span class="pre">Member</span></code></a> instance.</p></li>
+<li><p><strong>pool</strong> – The pool can be either the ID of a pool or a
+<a class="reference internal" href="../resources/vlb/v3/pool.html#otcextensions.sdk.vlb.v3.pool.Pool" title="otcextensions.sdk.vlb.v3.pool.Pool"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pool</span></code></a> instance
+that the member belongs to.</p></li>
+<li><p><strong>ignore_missing</strong> (<em>bool</em>) – When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code> will be
+raised when the member does not exist.
+When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, no exception will be set when
+attempting to delete a nonexistent member.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">find_member</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_or_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Find a single member</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name_or_id</strong> (<em>str</em>) – The name or ID of a member.</p></li>
+<li><p><strong>pool</strong> – The pool can be either the ID of a pool or a
+<a class="reference internal" href="../resources/vlb/v3/pool.html#otcextensions.sdk.vlb.v3.pool.Pool" title="otcextensions.sdk.vlb.v3.pool.Pool"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pool</span></code></a> instance
+that the member belongs to.</p></li>
+<li><p><strong>ignore_missing</strong> (<em>bool</em>) – When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code> will be
+raised when the resource does not exist.
+When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, None will be returned when
+attempting to find a nonexistent resource.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>One <a class="reference internal" href="../resources/vlb/v3/member.html#otcextensions.sdk.vlb.v3.member.Member" title="otcextensions.sdk.vlb.v3.member.Member"><code class="xref py py-class docutils literal notranslate"><span class="pre">Member</span></code></a>
+or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_member</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">member</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pool</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Get a single member</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>member</strong> – The member can be the ID of a member or a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Member</span></code>
+instance.</p></li>
+<li><p><strong>pool</strong> – The pool can be either the ID of a pool or a
+<a class="reference internal" href="../resources/vlb/v3/pool.html#otcextensions.sdk.vlb.v3.pool.Pool" title="otcextensions.sdk.vlb.v3.pool.Pool"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pool</span></code></a> instance
+that the member belongs to.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>One <a class="reference internal" href="../resources/vlb/v3/member.html#otcextensions.sdk.vlb.v3.member.Member" title="otcextensions.sdk.vlb.v3.member.Member"><code class="xref py py-class docutils literal notranslate"><span class="pre">Member</span></code></a></p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code>
+when no resource can be found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">members</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pool</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Return a generator of members</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pool</strong> – The pool can be either the ID of a pool or a
+<a class="reference internal" href="../resources/vlb/v3/pool.html#otcextensions.sdk.vlb.v3.pool.Pool" title="otcextensions.sdk.vlb.v3.pool.Pool"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pool</span></code></a> instance
+that the member belongs to.</p></li>
+<li><p><strong>query</strong> (<em>dict</em>) – Optional query parameters to be sent to limit
+the resources being returned.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A generator of member objects</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../resources/vlb/v3/member.html#otcextensions.sdk.vlb.v3.member.Member" title="otcextensions.sdk.vlb.v3.member.Member"><code class="xref py py-class docutils literal notranslate"><span class="pre">Member</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">update_member</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">member</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pool</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Update a member</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>member</strong> – Either the ID of a member or a
+<a class="reference internal" href="../resources/vlb/v3/member.html#otcextensions.sdk.vlb.v3.member.Member" title="otcextensions.sdk.vlb.v3.member.Member"><code class="xref py py-class docutils literal notranslate"><span class="pre">Member</span></code></a>
+instance.</p></li>
+<li><p><strong>pool</strong> – The pool can be either the ID of a pool or a
+<a class="reference internal" href="../resources/vlb/v3/pool.html#otcextensions.sdk.vlb.v3.pool.Pool" title="otcextensions.sdk.vlb.v3.pool.Pool"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pool</span></code></a> instance
+that the member belongs to.</p></li>
+<li><p><strong>attrs</strong> (<em>dict</em>) – The attributes to update on the member
+represented by <code class="docutils literal notranslate"><span class="pre">member</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The updated member</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../resources/vlb/v3/member.html#otcextensions.sdk.vlb.v3.member.Member" title="otcextensions.sdk.vlb.v3.member.Member"><code class="xref py py-class docutils literal notranslate"><span class="pre">Member</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="pool-operations">
+<h3>Pool Operations<a class="headerlink" href="#pool-operations" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">otcextensions.sdk.vlb.v3._proxy.</span></span><span class="sig-name descname"><span class="pre">Proxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">statsd_client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">statsd_prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prometheus_counter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prometheus_histogram</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">influxdb_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">influxdb_client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">create_pool</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Create a new pool from attributes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>attrs</strong> (<em>dict</em>) – Keyword arguments which will be used to create
+a <a class="reference internal" href="../resources/vlb/v3/pool.html#otcextensions.sdk.vlb.v3.pool.Pool" title="otcextensions.sdk.vlb.v3.pool.Pool"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pool</span></code></a>,
+comprised of the properties on the Pool class.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The results of the Pool Creation</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../resources/vlb/v3/pool.html#otcextensions.sdk.vlb.v3.pool.Pool" title="otcextensions.sdk.vlb.v3.pool.Pool"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pool</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_pool</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Get a single pool</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>attrs</strong> (<em>dict</em>) – Keyword arguments which will be used to get a
+<a class="reference internal" href="../resources/vlb/v3/pool.html#otcextensions.sdk.vlb.v3.pool.Pool" title="otcextensions.sdk.vlb.v3.pool.Pool"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pool</span></code></a>
+instance.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>One :class:
+<cite>~otcextensions.sdk.vlb.v3.pool.Pool</cite></p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code>
+when no resource can be found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">pools</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Return a generator of pool</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>query</strong> (<em>dict</em>) – Optional query parameters to be sent to limit
+the resources being returned.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A generator of pools objects.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">delete_pool</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Delete a pool</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pool</strong> – The value can be the ID of a ELB pool or a
+<a class="reference internal" href="../resources/vlb/v3/pool.html#otcextensions.sdk.vlb.v3.pool.Pool" title="otcextensions.sdk.vlb.v3.pool.Pool"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pool</span></code></a>
+instance.</p></li>
+<li><p><strong>ignore_missing</strong> (<em>bool</em>) – When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code> will be raised
+when the pool does not exist.
+When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, no exception will be set when attempting to
+delete a nonexistent pool.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">find_pool</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_or_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Find a single pool</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name_or_id</strong> – The name or ID of a pool</p></li>
+<li><p><strong>ignore_missing</strong> (<em>bool</em>) – When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code> will be raised
+when the pool does not exist.
+When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, no exception will be set when attempting
+to delete a nonexistent pool.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">update_pool</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pool</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Update a pool</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pool</strong> – The value can be either the ID of a ELB pool
+or a <a class="reference internal" href="../resources/vlb/v3/pool.html#otcextensions.sdk.vlb.v3.pool.Pool" title="otcextensions.sdk.vlb.v3.pool.Pool"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pool</span></code></a>
+instance.</p></li>
+<li><p><strong>attrs</strong> (<em>dict</em>) – The attributes to update on the pool
+represented by <code class="docutils literal notranslate"><span class="pre">pool</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The updated pool.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Pool</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="quota-operations">
+<h3>Quota Operations<a class="headerlink" href="#quota-operations" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">otcextensions.sdk.vlb.v3._proxy.</span></span><span class="sig-name descname"><span class="pre">Proxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">statsd_client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">statsd_prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prometheus_counter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prometheus_histogram</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">influxdb_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">influxdb_client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_quotas</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Retrieve a quotas</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A quota instance</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="../resources/vlb/v3/quota.html#otcextensions.sdk.vlb.v3.quota.Quota" title="otcextensions.sdk.vlb.v3.quota.Quota"><code class="xref py py-class docutils literal notranslate"><span class="pre">Quota</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+                </div>
+              </div>
+            </div>
+            <div class="docs-actions">
+            
+              <a href="deh.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: DeH API"></i></a>
+            
+            
+              <a href="dms.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: DMS API"></i></a>
+            
+            </div>
+            <div class="row docs-byline bottom">
+              <div class="docs-updated">updated: 2021-12-08 13:15</div>
+            </div>
+          </div>
+  <div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 docs-sidebar">
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <a href="../../index.html" class="docs-sidebar-section-title"><h4>otcextensions 0.24.3.dev2</h4></a>
+      <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../install/index.html">1. Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../install/configuration.html">2. Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cli/index.html">3. OpenStack Client (CLI)</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">4. Using the OpenStack SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../architecture.html">Architecture Overview and Important Terms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guides/index.html">Guides for SDK</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Service Proxies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../resources/index.html">Resources and Attributes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributor/index.html">5. Contributing to the OTC Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../coverage.html">6. Service Coverage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendices/index.html">7. Appendices</a></li>
+</ul>
+
+    </div>
+
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="local-table-of-contents">
+      <h4 class="docs-sidebar-section-title">Page Contents</h4>
+      <ul>
+<li><a class="reference internal" href="#">DLB v3 API</a><ul>
+<li><a class="reference internal" href="#the-vlb-class">The VLB Class</a><ul>
+<li><a class="reference internal" href="#availabilityzone-operations">AvailabilityZone Operations</a></li>
+<li><a class="reference internal" href="#certificate-operations">Certificate Operations</a></li>
+<li><a class="reference internal" href="#flavor-operations">Flavor Operations</a></li>
+<li><a class="reference internal" href="#healthmonitor-operations">HealthMonitor Operations</a></li>
+<li><a class="reference internal" href="#l7policy-operations">L7Policy Operations</a></li>
+<li><a class="reference internal" href="#l7rule-operations">L7Rule Operations</a></li>
+<li><a class="reference internal" href="#listener-operations">Listener Operations</a></li>
+<li><a class="reference internal" href="#loadbalancer-operations">LoadBalancer Operations</a></li>
+<li><a class="reference internal" href="#member-operations">Member Operations</a></li>
+<li><a class="reference internal" href="#pool-operations">Pool Operations</a></li>
+<li><a class="reference internal" href="#quota-operations">Quota Operations</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+  </div>
+</div>
+        </div>
+      </div>
+  </scale-app-shell>
+<scale-app-footer id="footer-shell" variant="standard" claim-lang="en">
+</scale-app-footer>
+<script>
+  const footer_shell = document.getElementById("footer-shell");
+  footer_shell.footerNavigation = [{"name":"Contact","id":"Contact","href":"https://cloud.telekom.de/en/contact/"},{"name":"Legal notice","id":"Legal notice","href":"https://cloud.telekom.de/en/imprint-adress"},{"name":"Data privacy","id":"Data privacy","href":"https://open-telekom-cloud.com/en/data-protection","icon":"alert-imprint-dataprivacy"}]</script>
+  <!-- jQuery -->
+<script type="text/javascript" src="../../_static/js/jquery-3.2.1.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script type="text/javascript" src="../../_static/js/bootstrap.min.js"></script>
+
+<!-- Telekom Scale -->
+<script type="module" src="https://unpkg.com/@telekom/scale-components@3.0.0-beta.32/dist/scale-components/scale-components.esm.js"></script>
+
+<!-- The rest of the JS -->
+<script type="text/javascript" src="../../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script type="text/javascript" src="../../_static/js/docs.js"></script>
+
+<!-- Popovers -->
+<script type="text/javascript" src="../../_static/js/webui-popover.js"></script>
+
+<!-- standard sphinx include libraries, which allow search highlighting -->
+<script type="text/javascript" src="../../_static/underscore.js"></script>
+<script type="text/javascript" src="../../_static/doctools.js"></script>
+<script type="text/javascript" src="../../_static/searchtools.js"></script>
+
+<script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.24.3.dev2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+</script>
+
+
+<!-- Javascript for page -->
+<script language="JavaScript">
+/* build a description of this page including SHA, source location on git repo,
+   build time and the project's launchpad bug tag. Set the HREF of the bug
+   buttons */
+</script>
+  
+  </body>
+</html>

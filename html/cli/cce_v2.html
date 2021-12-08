@@ -1,0 +1,785 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Cloud Container Engine (CCE) &#8212; otcextensions 0.24.3.dev2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/basic.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Cloud Eye Service (CES)" href="ces.html" />
+    <link rel="prev" title="Cloud Backup and Recovery (CBR)" href="cbr.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap CSS -->
+<link href="../_static/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../_static/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="../_static/css/combined.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../_static/pygments.css" rel="stylesheet">
+
+<!-- Telekom Scale -->
+<link href="https://unpkg.com/@telekom/scale-components@3.0.0-beta.32/dist/scale-components/scale-components.css" rel="stylesheet">
+
+<!-- Otcdocstheme CSS -->
+<link href="../_static/css/otcdocstheme.css" rel="stylesheet">
+
+
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-17511903-1', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+  </head><body>
+  
+<!-- SOURCE_FILE: cli/cce_v2.rst -->
+
+
+<scale-app-shell
+  id="app-shell"
+  claim-lang="en"
+  logo-title="PAGENAME"
+  logo-href="/"
+>
+
+
+
+<script>
+  const app_shell = document.getElementById(
+  'app-shell');
+  app_shell.mainNavigation = [
+    {
+      "name": "Software",
+      "id": "Software",
+      "children": [
+        {
+          "name": "Automation",
+          "id": "Automation",
+          "children": [
+            {
+              "name": "Terraform OTC Driver",
+              "id": "Terraform OTC Driver",
+              "href": "https://docs.otc-service.com/terraform-provider-opentelekomcloud"
+            },
+                      {
+              "name": "Ansible Collection Cloud",
+              "id": "Ansible Collection Cloud",
+              "href": "https://docs.otc-service.com/ansible-collection-cloud"
+            },
+          ]
+        },
+        {
+          "name": "Client Tools",
+          "id": "Client Tools",
+          "children": [
+            {
+              "name": "OTC Extensions",
+              "id": "OTC Extensions",
+              "href": "https://docs.otc-service.com/python-otcextensions"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Release Notes",
+      "id": "Release Notes",
+      "children": [
+        {
+          "name": "Automation",
+          "id": "Automation",
+          "children": [
+            {
+              "name": "Terraform OTC Driver",
+              "id": "Terraform OTC Driver",
+              "href": "https://docs.otc-service.com/releasenotes/terraform-provider-opentelekomcloud"
+            }
+          ]
+        },
+        {
+          "name": "Client Tools",
+          "id": "Client Tools",
+          "children": [
+            {
+              "name": "OTC Extensions",
+              "id": "OTC Extensions",
+              "href": "https://docs.otc-service.com/releasenotes/python-otcextensions"
+            }
+          ]
+        }
+      ]
+    }
+  ];
+</script>
+  
+      <div class="container docs-book-wrapper">
+        <div class="row">
+          <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
+  <div class="row docs-title">
+  <div class="col-lg-8">
+      <h1>Cloud Container Engine (CCE)</h1>
+    
+  </div>
+  <div class="docs-actions">
+    
+    <a href="cbr.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Cloud Backup and Recovery (CBR)"></i></a>
+    
+    
+    <a href="ces.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Cloud Eye Service (CES)"></i></a>
+    
+  </div>
+</div>
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="docs-body" role="main">
+  
+  <section id="cloud-container-engine-cce">
+<h1>Cloud Container Engine (CCE)<a class="headerlink" href="#cloud-container-engine-cce" title="Permalink to this headline">¶</a></h1>
+<p>The CCE client is the command-line interface (CLI) for
+the Cloud Container Engine (CCE) API and its extensions for the CCE v2.
+It can be enabled by either adding <cite>cce_api_version: 3</cite> into the clouds.yaml
+or <cite>OS_CCE_API_VERSION=3</cite> environment variable or flag to the OSC.</p>
+<p>For help on a specific <cite>cce</cite> command, enter:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>openstack cce <span class="nb">help</span> SUBCOMMAND
+</pre></div>
+</div>
+<section id="cluster-v2-operations">
+<span id="cluster"></span><h2>Cluster v2 operations<a class="headerlink" href="#cluster-v2-operations" title="Permalink to this headline">¶</a></h2>
+<section id="cce-cluster-create">
+<h3>cce cluster create<a class="headerlink" href="#cce-cluster-create" title="Permalink to this headline">¶</a></h3>
+<p>Create CCE Cluster</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack cce cluster create
+    <span class="o">[</span>--description &lt;description&gt;<span class="o">]</span>
+    <span class="o">[</span>--multi-az<span class="o">]</span>
+    <span class="o">[</span>--version &lt;version&gt;<span class="o">]</span>
+    --flavor &lt;flavor&gt;
+    <span class="o">[</span>--type <span class="o">{</span>VirtualMachine<span class="o">}]</span>
+    <span class="o">[</span>--container-network-mode <span class="o">{</span>overlay_l2,underlay_ipvlan,vpc-router<span class="o">}]</span>
+    <span class="o">[</span>--container-network-cidr &lt;CIDR&gt;<span class="o">]</span>
+    <span class="o">[</span>--wait<span class="o">]</span>
+    <span class="o">[</span>--wait-interval WAIT_INTERVAL<span class="o">]</span>
+    <span class="o">[</span>--wait-timeout WAIT_TIMEOUT<span class="o">]</span>
+    &lt;name&gt;
+    &lt;router&gt;
+    &lt;network&gt;
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-create-description">
+<span class="sig-name descname"><span class="pre">--description</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;description&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-create-description" title="Permalink to this definition">¶</a></dt>
+<dd><p>Text description of the cluster.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-create-multi-az">
+<span class="sig-name descname"><span class="pre">--multi-az</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-create-multi-az" title="Permalink to this definition">¶</a></dt>
+<dd><p>Support for multi-AZ cluster</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-create-version">
+<span class="sig-name descname"><span class="pre">--version</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;version&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-create-version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cluster version.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-create-flavor">
+<span class="sig-name descname"><span class="pre">--flavor</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;flavor&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-create-flavor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cluster flavor.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-create-type">
+<span class="sig-name descname"><span class="pre">--type</span></span><span class="sig-prename descclassname"> <span class="pre">{VirtualMachine}</span></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-create-type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cluster type.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-create-container-network-mode">
+<span class="sig-name descname"><span class="pre">--container-network-mode</span></span><span class="sig-prename descclassname"> <span class="pre">{overlay_l2,underlay_ipvlan,vpc-router}</span></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-create-container-network-mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Container network mode.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-create-container-network-cidr">
+<span class="sig-name descname"><span class="pre">--container-network-cidr</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;CIDR&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-create-container-network-cidr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Network segment of the container network.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-create-wait">
+<span class="sig-name descname"><span class="pre">--wait</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-create-wait" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wait for the instance to become active</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-create-wait-interval">
+<span class="sig-name descname"><span class="pre">--wait-interval</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;WAIT_INTERVAL&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-create-wait-interval" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interval for checking status</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-create-wait-timeout">
+<span class="sig-name descname"><span class="pre">--wait-timeout</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;WAIT_TIMEOUT&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-create-wait-timeout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wait timeout</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-create-arg-name">
+<span class="sig-name descname"><span class="pre">name</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-create-arg-name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name of the cluster.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-create-arg-router">
+<span class="sig-name descname"><span class="pre">router</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-create-arg-router" title="Permalink to this definition">¶</a></dt>
+<dd><p>ID or name the Neutron Router.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-create-arg-network">
+<span class="sig-name descname"><span class="pre">network</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-create-arg-network" title="Permalink to this definition">¶</a></dt>
+<dd><p>ID or name of the Neutron network.</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="cce-cluster-delete">
+<h3>cce cluster delete<a class="headerlink" href="#cce-cluster-delete" title="Permalink to this headline">¶</a></h3>
+<p>Delete CCE Cluster</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack cce cluster delete
+    <span class="o">[</span>--wait<span class="o">]</span>
+    <span class="o">[</span>--wait-interval WAIT_INTERVAL<span class="o">]</span>
+    <span class="o">[</span>--wait-timeout WAIT_TIMEOUT<span class="o">]</span>
+    &lt;cluster&gt;
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-delete-wait">
+<span class="sig-name descname"><span class="pre">--wait</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-delete-wait" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wait for the instance to become active</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-delete-wait-interval">
+<span class="sig-name descname"><span class="pre">--wait-interval</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;WAIT_INTERVAL&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-delete-wait-interval" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interval for checking status</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-delete-wait-timeout">
+<span class="sig-name descname"><span class="pre">--wait-timeout</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;WAIT_TIMEOUT&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-delete-wait-timeout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wait timeout</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-delete-arg-cluster">
+<span class="sig-name descname"><span class="pre">cluster</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-delete-arg-cluster" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name or ID of the cluster</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="cce-cluster-list">
+<h3>cce cluster list<a class="headerlink" href="#cce-cluster-list" title="Permalink to this headline">¶</a></h3>
+<p>List CCE Clusters</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack cce cluster list
+    <span class="o">[</span>--sort-column SORT_COLUMN<span class="o">]</span>
+    <span class="o">[</span>--sort-ascending <span class="p">|</span> --sort-descending<span class="o">]</span>
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-list-sort-column">
+<span class="sig-name descname"><span class="pre">--sort-column</span></span><span class="sig-prename descclassname"> <span class="pre">SORT_COLUMN</span></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-list-sort-column" title="Permalink to this definition">¶</a></dt>
+<dd><p>specify the column(s) to sort the data (columns specified first have a priority, non-existing columns are ignored), can be repeated</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-list-sort-ascending">
+<span class="sig-name descname"><span class="pre">--sort-ascending</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-list-sort-ascending" title="Permalink to this definition">¶</a></dt>
+<dd><p>sort the column(s) in ascending order</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-list-sort-descending">
+<span class="sig-name descname"><span class="pre">--sort-descending</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-list-sort-descending" title="Permalink to this definition">¶</a></dt>
+<dd><p>sort the column(s) in descending order</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="cce-cluster-node-create">
+<h3>cce cluster node create<a class="headerlink" href="#cce-cluster-node-create" title="Permalink to this headline">¶</a></h3>
+<p>Create CCE Cluster Node</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack cce cluster node create
+    <span class="o">[</span>--name &lt;name&gt;<span class="o">]</span>
+    <span class="o">[</span>--annotation &lt;key_name&gt;<span class="o">=</span>&lt;value_name&gt;<span class="o">]</span>
+    --availability-zone &lt;availability_zone&gt;
+    <span class="o">[</span>--bandwidth &lt;bandwidth&gt;<span class="o">]</span>
+    <span class="o">[</span>--count &lt;count&gt;<span class="o">]</span>
+    <span class="o">[</span>--data-volume <span class="nv">volumetype</span><span class="o">=</span>&lt;volumetype&gt;,size<span class="o">=</span>&lt;disksize&gt;,encrypted<span class="o">=</span>&lt;True<span class="p">|</span>False&gt;,cmk_id<span class="o">=</span>&lt;cmk_id&gt;<span class="o">]</span>
+    <span class="o">[</span>--dedicated-host &lt;dedicated_host&gt;<span class="o">]</span>
+    <span class="o">[</span>--ecs-group &lt;group_id&gt;<span class="o">]</span>
+    <span class="o">[</span>--fault-domain &lt;fault_domain&gt;<span class="o">]</span>
+    --flavor &lt;flavor&gt;
+    <span class="o">[</span>--floating-ip &lt;floating_ip&gt;<span class="o">]</span>
+    <span class="o">[</span>--fip-count &lt;fip_count&gt;<span class="o">]</span>
+    <span class="o">[</span>--k8s-tag &lt;key_name&gt;<span class="o">=</span>&lt;value_name&gt;<span class="o">]</span>
+    <span class="o">[</span>--label &lt;key_name&gt;<span class="o">=</span>&lt;value_name&gt;<span class="o">]</span>
+    <span class="o">[</span>--lvm-config &lt;lvm_config&gt;<span class="o">]</span>
+    <span class="o">[</span>--max-pods &lt;max_pods&gt;<span class="o">]</span>
+    --network &lt;network&gt;
+    <span class="o">[</span>--node-image-id &lt;node_image_id&gt;<span class="o">]</span>
+    <span class="o">[</span>--os &lt;operating_system&gt;<span class="o">]</span>
+    <span class="o">[</span>--postinstall-script &lt;postinstall_script&gt;<span class="o">]</span>
+    <span class="o">[</span>--preinstall-script &lt;preinstall_script&gt;<span class="o">]</span>
+    <span class="o">[</span>--root-volume-size &lt;root_volume_size&gt;<span class="o">]</span>
+    <span class="o">[</span>--root-volume-type &lt;root_volume_type&gt;<span class="o">]</span>
+    --ssh-key &lt;ssh_key&gt;
+    <span class="o">[</span>--tag <span class="nv">key</span><span class="o">=</span>&lt;keyname1&gt;,value<span class="o">=</span>&lt;value1&gt;<span class="o">]</span>
+    <span class="o">[</span>--wait<span class="o">]</span>
+    <span class="o">[</span>--wait-interval &lt;interval&gt;<span class="o">]</span>
+    <span class="o">[</span>--wait-timeout &lt;timeout&gt;<span class="o">]</span>
+    &lt;cluster&gt;
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-node-create-name">
+<span class="sig-name descname"><span class="pre">--name</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;name&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-node-create-name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name of the CCE node.
+The clustername and a random number is used to create a node name by default.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-node-create-annotation">
+<span class="sig-name descname"><span class="pre">--annotation</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;key_name&gt;=&lt;value_name&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-node-create-annotation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Annotations in form of key, value pairs.Repeat option for multiple tags.
+Example: –annotation keyname1=valuename1 –annotation keyname2=valuename2</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-node-create-availability-zone">
+<span class="sig-name descname"><span class="pre">--availability-zone</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;availability_zone&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-node-create-availability-zone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Availability zone to place server in.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-node-create-bandwidth">
+<span class="sig-name descname"><span class="pre">--bandwidth</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;bandwidth&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-node-create-bandwidth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bandwidth of the floating ip being created. fip-countmust be specified if bandwidth is used.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-node-create-count">
+<span class="sig-name descname"><span class="pre">--count</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;count&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-node-create-count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Count of the cluster nodes to be created.
+Default: 1.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-node-create-data-volume">
+<span class="sig-name descname"><span class="pre">--data-volume</span></span><span class="sig-prename descclassname"> <span class="pre">volumetype=&lt;volumetype&gt;,size=&lt;disksize&gt;,encrypted=&lt;True|False&gt;,cmk_id=&lt;cmk_id&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-node-create-data-volume" title="Permalink to this definition">¶</a></dt>
+<dd><p>Example: –data-volume volumetype=SATA,size=100,encrypted=True,cmk_id=12345qwertz
+Repeat option for multiple data volumes.
+Default: –data-volume volumetype=SATA,size=100</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-node-create-dedicated-host">
+<span class="sig-name descname"><span class="pre">--dedicated-host</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;dedicated_host&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-node-create-dedicated-host" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name or ID of the Dedicated Host to which nodes will.be scheduled.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-node-create-ecs-group">
+<span class="sig-name descname"><span class="pre">--ecs-group</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;group_id&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-node-create-ecs-group" title="Permalink to this definition">¶</a></dt>
+<dd><p>ID of the ECS group where the CCE node can belong to.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-node-create-fault-domain">
+<span class="sig-name descname"><span class="pre">--fault-domain</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;fault_domain&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-node-create-fault-domain" title="Permalink to this definition">¶</a></dt>
+<dd><p>The node is created in the specified fault domain.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-node-create-flavor">
+<span class="sig-name descname"><span class="pre">--flavor</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;flavor&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-node-create-flavor" title="Permalink to this definition">¶</a></dt>
+<dd><p>The flavor for the node.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-node-create-floating-ip">
+<span class="sig-name descname"><span class="pre">--floating-ip</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;floating_ip&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-node-create-floating-ip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Address or ID of the existing floating IP to be attached to the new node.
+Repeat option for multiple IPs to be attached to multiple nodes.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-node-create-fip-count">
+<span class="sig-name descname"><span class="pre">--fip-count</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;fip_count&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-node-create-fip-count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Count of floating IP addresses being attached to one or more nodes.
+The parameter must be used together withbandwidth.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-node-create-k8s-tag">
+<span class="sig-name descname"><span class="pre">--k8s-tag</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;key_name&gt;=&lt;value_name&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-node-create-k8s-tag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Kubernetes tags in form of key, value pairs. Repeat option for multiple tags.
+Example:
+–k8s-tag keyname1=valuename1 –k8s-tag keyname2=valuename2</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-node-create-label">
+<span class="sig-name descname"><span class="pre">--label</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;key_name&gt;=&lt;value_name&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-node-create-label" title="Permalink to this definition">¶</a></dt>
+<dd><p>Option labels in form of key, value pairs. Repeat option for multiple labels.
+Example:
+–label keyname1=valuename1 –label keyname2=valuename2</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-node-create-lvm-config">
+<span class="sig-name descname"><span class="pre">--lvm-config</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;lvm_config&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-node-create-lvm-config" title="Permalink to this definition">¶</a></dt>
+<dd><p>ConfigMap of the Docker data disk.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-node-create-max-pods">
+<span class="sig-name descname"><span class="pre">--max-pods</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;max_pods&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-node-create-max-pods" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maximum number of pods on the node</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-node-create-network">
+<span class="sig-name descname"><span class="pre">--network</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;network&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-node-create-network" title="Permalink to this definition">¶</a></dt>
+<dd><p>ID or name of the network where the node will be created.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-node-create-node-image-id">
+<span class="sig-name descname"><span class="pre">--node-image-id</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;node_image_id&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-node-create-node-image-id" title="Permalink to this definition">¶</a></dt>
+<dd><p>ID of a custom image used in a bare metal scenario.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-node-create-os">
+<span class="sig-name descname"><span class="pre">--os</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;operating_system&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-node-create-os" title="Permalink to this definition">¶</a></dt>
+<dd><p>Operating system of the cluster node.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-node-create-postinstall-script">
+<span class="sig-name descname"><span class="pre">--postinstall-script</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;postinstall_script&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-node-create-postinstall-script" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base64 encoded post installation script.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-node-create-preinstall-script">
+<span class="sig-name descname"><span class="pre">--preinstall-script</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;preinstall_script&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-node-create-preinstall-script" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base64 encoded pre installation script.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-node-create-root-volume-size">
+<span class="sig-name descname"><span class="pre">--root-volume-size</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;root_volume_size&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-node-create-root-volume-size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Root volume size in GB.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-node-create-root-volume-type">
+<span class="sig-name descname"><span class="pre">--root-volume-type</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;root_volume_type&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-node-create-root-volume-type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Root volume type.
+Options: SAS, SATA, SSD.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-node-create-ssh-key">
+<span class="sig-name descname"><span class="pre">--ssh-key</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;ssh_key&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-node-create-ssh-key" title="Permalink to this definition">¶</a></dt>
+<dd><p>SSH Key used to create the node.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-node-create-tag">
+<span class="sig-name descname"><span class="pre">--tag</span></span><span class="sig-prename descclassname"> <span class="pre">key=&lt;keyname1&gt;,value=&lt;value1&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-node-create-tag" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of tags used to build UI labels. Repeat option for multiple tags.
+Example:
+–tag key=mykey1,value=myvalue1</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-node-create-wait">
+<span class="sig-name descname"><span class="pre">--wait</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-node-create-wait" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wait for the instance to become active</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-node-create-wait-interval">
+<span class="sig-name descname"><span class="pre">--wait-interval</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;interval&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-node-create-wait-interval" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check interval in seconds for successful creation checkwhen param wait is True.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-node-create-wait-timeout">
+<span class="sig-name descname"><span class="pre">--wait-timeout</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;timeout&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-node-create-wait-timeout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maximum time in seconds to wait for successful creationwhen param wait is True.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-node-create-arg-cluster">
+<span class="sig-name descname"><span class="pre">cluster</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-node-create-arg-cluster" title="Permalink to this definition">¶</a></dt>
+<dd><p>ID or name of the CCE cluster.</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="cce-cluster-node-delete">
+<h3>cce cluster node delete<a class="headerlink" href="#cce-cluster-node-delete" title="Permalink to this headline">¶</a></h3>
+<p>Delete CCE Cluster nodes</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack cce cluster node delete &lt;cluster&gt; &lt;node&gt; <span class="o">[</span>&lt;node&gt; ...<span class="o">]</span>
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-node-delete-arg-cluster">
+<span class="sig-name descname"><span class="pre">cluster</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-node-delete-arg-cluster" title="Permalink to this definition">¶</a></dt>
+<dd><p>ID of the cluster.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-node-delete-arg-node">
+<span class="sig-name descname"><span class="pre">node</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-node-delete-arg-node" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name of the cluster node.</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="cce-cluster-node-list">
+<h3>cce cluster node list<a class="headerlink" href="#cce-cluster-node-list" title="Permalink to this headline">¶</a></h3>
+<p>List CCE Cluster Nodes</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack cce cluster node list
+    <span class="o">[</span>--sort-column SORT_COLUMN<span class="o">]</span>
+    <span class="o">[</span>--sort-ascending <span class="p">|</span> --sort-descending<span class="o">]</span>
+    &lt;cluster&gt;
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-node-list-sort-column">
+<span class="sig-name descname"><span class="pre">--sort-column</span></span><span class="sig-prename descclassname"> <span class="pre">SORT_COLUMN</span></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-node-list-sort-column" title="Permalink to this definition">¶</a></dt>
+<dd><p>specify the column(s) to sort the data (columns specified first have a priority, non-existing columns are ignored), can be repeated</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-node-list-sort-ascending">
+<span class="sig-name descname"><span class="pre">--sort-ascending</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-node-list-sort-ascending" title="Permalink to this definition">¶</a></dt>
+<dd><p>sort the column(s) in ascending order</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-node-list-sort-descending">
+<span class="sig-name descname"><span class="pre">--sort-descending</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-node-list-sort-descending" title="Permalink to this definition">¶</a></dt>
+<dd><p>sort the column(s) in descending order</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-node-list-arg-cluster">
+<span class="sig-name descname"><span class="pre">cluster</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-node-list-arg-cluster" title="Permalink to this definition">¶</a></dt>
+<dd><p>The ID or name of the cluster.</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="cce-cluster-node-show">
+<h3>cce cluster node show<a class="headerlink" href="#cce-cluster-node-show" title="Permalink to this headline">¶</a></h3>
+<p>Show single Cluster node details</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack cce cluster node show &lt;cluster&gt; &lt;node&gt;
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-node-show-arg-cluster">
+<span class="sig-name descname"><span class="pre">cluster</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-node-show-arg-cluster" title="Permalink to this definition">¶</a></dt>
+<dd><p>ID of the cluster.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-node-show-arg-node">
+<span class="sig-name descname"><span class="pre">node</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-node-show-arg-node" title="Permalink to this definition">¶</a></dt>
+<dd><p>ID of the cluster node.</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="cce-cluster-show">
+<h3>cce cluster show<a class="headerlink" href="#cce-cluster-show" title="Permalink to this headline">¶</a></h3>
+<p>Show single Cluster details</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack cce cluster show &lt;cluster&gt;
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-cce-cluster-show-arg-cluster">
+<span class="sig-name descname"><span class="pre">cluster</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-cce-cluster-show-arg-cluster" title="Permalink to this definition">¶</a></dt>
+<dd><p>ID of the cluster</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+</section>
+</section>
+
+
+                </div>
+              </div>
+            </div>
+            <div class="docs-actions">
+            
+              <a href="cbr.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Cloud Backup and Recovery (CBR)"></i></a>
+            
+            
+              <a href="ces.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Cloud Eye Service (CES)"></i></a>
+            
+            </div>
+            <div class="row docs-byline bottom">
+              <div class="docs-updated">updated: 2021-12-08 13:15</div>
+            </div>
+          </div>
+  <div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 docs-sidebar">
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <a href="../index.html" class="docs-sidebar-section-title"><h4>otcextensions 0.24.3.dev2</h4></a>
+      <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install/index.html">1. Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install/configuration.html">2. Configuration</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">3. OpenStack Client (CLI)</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="anti_ddos.html">Anti DDoS Service (Anti_DDoS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="auto_scaling.html">AutoScaling service (AS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cbr.html">Cloud Backup and Recovery (CBR)</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Cloud Container Engine (CCE)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ces.html">Cloud Eye Service (CES)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="css.html">Cloud Search Service (CSS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cts.html">Cloud Trace Service (CTS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dcs.html">Distributed Cache Service (DCS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deh.html">Dedicated Host Service (DeH)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dms.html">Distributed Message Service (DMS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dns.html">Domain Name Service (DNS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="identity.html">Identity Service (IAM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kms.html">Key Management Service (KMS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="load_balancer.html">Elastic LoadBalancer (ELB)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nat.html">Network Address Translation (NAT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="obs.html">Object Storage service (OBS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rds_v3.html">Relational Database Service (RDS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="smn.html">Simple Message Notification Service (SMN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="volume_backup.html">Volume Backup Service (VBS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vpc.html">Virtual Private Cloud (VPC)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sdk/index.html">4. Using the OpenStack SDK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributor/index.html">5. Contributing to the OTC Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../coverage.html">6. Service Coverage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendices/index.html">7. Appendices</a></li>
+</ul>
+
+    </div>
+
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="local-table-of-contents">
+      <h4 class="docs-sidebar-section-title">Page Contents</h4>
+      <ul>
+<li><a class="reference internal" href="#">Cloud Container Engine (CCE)</a><ul>
+<li><a class="reference internal" href="#cluster-v2-operations">Cluster v2 operations</a><ul>
+<li><a class="reference internal" href="#cce-cluster-create">cce cluster create</a></li>
+<li><a class="reference internal" href="#cce-cluster-delete">cce cluster delete</a></li>
+<li><a class="reference internal" href="#cce-cluster-list">cce cluster list</a></li>
+<li><a class="reference internal" href="#cce-cluster-node-create">cce cluster node create</a></li>
+<li><a class="reference internal" href="#cce-cluster-node-delete">cce cluster node delete</a></li>
+<li><a class="reference internal" href="#cce-cluster-node-list">cce cluster node list</a></li>
+<li><a class="reference internal" href="#cce-cluster-node-show">cce cluster node show</a></li>
+<li><a class="reference internal" href="#cce-cluster-show">cce cluster show</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+  </div>
+</div>
+        </div>
+      </div>
+  </scale-app-shell>
+<scale-app-footer id="footer-shell" variant="standard" claim-lang="en">
+</scale-app-footer>
+<script>
+  const footer_shell = document.getElementById("footer-shell");
+  footer_shell.footerNavigation = [{"name":"Contact","id":"Contact","href":"https://cloud.telekom.de/en/contact/"},{"name":"Legal notice","id":"Legal notice","href":"https://cloud.telekom.de/en/imprint-adress"},{"name":"Data privacy","id":"Data privacy","href":"https://open-telekom-cloud.com/en/data-protection","icon":"alert-imprint-dataprivacy"}]</script>
+  <!-- jQuery -->
+<script type="text/javascript" src="../_static/js/jquery-3.2.1.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script type="text/javascript" src="../_static/js/bootstrap.min.js"></script>
+
+<!-- Telekom Scale -->
+<script type="module" src="https://unpkg.com/@telekom/scale-components@3.0.0-beta.32/dist/scale-components/scale-components.esm.js"></script>
+
+<!-- The rest of the JS -->
+<script type="text/javascript" src="../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script type="text/javascript" src="../_static/js/docs.js"></script>
+
+<!-- Popovers -->
+<script type="text/javascript" src="../_static/js/webui-popover.js"></script>
+
+<!-- standard sphinx include libraries, which allow search highlighting -->
+<script type="text/javascript" src="../_static/underscore.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+<script type="text/javascript" src="../_static/searchtools.js"></script>
+
+<script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.24.3.dev2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+</script>
+
+
+<!-- Javascript for page -->
+<script language="JavaScript">
+/* build a description of this page including SHA, source location on git repo,
+   build time and the project's launchpad bug tag. Set the HREF of the bug
+   buttons */
+</script>
+  
+  </body>
+</html>

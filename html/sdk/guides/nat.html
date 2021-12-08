@@ -1,0 +1,621 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Network Address Translation (NAT) &#8212; otcextensions 0.24.3.dev2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/basic.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Relational Database Service (RDS)" href="rds.html" />
+    <link rel="prev" title="Key Management Service (KMS)" href="kms.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap CSS -->
+<link href="../../_static/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../../_static/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="../../_static/css/combined.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../../_static/pygments.css" rel="stylesheet">
+
+<!-- Telekom Scale -->
+<link href="https://unpkg.com/@telekom/scale-components@3.0.0-beta.32/dist/scale-components/scale-components.css" rel="stylesheet">
+
+<!-- Otcdocstheme CSS -->
+<link href="../../_static/css/otcdocstheme.css" rel="stylesheet">
+
+
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-17511903-1', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+  </head><body>
+  
+<!-- SOURCE_FILE: sdk/guides/nat.rst -->
+
+
+<scale-app-shell
+  id="app-shell"
+  claim-lang="en"
+  logo-title="PAGENAME"
+  logo-href="/"
+>
+
+
+
+<script>
+  const app_shell = document.getElementById(
+  'app-shell');
+  app_shell.mainNavigation = [
+    {
+      "name": "Software",
+      "id": "Software",
+      "children": [
+        {
+          "name": "Automation",
+          "id": "Automation",
+          "children": [
+            {
+              "name": "Terraform OTC Driver",
+              "id": "Terraform OTC Driver",
+              "href": "https://docs.otc-service.com/terraform-provider-opentelekomcloud"
+            },
+                      {
+              "name": "Ansible Collection Cloud",
+              "id": "Ansible Collection Cloud",
+              "href": "https://docs.otc-service.com/ansible-collection-cloud"
+            },
+          ]
+        },
+        {
+          "name": "Client Tools",
+          "id": "Client Tools",
+          "children": [
+            {
+              "name": "OTC Extensions",
+              "id": "OTC Extensions",
+              "href": "https://docs.otc-service.com/python-otcextensions"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Release Notes",
+      "id": "Release Notes",
+      "children": [
+        {
+          "name": "Automation",
+          "id": "Automation",
+          "children": [
+            {
+              "name": "Terraform OTC Driver",
+              "id": "Terraform OTC Driver",
+              "href": "https://docs.otc-service.com/releasenotes/terraform-provider-opentelekomcloud"
+            }
+          ]
+        },
+        {
+          "name": "Client Tools",
+          "id": "Client Tools",
+          "children": [
+            {
+              "name": "OTC Extensions",
+              "id": "OTC Extensions",
+              "href": "https://docs.otc-service.com/releasenotes/python-otcextensions"
+            }
+          ]
+        }
+      ]
+    }
+  ];
+</script>
+  
+      <div class="container docs-book-wrapper">
+        <div class="row">
+          <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
+  <div class="row docs-title">
+  <div class="col-lg-8">
+      <h1>Network Address Translation (NAT)</h1>
+    
+  </div>
+  <div class="docs-actions">
+    
+    <a href="kms.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Key Management Service (KMS)"></i></a>
+    
+    
+    <a href="rds.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Relational Database Service (RDS)"></i></a>
+    
+  </div>
+</div>
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="docs-body" role="main">
+  
+  <section id="network-address-translation-nat">
+<h1>Network Address Translation (NAT)<a class="headerlink" href="#network-address-translation-nat" title="Permalink to this headline">¶</a></h1>
+<nav class="contents local" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#nat-gateway" id="id1">NAT Gateway</a></p>
+<ul>
+<li><p><a class="reference internal" href="#list-nat-gateways" id="id2">List NAT Gateways</a></p></li>
+<li><p><a class="reference internal" href="#create-nat-gateway" id="id3">Create NAT Gateway</a></p></li>
+<li><p><a class="reference internal" href="#get-nat-gateway" id="id4">Get NAT Gateway</a></p></li>
+<li><p><a class="reference internal" href="#find-nat-gateway" id="id5">Find NAT Gateway</a></p></li>
+<li><p><a class="reference internal" href="#update-nat-gateway" id="id6">Update NAT Gateway</a></p></li>
+<li><p><a class="reference internal" href="#delete-nat-gateway" id="id7">Delete NAT Gateway</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#snat" id="id8">SNAT</a></p>
+<ul>
+<li><p><a class="reference internal" href="#list-snat-rules" id="id9">List SNAT Rules</a></p></li>
+<li><p><a class="reference internal" href="#create-snat-rule" id="id10">Create SNAT Rule</a></p></li>
+<li><p><a class="reference internal" href="#get-snat-rule" id="id11">Get SNAT Rule</a></p></li>
+<li><p><a class="reference internal" href="#delete-snat-rule" id="id12">Delete SNAT Rule</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#dnat" id="id13">DNAT</a></p>
+<ul>
+<li><p><a class="reference internal" href="#list-dnat-rules" id="id14">List DNAT Rules</a></p></li>
+<li><p><a class="reference internal" href="#create-dnat-rule" id="id15">Create DNAT Rule</a></p></li>
+<li><p><a class="reference internal" href="#get-dnat-rule" id="id16">Get DNAT Rule</a></p></li>
+<li><p><a class="reference internal" href="#delete-dnat-rule" id="id17">Delete DNAT Rule</a></p></li>
+</ul>
+</li>
+</ul>
+</nav>
+<section id="nat-gateway">
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">NAT Gateway</a><a class="headerlink" href="#nat-gateway" title="Permalink to this headline">¶</a></h2>
+<p>The NAT Gateway service provides the network address translation (NAT)
+function for servers, such as Elastic Cloud Servers (ECSs), Bare Metal
+Servers (BMSs), and Workspace desktops, in a Virtual Private Cloud (VPC)
+or servers that connect to a VPC through Direct Connect or Virtual
+Private Network (VPN) in local data centers, allowing these servers to
+share elastic IP addresses (EIPs) to access the Internet or to provide
+services accessible from the Internet.</p>
+<section id="list-nat-gateways">
+<h3><a class="toc-backref" href="#id2" role="doc-backlink">List NAT Gateways</a><a class="headerlink" href="#list-nat-gateways" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to query an NAT gateway list and to filter
+the output with query parameters.
+<a class="reference internal" href="../resources/nat/v2/gateway.html#otcextensions.sdk.nat.v2.gateway.Gateway" title="otcextensions.sdk.nat.v2.gateway.Gateway"><code class="xref py py-class docutils literal notranslate"><span class="pre">Gateway</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">gateway</span> <span class="ow">in</span> <span class="n">conn</span><span class="o">.</span><span class="n">nat</span><span class="o">.</span><span class="n">gateways</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">gateway</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="create-nat-gateway">
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">Create NAT Gateway</a><a class="headerlink" href="#create-nat-gateway" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to create a NAT Ggateway with
+parameters.
+<a class="reference internal" href="../resources/nat/v2/gateway.html#otcextensions.sdk.nat.v2.gateway.Gateway" title="otcextensions.sdk.nat.v2.gateway.Gateway"><code class="xref py py-class docutils literal notranslate"><span class="pre">Gateway</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;nat_001&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;my nat gateway 01&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;router_id&quot;</span><span class="p">:</span> <span class="s2">&quot;d84f345c-80a1-4fa2-a39c-d0d397c3f09a&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;internal_network_id&quot;</span><span class="p">:</span> <span class="s2">&quot;89d66639-aacb-4929-969d-07080b0f9fd9&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;spec&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span>
+<span class="p">}</span>
+
+<span class="n">gateway</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">nat</span><span class="o">.</span><span class="n">create_gateway</span><span class="p">(</span><span class="o">**</span><span class="n">attrs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">gateway</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="get-nat-gateway">
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">Get NAT Gateway</a><a class="headerlink" href="#get-nat-gateway" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to get a NAT gateway by ID
+or an instance of class
+<a class="reference internal" href="../resources/nat/v2/gateway.html#otcextensions.sdk.nat.v2.gateway.Gateway" title="otcextensions.sdk.nat.v2.gateway.Gateway"><code class="xref py py-class docutils literal notranslate"><span class="pre">Gateway</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="n">gateway</span> <span class="o">=</span> <span class="s1">&#39;gateway_id&#39;</span>
+<span class="n">gateway</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">nat</span><span class="o">.</span><span class="n">get_gateway</span><span class="p">(</span><span class="n">gateway</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">gateway</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="find-nat-gateway">
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Find NAT Gateway</a><a class="headerlink" href="#find-nat-gateway" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to find a NAT gateway by id or name.
+<a class="reference internal" href="../resources/nat/v2/gateway.html#otcextensions.sdk.nat.v2.gateway.Gateway" title="otcextensions.sdk.nat.v2.gateway.Gateway"><code class="xref py py-class docutils literal notranslate"><span class="pre">Gateway</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="n">name_or_id</span> <span class="o">=</span> <span class="s1">&#39;gateway_name_or_id&#39;</span>
+<span class="n">gateway</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">nat</span><span class="o">.</span><span class="n">find_gateway</span><span class="p">(</span><span class="n">name_or_id</span><span class="p">,</span> <span class="n">ignore_missing</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">gateway</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="update-nat-gateway">
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">Update NAT Gateway</a><a class="headerlink" href="#update-nat-gateway" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to update NAT gateway parameters by
+id or an instance of class
+<a class="reference internal" href="../resources/nat/v2/gateway.html#otcextensions.sdk.nat.v2.gateway.Gateway" title="otcextensions.sdk.nat.v2.gateway.Gateway"><code class="xref py py-class docutils literal notranslate"><span class="pre">Gateway</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;new_name&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;new description&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;spec&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span>
+<span class="p">}</span>
+
+<span class="n">name_or_id</span> <span class="o">=</span> <span class="s1">&#39;gateway_name_or_id&#39;</span>
+<span class="n">gateway</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">nat</span><span class="o">.</span><span class="n">find_gateway</span><span class="p">(</span><span class="n">name_or_id</span><span class="p">,</span> <span class="n">ignore_missing</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">nat</span><span class="o">.</span><span class="n">update_gateway</span><span class="p">(</span><span class="n">gateway</span><span class="p">,</span> <span class="o">**</span><span class="n">attrs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="delete-nat-gateway">
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">Delete NAT Gateway</a><a class="headerlink" href="#delete-nat-gateway" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to delete a NAT gateway by ID
+or an instance of class
+<a class="reference internal" href="../resources/nat/v2/gateway.html#otcextensions.sdk.nat.v2.gateway.Gateway" title="otcextensions.sdk.nat.v2.gateway.Gateway"><code class="xref py py-class docutils literal notranslate"><span class="pre">Gateway</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="n">name_or_id</span> <span class="o">=</span> <span class="s1">&#39;gateway_name_or_id&#39;</span>
+<span class="n">gateway</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">nat</span><span class="o">.</span><span class="n">find_gateway</span><span class="p">(</span><span class="n">name_or_id</span><span class="o">=</span><span class="n">name_or_id</span><span class="p">,</span> <span class="n">ignore_missing</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">nat</span><span class="o">.</span><span class="n">delete_gateway</span><span class="p">(</span><span class="n">gateway</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>NAT Gateway supports source NAT (SNAT) and destination NAT (DNAT)
+functions.</p>
+</section>
+</section>
+<section id="snat">
+<h2><a class="toc-backref" href="#id8" role="doc-backlink">SNAT</a><a class="headerlink" href="#snat" title="Permalink to this headline">¶</a></h2>
+<p>The SNAT function translates a private IP address to a public IP
+address by binding EIPs to servers in a VPC, providing secure and
+efficient access to the Internet.</p>
+<section id="list-snat-rules">
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">List SNAT Rules</a><a class="headerlink" href="#list-snat-rules" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to query an SNAT rule list and to filter
+the output with query parameters.
+<a class="reference internal" href="../resources/nat/v2/snat.html#otcextensions.sdk.nat.v2.snat.Snat" title="otcextensions.sdk.nat.v2.snat.Snat"><code class="xref py py-class docutils literal notranslate"><span class="pre">Snat</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">snat_rule</span> <span class="ow">in</span> <span class="n">conn</span><span class="o">.</span><span class="n">nat</span><span class="o">.</span><span class="n">snat_rules</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">snat_rule</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="create-snat-rule">
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">Create SNAT Rule</a><a class="headerlink" href="#create-snat-rule" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to create a SNAT rule with
+parameters.
+<a class="reference internal" href="../resources/nat/v2/snat.html#otcextensions.sdk.nat.v2.snat.Snat" title="otcextensions.sdk.nat.v2.snat.Snat"><code class="xref py py-class docutils literal notranslate"><span class="pre">Snat</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="n">nat_gateway_id</span> <span class="o">=</span> <span class="s1">&#39;nat_gateway_id&#39;</span>
+<span class="n">network_id</span> <span class="o">=</span> <span class="s1">&#39;network_id&#39;</span>
+<span class="n">floating_ip_id</span> <span class="o">=</span> <span class="s1">&#39;floating_ip_id&#39;</span>
+
+<span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;nat_gateway_id&quot;</span><span class="p">:</span> <span class="n">nat_gateway_id</span><span class="p">,</span>
+    <span class="s2">&quot;network_id&quot;</span><span class="p">:</span> <span class="n">network_id</span><span class="p">,</span>
+    <span class="s2">&quot;floating_ip_id&quot;</span><span class="p">:</span> <span class="n">floating_ip_id</span>
+<span class="p">}</span>
+
+<span class="n">snat_rule</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">nat</span><span class="o">.</span><span class="n">create_snat_rule</span><span class="p">(</span><span class="o">**</span><span class="n">attrs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">snat_rule</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="get-snat-rule">
+<h3><a class="toc-backref" href="#id11" role="doc-backlink">Get SNAT Rule</a><a class="headerlink" href="#get-snat-rule" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to get a SNAT rule by ID
+or an instance of class
+<a class="reference internal" href="../resources/nat/v2/snat.html#otcextensions.sdk.nat.v2.snat.Snat" title="otcextensions.sdk.nat.v2.snat.Snat"><code class="xref py py-class docutils literal notranslate"><span class="pre">Snat</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="n">snat_rule_id</span> <span class="o">=</span> <span class="s1">&#39;snat_rule_id&#39;</span>
+<span class="n">snat_rule</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">nat</span><span class="o">.</span><span class="n">get_snat_rule</span><span class="p">(</span><span class="n">snat_rule_id</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">snat_rule</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="delete-snat-rule">
+<h3><a class="toc-backref" href="#id12" role="doc-backlink">Delete SNAT Rule</a><a class="headerlink" href="#delete-snat-rule" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to delete a SNAT Rule by ID
+or an instance of class
+<a class="reference internal" href="../resources/nat/v2/snat.html#otcextensions.sdk.nat.v2.snat.Snat" title="otcextensions.sdk.nat.v2.snat.Snat"><code class="xref py py-class docutils literal notranslate"><span class="pre">Snat</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="n">snat_rule_id</span> <span class="o">=</span> <span class="s1">&#39;snat_rule_id&#39;</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">nat</span><span class="o">.</span><span class="n">delete_snat_rule</span><span class="p">(</span><span class="n">snat_rule_id</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="dnat">
+<h2><a class="toc-backref" href="#id13" role="doc-backlink">DNAT</a><a class="headerlink" href="#dnat" title="Permalink to this headline">¶</a></h2>
+<p>The DNAT function enables servers that share the same EIPs in
+a VPC to provide services accessible from the Internet through
+the IP address mapping and port mapping.</p>
+<section id="list-dnat-rules">
+<h3><a class="toc-backref" href="#id14" role="doc-backlink">List DNAT Rules</a><a class="headerlink" href="#list-dnat-rules" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to query an DNAT rule list and to filter
+the output with query parameters.
+<a class="reference internal" href="../resources/nat/v2/dnat.html#otcextensions.sdk.nat.v2.dnat.Dnat" title="otcextensions.sdk.nat.v2.dnat.Dnat"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dnat</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">dnat_rule</span> <span class="ow">in</span> <span class="n">conn</span><span class="o">.</span><span class="n">nat</span><span class="o">.</span><span class="n">dnat_rules</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">dnat_rule</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="create-dnat-rule">
+<h3><a class="toc-backref" href="#id15" role="doc-backlink">Create DNAT Rule</a><a class="headerlink" href="#create-dnat-rule" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to create a DNAT rule with
+parameters.
+<a class="reference internal" href="../resources/nat/v2/dnat.html#otcextensions.sdk.nat.v2.dnat.Dnat" title="otcextensions.sdk.nat.v2.dnat.Dnat"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dnat</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="n">nat_gateway_id</span> <span class="o">=</span> <span class="s1">&#39;nat_gateway_id&#39;</span>
+<span class="n">port_id</span> <span class="o">=</span> <span class="s1">&#39;network_id&#39;</span>
+<span class="n">private_ip</span> <span class="o">=</span> <span class="s1">&#39;192.168.199.3&#39;</span>
+<span class="n">floating_ip_id</span> <span class="o">=</span> <span class="s1">&#39;floating_ip_id&#39;</span>
+<span class="n">protocol</span> <span class="o">=</span> <span class="s1">&#39;TCP&#39;</span>
+<span class="n">internal_service_port</span> <span class="o">=</span> <span class="mi">80</span>
+<span class="n">external_service_port</span> <span class="o">=</span> <span class="mi">80</span>
+
+
+<span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;nat_gateway_id&quot;</span><span class="p">:</span> <span class="n">nat_gateway_id</span><span class="p">,</span>
+    <span class="s2">&quot;private_ip&quot;</span><span class="p">:</span> <span class="n">private_ip</span><span class="p">,</span>
+    <span class="s2">&quot;port_id&quot;</span><span class="p">:</span> <span class="n">port_id</span><span class="p">,</span>
+    <span class="s2">&quot;protocol&quot;</span><span class="p">:</span> <span class="n">protocol</span><span class="p">,</span>
+    <span class="s2">&quot;internal_service_port&quot;</span><span class="p">:</span> <span class="n">internal_service_port</span><span class="p">,</span>
+    <span class="s2">&quot;external_service_port&quot;</span><span class="p">:</span> <span class="n">external_service_port</span><span class="p">,</span>
+    <span class="s2">&quot;floating_ip_id&quot;</span><span class="p">:</span> <span class="n">floating_ip_id</span>
+<span class="p">}</span>
+
+<span class="n">dnat_rule</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">nat</span><span class="o">.</span><span class="n">create_dnat_rule</span><span class="p">(</span><span class="o">**</span><span class="n">attrs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">dnat_rule</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="get-dnat-rule">
+<h3><a class="toc-backref" href="#id16" role="doc-backlink">Get DNAT Rule</a><a class="headerlink" href="#get-dnat-rule" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to get a DNAT rule by ID
+or an instance of class
+<a class="reference internal" href="../resources/nat/v2/dnat.html#otcextensions.sdk.nat.v2.dnat.Dnat" title="otcextensions.sdk.nat.v2.dnat.Dnat"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dnat</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="n">dnat_rule_id</span> <span class="o">=</span> <span class="s1">&#39;dnat_rule_id&#39;</span>
+<span class="n">dnat_rule</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">nat</span><span class="o">.</span><span class="n">get_dnat_rule</span><span class="p">(</span><span class="n">dnat_rule_id</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">dnat_rule</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="delete-dnat-rule">
+<h3><a class="toc-backref" href="#id17" role="doc-backlink">Delete DNAT Rule</a><a class="headerlink" href="#delete-dnat-rule" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to delete a DNAT Rule by ID
+or an instance of class
+<a class="reference internal" href="../resources/nat/v2/dnat.html#otcextensions.sdk.nat.v2.dnat.Dnat" title="otcextensions.sdk.nat.v2.dnat.Dnat"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dnat</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="n">snat_rule_id</span> <span class="o">=</span> <span class="s1">&#39;snat_rule_id&#39;</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">nat</span><span class="o">.</span><span class="n">delete_snat_rule</span><span class="p">(</span><span class="n">snat_rule_id</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+                </div>
+              </div>
+            </div>
+            <div class="docs-actions">
+            
+              <a href="kms.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Key Management Service (KMS)"></i></a>
+            
+            
+              <a href="rds.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Relational Database Service (RDS)"></i></a>
+            
+            </div>
+            <div class="row docs-byline bottom">
+              <div class="docs-updated">updated: 2021-12-08 13:15</div>
+            </div>
+          </div>
+  <div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 docs-sidebar">
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <a href="../../index.html" class="docs-sidebar-section-title"><h4>otcextensions 0.24.3.dev2</h4></a>
+      <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../install/index.html">1. Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../install/configuration.html">2. Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cli/index.html">3. OpenStack Client (CLI)</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">4. Using the OpenStack SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../architecture.html">Architecture Overview and Important Terms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Guides for SDK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proxies/index.html">Service Proxies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../resources/index.html">Resources and Attributes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributor/index.html">5. Contributing to the OTC Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../coverage.html">6. Service Coverage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendices/index.html">7. Appendices</a></li>
+</ul>
+
+    </div>
+
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="local-table-of-contents">
+      <h4 class="docs-sidebar-section-title">Page Contents</h4>
+      <ul>
+<li><a class="reference internal" href="#">Network Address Translation (NAT)</a><ul>
+<li><a class="reference internal" href="#nat-gateway">NAT Gateway</a><ul>
+<li><a class="reference internal" href="#list-nat-gateways">List NAT Gateways</a></li>
+<li><a class="reference internal" href="#create-nat-gateway">Create NAT Gateway</a></li>
+<li><a class="reference internal" href="#get-nat-gateway">Get NAT Gateway</a></li>
+<li><a class="reference internal" href="#find-nat-gateway">Find NAT Gateway</a></li>
+<li><a class="reference internal" href="#update-nat-gateway">Update NAT Gateway</a></li>
+<li><a class="reference internal" href="#delete-nat-gateway">Delete NAT Gateway</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#snat">SNAT</a><ul>
+<li><a class="reference internal" href="#list-snat-rules">List SNAT Rules</a></li>
+<li><a class="reference internal" href="#create-snat-rule">Create SNAT Rule</a></li>
+<li><a class="reference internal" href="#get-snat-rule">Get SNAT Rule</a></li>
+<li><a class="reference internal" href="#delete-snat-rule">Delete SNAT Rule</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#dnat">DNAT</a><ul>
+<li><a class="reference internal" href="#list-dnat-rules">List DNAT Rules</a></li>
+<li><a class="reference internal" href="#create-dnat-rule">Create DNAT Rule</a></li>
+<li><a class="reference internal" href="#get-dnat-rule">Get DNAT Rule</a></li>
+<li><a class="reference internal" href="#delete-dnat-rule">Delete DNAT Rule</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+  </div>
+</div>
+        </div>
+      </div>
+  </scale-app-shell>
+<scale-app-footer id="footer-shell" variant="standard" claim-lang="en">
+</scale-app-footer>
+<script>
+  const footer_shell = document.getElementById("footer-shell");
+  footer_shell.footerNavigation = [{"name":"Contact","id":"Contact","href":"https://cloud.telekom.de/en/contact/"},{"name":"Legal notice","id":"Legal notice","href":"https://cloud.telekom.de/en/imprint-adress"},{"name":"Data privacy","id":"Data privacy","href":"https://open-telekom-cloud.com/en/data-protection","icon":"alert-imprint-dataprivacy"}]</script>
+  <!-- jQuery -->
+<script type="text/javascript" src="../../_static/js/jquery-3.2.1.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script type="text/javascript" src="../../_static/js/bootstrap.min.js"></script>
+
+<!-- Telekom Scale -->
+<script type="module" src="https://unpkg.com/@telekom/scale-components@3.0.0-beta.32/dist/scale-components/scale-components.esm.js"></script>
+
+<!-- The rest of the JS -->
+<script type="text/javascript" src="../../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script type="text/javascript" src="../../_static/js/docs.js"></script>
+
+<!-- Popovers -->
+<script type="text/javascript" src="../../_static/js/webui-popover.js"></script>
+
+<!-- standard sphinx include libraries, which allow search highlighting -->
+<script type="text/javascript" src="../../_static/underscore.js"></script>
+<script type="text/javascript" src="../../_static/doctools.js"></script>
+<script type="text/javascript" src="../../_static/searchtools.js"></script>
+
+<script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.24.3.dev2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+</script>
+
+
+<!-- Javascript for page -->
+<script language="JavaScript">
+/* build a description of this page including SHA, source location on git repo,
+   build time and the project's launchpad bug tag. Set the HREF of the bug
+   buttons */
+</script>
+  
+  </body>
+</html>

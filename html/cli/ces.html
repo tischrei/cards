@@ -1,0 +1,696 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Cloud Eye Service (CES) &#8212; otcextensions 0.24.3.dev2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/basic.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Cloud Search Service (CSS)" href="css.html" />
+    <link rel="prev" title="Cloud Container Engine (CCE)" href="cce_v2.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap CSS -->
+<link href="../_static/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../_static/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="../_static/css/combined.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../_static/pygments.css" rel="stylesheet">
+
+<!-- Telekom Scale -->
+<link href="https://unpkg.com/@telekom/scale-components@3.0.0-beta.32/dist/scale-components/scale-components.css" rel="stylesheet">
+
+<!-- Otcdocstheme CSS -->
+<link href="../_static/css/otcdocstheme.css" rel="stylesheet">
+
+
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-17511903-1', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+  </head><body>
+  
+<!-- SOURCE_FILE: cli/ces.rst -->
+
+
+<scale-app-shell
+  id="app-shell"
+  claim-lang="en"
+  logo-title="PAGENAME"
+  logo-href="/"
+>
+
+
+
+<script>
+  const app_shell = document.getElementById(
+  'app-shell');
+  app_shell.mainNavigation = [
+    {
+      "name": "Software",
+      "id": "Software",
+      "children": [
+        {
+          "name": "Automation",
+          "id": "Automation",
+          "children": [
+            {
+              "name": "Terraform OTC Driver",
+              "id": "Terraform OTC Driver",
+              "href": "https://docs.otc-service.com/terraform-provider-opentelekomcloud"
+            },
+                      {
+              "name": "Ansible Collection Cloud",
+              "id": "Ansible Collection Cloud",
+              "href": "https://docs.otc-service.com/ansible-collection-cloud"
+            },
+          ]
+        },
+        {
+          "name": "Client Tools",
+          "id": "Client Tools",
+          "children": [
+            {
+              "name": "OTC Extensions",
+              "id": "OTC Extensions",
+              "href": "https://docs.otc-service.com/python-otcextensions"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Release Notes",
+      "id": "Release Notes",
+      "children": [
+        {
+          "name": "Automation",
+          "id": "Automation",
+          "children": [
+            {
+              "name": "Terraform OTC Driver",
+              "id": "Terraform OTC Driver",
+              "href": "https://docs.otc-service.com/releasenotes/terraform-provider-opentelekomcloud"
+            }
+          ]
+        },
+        {
+          "name": "Client Tools",
+          "id": "Client Tools",
+          "children": [
+            {
+              "name": "OTC Extensions",
+              "id": "OTC Extensions",
+              "href": "https://docs.otc-service.com/releasenotes/python-otcextensions"
+            }
+          ]
+        }
+      ]
+    }
+  ];
+</script>
+  
+      <div class="container docs-book-wrapper">
+        <div class="row">
+          <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
+  <div class="row docs-title">
+  <div class="col-lg-8">
+      <h1>Cloud Eye Service (CES)</h1>
+    
+  </div>
+  <div class="docs-actions">
+    
+    <a href="cce_v2.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Cloud Container Engine (CCE)"></i></a>
+    
+    
+    <a href="css.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Cloud Search Service (CSS)"></i></a>
+    
+  </div>
+</div>
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="docs-body" role="main">
+  
+  <section id="cloud-eye-service-ces">
+<h1>Cloud Eye Service (CES)<a class="headerlink" href="#cloud-eye-service-ces" title="Permalink to this headline">¶</a></h1>
+<p>The CES client is the command-line interface (CLI) for
+the Cloud Eye Service (CES) API and its extensions.</p>
+<p>For help on a specific <cite>ces</cite> command, enter:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>openstack ces <span class="nb">help</span> SUBCOMMAND
+</pre></div>
+</div>
+<section id="alarm-rule-operations">
+<span id="alarm"></span><h2>Alarm Rule Operations<a class="headerlink" href="#alarm-rule-operations" title="Permalink to this headline">¶</a></h2>
+<section id="ces-alarm-create">
+<h3>ces alarm create<a class="headerlink" href="#ces-alarm-create" title="Permalink to this headline">¶</a></h3>
+<p>Create CloudEye alarm rule</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack ces alarm create
+    <span class="o">[</span>--enabled &lt;enabled&gt;<span class="o">]</span>
+    <span class="o">[</span>--description &lt;description&gt;<span class="o">]</span>
+    <span class="o">[</span>--action-enabled ACTION_ENABLED<span class="o">]</span>
+    <span class="o">[</span>--level &lt;level&gt;<span class="o">]</span>
+    <span class="o">[</span>--alarm-action-type &lt;alarm_action_type&gt;<span class="o">]</span>
+    <span class="o">[</span>--alarm-action-notification-list &lt;alarm_action_notification_list&gt;<span class="o">]</span>
+    <span class="o">[</span>--ok-action-type &lt;ok_action_type&gt;<span class="o">]</span>
+    <span class="o">[</span>--ok-action-notification-list &lt;ok_action_notification_list&gt;<span class="o">]</span>
+    --comparison-operator &lt;comparison_operator&gt;
+    --count &lt;count&gt;
+    --filter &lt;filter&gt;
+    --period &lt;period&gt;
+    <span class="o">[</span>--unit &lt;unit&gt;<span class="o">]</span>
+    --value &lt;value&gt;
+    --dimension <span class="nv">name</span>
+    <span class="o">=</span>&lt;dimension-name&gt;,value<span class="o">=</span>&lt;dimensions-value&gt;
+    --metric-name &lt;metric_name&gt;
+    --namespace &lt;namespace&gt;
+    &lt;name&gt;
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-ces-alarm-create-enabled">
+<span class="sig-name descname"><span class="pre">--enabled</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;enabled&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-ces-alarm-create-enabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>State of the alarm.
+True: enable alarm (default)
+False: disable alarm</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-ces-alarm-create-description">
+<span class="sig-name descname"><span class="pre">--description</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;description&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-ces-alarm-create-description" title="Permalink to this definition">¶</a></dt>
+<dd><p>Description of the alarm</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-ces-alarm-create-action-enabled">
+<span class="sig-name descname"><span class="pre">--action-enabled</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;ACTION_ENABLED&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-ces-alarm-create-action-enabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies whether the alarm action is triggered</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-ces-alarm-create-level">
+<span class="sig-name descname"><span class="pre">--level</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;level&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-ces-alarm-create-level" title="Permalink to this definition">¶</a></dt>
+<dd><p>Indicates the alarm level
+1: critical
+2: major
+3: minor
+4: informational</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-ces-alarm-create-alarm-action-type">
+<span class="sig-name descname"><span class="pre">--alarm-action-type</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;alarm_action_type&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-ces-alarm-create-alarm-action-type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the alarms action type.
+notification: notification will be sent to user
+autoscaling: scaling action will be triggered</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-ces-alarm-create-alarm-action-notification-list">
+<span class="sig-name descname"><span class="pre">--alarm-action-notification-list</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;alarm_action_notification_list&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-ces-alarm-create-alarm-action-notification-list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the list of objects being notified when alarm status changes.
+URN example structure:
+<a class="reference external" href="urn:smn:region:68438a86d98e427e907e0097b7e35d48:sd">urn:smn:region:68438a86d98e427e907e0097b7e35d48:sd</a>
+The parameter can be given multiple times to notify multiple targets.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-ces-alarm-create-ok-action-type">
+<span class="sig-name descname"><span class="pre">--ok-action-type</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;ok_action_type&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-ces-alarm-create-ok-action-type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the alarms action type.
+notification: notification will be sent to user
+autoscaling: scaling action will be triggered</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-ces-alarm-create-ok-action-notification-list">
+<span class="sig-name descname"><span class="pre">--ok-action-notification-list</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;ok_action_notification_list&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-ces-alarm-create-ok-action-notification-list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the list of objects being notified when alarm status changes.
+URN example structure:
+<a class="reference external" href="urn:smn:region:68438a86d98e427e907e0097b7e35d48:sd">urn:smn:region:68438a86d98e427e907e0097b7e35d48:sd</a>
+The parameter can be given multiple times to notify multiple targets.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-ces-alarm-create-comparison-operator">
+<span class="sig-name descname"><span class="pre">--comparison-operator</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;comparison_operator&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-ces-alarm-create-comparison-operator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the conditions comparison operator</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-ces-alarm-create-count">
+<span class="sig-name descname"><span class="pre">--count</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;count&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-ces-alarm-create-count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies how many times the alarm condition has to triggered until Alarm raises.
+Value range: 1 to 5</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-ces-alarm-create-filter">
+<span class="sig-name descname"><span class="pre">--filter</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;filter&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-ces-alarm-create-filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the data rollup method.
+Values: max, min, average, sum, variance</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-ces-alarm-create-period">
+<span class="sig-name descname"><span class="pre">--period</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;period&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-ces-alarm-create-period" title="Permalink to this definition">¶</a></dt>
+<dd><p>Indicates the interval (in seconds) for checking whether the configured alarm rules are met.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-ces-alarm-create-unit">
+<span class="sig-name descname"><span class="pre">--unit</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;unit&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-ces-alarm-create-unit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies data unit.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-ces-alarm-create-value">
+<span class="sig-name descname"><span class="pre">--value</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;value&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-ces-alarm-create-value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the alarm threshold.
+Values: 0 to max(int)</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-ces-alarm-create-dimension">
+<span class="sig-name descname"><span class="pre">--dimension</span></span><span class="sig-prename descclassname"> <span class="pre">name=&lt;dimension-name&gt;,value=&lt;dimensions-value&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-ces-alarm-create-dimension" title="Permalink to this definition">¶</a></dt>
+<dd><p>Example:
+–dimension name=instance_id,value=123456-bfdba93d4123
+Repeat option to provide multiple dimensions.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-ces-alarm-create-metric-name">
+<span class="sig-name descname"><span class="pre">--metric-name</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;metric_name&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-ces-alarm-create-metric-name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the metric name</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-ces-alarm-create-namespace">
+<span class="sig-name descname"><span class="pre">--namespace</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;namespace&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-ces-alarm-create-namespace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the namespace of the metric such as:
+SYS.ECS, SYS.AS</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-ces-alarm-create-arg-name">
+<span class="sig-name descname"><span class="pre">name</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-ces-alarm-create-arg-name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alarm name</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="ces-alarm-delete">
+<h3>ces alarm delete<a class="headerlink" href="#ces-alarm-delete" title="Permalink to this headline">¶</a></h3>
+<p>Delete CES alarm</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack ces alarm delete &lt;alarm&gt; <span class="o">[</span>&lt;alarm&gt; ...<span class="o">]</span>
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-ces-alarm-delete-arg-alarm">
+<span class="sig-name descname"><span class="pre">alarm</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-ces-alarm-delete-arg-alarm" title="Permalink to this definition">¶</a></dt>
+<dd><p>UUID or name of the alarm.</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="ces-alarm-list">
+<h3>ces alarm list<a class="headerlink" href="#ces-alarm-list" title="Permalink to this headline">¶</a></h3>
+<p>List CES alarms</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack ces alarm list
+    <span class="o">[</span>--sort-column SORT_COLUMN<span class="o">]</span>
+    <span class="o">[</span>--sort-ascending <span class="p">|</span> --sort-descending<span class="o">]</span>
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-ces-alarm-list-sort-column">
+<span class="sig-name descname"><span class="pre">--sort-column</span></span><span class="sig-prename descclassname"> <span class="pre">SORT_COLUMN</span></span><a class="headerlink" href="#cmdoption-openstack-ces-alarm-list-sort-column" title="Permalink to this definition">¶</a></dt>
+<dd><p>specify the column(s) to sort the data (columns specified first have a priority, non-existing columns are ignored), can be repeated</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-ces-alarm-list-sort-ascending">
+<span class="sig-name descname"><span class="pre">--sort-ascending</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-ces-alarm-list-sort-ascending" title="Permalink to this definition">¶</a></dt>
+<dd><p>sort the column(s) in ascending order</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-ces-alarm-list-sort-descending">
+<span class="sig-name descname"><span class="pre">--sort-descending</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-ces-alarm-list-sort-descending" title="Permalink to this definition">¶</a></dt>
+<dd><p>sort the column(s) in descending order</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="ces-alarm-show">
+<h3>ces alarm show<a class="headerlink" href="#ces-alarm-show" title="Permalink to this headline">¶</a></h3>
+<p>Show CloudEye alarm rule details</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack ces alarm show &lt;alarm&gt;
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-ces-alarm-show-arg-alarm">
+<span class="sig-name descname"><span class="pre">alarm</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-ces-alarm-show-arg-alarm" title="Permalink to this definition">¶</a></dt>
+<dd><p>UUID or name of the alarm rule.</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="ces-alarm-switch-state">
+<h3>ces alarm switch state<a class="headerlink" href="#ces-alarm-switch-state" title="Permalink to this headline">¶</a></h3>
+<p>Switch Alarm status.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack ces alarm switch state &lt;alarm&gt;
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-ces-alarm-switch-state-arg-alarm">
+<span class="sig-name descname"><span class="pre">alarm</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-ces-alarm-switch-state-arg-alarm" title="Permalink to this definition">¶</a></dt>
+<dd><p>UUID or name of the alarm.</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+</section>
+<section id="metric-operations">
+<span id="metric"></span><h2>Metric Operations<a class="headerlink" href="#metric-operations" title="Permalink to this headline">¶</a></h2>
+<section id="ces-metric-list">
+<h3>ces metric list<a class="headerlink" href="#ces-metric-list" title="Permalink to this headline">¶</a></h3>
+<p>List CES Metrics</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack ces metric list
+    <span class="o">[</span>--sort-column SORT_COLUMN<span class="o">]</span>
+    <span class="o">[</span>--sort-ascending <span class="p">|</span> --sort-descending<span class="o">]</span>
+    <span class="o">[</span>--namespace &lt;namespace&gt;<span class="o">]</span>
+    <span class="o">[</span>--metric-name &lt;metric_name&gt;<span class="o">]</span>
+    <span class="o">[</span>--unit &lt;unit&gt;<span class="o">]</span>
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-ces-metric-list-sort-column">
+<span class="sig-name descname"><span class="pre">--sort-column</span></span><span class="sig-prename descclassname"> <span class="pre">SORT_COLUMN</span></span><a class="headerlink" href="#cmdoption-openstack-ces-metric-list-sort-column" title="Permalink to this definition">¶</a></dt>
+<dd><p>specify the column(s) to sort the data (columns specified first have a priority, non-existing columns are ignored), can be repeated</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-ces-metric-list-sort-ascending">
+<span class="sig-name descname"><span class="pre">--sort-ascending</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-ces-metric-list-sort-ascending" title="Permalink to this definition">¶</a></dt>
+<dd><p>sort the column(s) in ascending order</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-ces-metric-list-sort-descending">
+<span class="sig-name descname"><span class="pre">--sort-descending</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-ces-metric-list-sort-descending" title="Permalink to this definition">¶</a></dt>
+<dd><p>sort the column(s) in descending order</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-ces-metric-list-namespace">
+<span class="sig-name descname"><span class="pre">--namespace</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;namespace&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-ces-metric-list-namespace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Namespace of the monitored object, e.g.
+SYS.ECS, SYS.VPC</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-ces-metric-list-metric-name">
+<span class="sig-name descname"><span class="pre">--metric-name</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;metric_name&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-ces-metric-list-metric-name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name of the metrics object.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-ces-metric-list-unit">
+<span class="sig-name descname"><span class="pre">--unit</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;unit&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-ces-metric-list-unit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unit which is measured.</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+</section>
+<section id="quota-operations">
+<span id="quota"></span><h2>Quota Operations<a class="headerlink" href="#quota-operations" title="Permalink to this headline">¶</a></h2>
+<section id="ces-quota-list">
+<h3>ces quota list<a class="headerlink" href="#ces-quota-list" title="Permalink to this headline">¶</a></h3>
+<p>List CES alarm quota</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack ces quota list
+    <span class="o">[</span>--sort-column SORT_COLUMN<span class="o">]</span>
+    <span class="o">[</span>--sort-ascending <span class="p">|</span> --sort-descending<span class="o">]</span>
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-ces-quota-list-sort-column">
+<span class="sig-name descname"><span class="pre">--sort-column</span></span><span class="sig-prename descclassname"> <span class="pre">SORT_COLUMN</span></span><a class="headerlink" href="#cmdoption-openstack-ces-quota-list-sort-column" title="Permalink to this definition">¶</a></dt>
+<dd><p>specify the column(s) to sort the data (columns specified first have a priority, non-existing columns are ignored), can be repeated</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-ces-quota-list-sort-ascending">
+<span class="sig-name descname"><span class="pre">--sort-ascending</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-ces-quota-list-sort-ascending" title="Permalink to this definition">¶</a></dt>
+<dd><p>sort the column(s) in ascending order</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-ces-quota-list-sort-descending">
+<span class="sig-name descname"><span class="pre">--sort-descending</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-ces-quota-list-sort-descending" title="Permalink to this definition">¶</a></dt>
+<dd><p>sort the column(s) in descending order</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+</section>
+<section id="event-data-operations">
+<span id="event-data"></span><h2>Event Data Operations<a class="headerlink" href="#event-data-operations" title="Permalink to this headline">¶</a></h2>
+<section id="ces-event-data-list">
+<h3>ces event data list<a class="headerlink" href="#ces-event-data-list" title="Permalink to this headline">¶</a></h3>
+<p>List CES event data</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack ces event data list
+    <span class="o">[</span>--sort-column SORT_COLUMN<span class="o">]</span>
+    <span class="o">[</span>--sort-ascending <span class="p">|</span> --sort-descending<span class="o">]</span>
+    --namespace &lt;namespace&gt;
+    --type &lt;type&gt;
+    --dim &lt;key
+    ,value&gt;
+    --time-from &lt;from&gt;
+    --time-to &lt;to&gt;
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-ces-event-data-list-sort-column">
+<span class="sig-name descname"><span class="pre">--sort-column</span></span><span class="sig-prename descclassname"> <span class="pre">SORT_COLUMN</span></span><a class="headerlink" href="#cmdoption-openstack-ces-event-data-list-sort-column" title="Permalink to this definition">¶</a></dt>
+<dd><p>specify the column(s) to sort the data (columns specified first have a priority, non-existing columns are ignored), can be repeated</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-ces-event-data-list-sort-ascending">
+<span class="sig-name descname"><span class="pre">--sort-ascending</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-ces-event-data-list-sort-ascending" title="Permalink to this definition">¶</a></dt>
+<dd><p>sort the column(s) in ascending order</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-ces-event-data-list-sort-descending">
+<span class="sig-name descname"><span class="pre">--sort-descending</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-ces-event-data-list-sort-descending" title="Permalink to this definition">¶</a></dt>
+<dd><p>sort the column(s) in descending order</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-ces-event-data-list-namespace">
+<span class="sig-name descname"><span class="pre">--namespace</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;namespace&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-ces-event-data-list-namespace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the namespace of the metric such as:
+SYS.ECS, SYS.AS</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-ces-event-data-list-type">
+<span class="sig-name descname"><span class="pre">--type</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;type&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-ces-event-data-list-type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the event type such as:
+instance_host_info</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-ces-event-data-list-dim">
+<span class="sig-name descname"><span class="pre">--dim</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;key,value&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-ces-event-data-list-dim" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the monitoring dimension:
+dim.0=instance_id,123-456-789</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-ces-event-data-list-time-from">
+<span class="sig-name descname"><span class="pre">--time-from</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;from&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-ces-event-data-list-time-from" title="Permalink to this definition">¶</a></dt>
+<dd><p>UNIX timestamp in ms from which the data is collected.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-ces-event-data-list-time-to">
+<span class="sig-name descname"><span class="pre">--time-to</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;to&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-ces-event-data-list-time-to" title="Permalink to this definition">¶</a></dt>
+<dd><p>UNIX timestamp in ms to which the data is collected.</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+</section>
+</section>
+
+
+                </div>
+              </div>
+            </div>
+            <div class="docs-actions">
+            
+              <a href="cce_v2.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Cloud Container Engine (CCE)"></i></a>
+            
+            
+              <a href="css.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Cloud Search Service (CSS)"></i></a>
+            
+            </div>
+            <div class="row docs-byline bottom">
+              <div class="docs-updated">updated: 2021-12-08 13:15</div>
+            </div>
+          </div>
+  <div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 docs-sidebar">
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <a href="../index.html" class="docs-sidebar-section-title"><h4>otcextensions 0.24.3.dev2</h4></a>
+      <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install/index.html">1. Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install/configuration.html">2. Configuration</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">3. OpenStack Client (CLI)</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="anti_ddos.html">Anti DDoS Service (Anti_DDoS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="auto_scaling.html">AutoScaling service (AS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cbr.html">Cloud Backup and Recovery (CBR)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cce_v2.html">Cloud Container Engine (CCE)</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Cloud Eye Service (CES)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="css.html">Cloud Search Service (CSS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cts.html">Cloud Trace Service (CTS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dcs.html">Distributed Cache Service (DCS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deh.html">Dedicated Host Service (DeH)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dms.html">Distributed Message Service (DMS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dns.html">Domain Name Service (DNS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="identity.html">Identity Service (IAM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kms.html">Key Management Service (KMS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="load_balancer.html">Elastic LoadBalancer (ELB)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nat.html">Network Address Translation (NAT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="obs.html">Object Storage service (OBS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rds_v3.html">Relational Database Service (RDS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="smn.html">Simple Message Notification Service (SMN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="volume_backup.html">Volume Backup Service (VBS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vpc.html">Virtual Private Cloud (VPC)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sdk/index.html">4. Using the OpenStack SDK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributor/index.html">5. Contributing to the OTC Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../coverage.html">6. Service Coverage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendices/index.html">7. Appendices</a></li>
+</ul>
+
+    </div>
+
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="local-table-of-contents">
+      <h4 class="docs-sidebar-section-title">Page Contents</h4>
+      <ul>
+<li><a class="reference internal" href="#">Cloud Eye Service (CES)</a><ul>
+<li><a class="reference internal" href="#alarm-rule-operations">Alarm Rule Operations</a><ul>
+<li><a class="reference internal" href="#ces-alarm-create">ces alarm create</a></li>
+<li><a class="reference internal" href="#ces-alarm-delete">ces alarm delete</a></li>
+<li><a class="reference internal" href="#ces-alarm-list">ces alarm list</a></li>
+<li><a class="reference internal" href="#ces-alarm-show">ces alarm show</a></li>
+<li><a class="reference internal" href="#ces-alarm-switch-state">ces alarm switch state</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#metric-operations">Metric Operations</a><ul>
+<li><a class="reference internal" href="#ces-metric-list">ces metric list</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#quota-operations">Quota Operations</a><ul>
+<li><a class="reference internal" href="#ces-quota-list">ces quota list</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#event-data-operations">Event Data Operations</a><ul>
+<li><a class="reference internal" href="#ces-event-data-list">ces event data list</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+  </div>
+</div>
+        </div>
+      </div>
+  </scale-app-shell>
+<scale-app-footer id="footer-shell" variant="standard" claim-lang="en">
+</scale-app-footer>
+<script>
+  const footer_shell = document.getElementById("footer-shell");
+  footer_shell.footerNavigation = [{"name":"Contact","id":"Contact","href":"https://cloud.telekom.de/en/contact/"},{"name":"Legal notice","id":"Legal notice","href":"https://cloud.telekom.de/en/imprint-adress"},{"name":"Data privacy","id":"Data privacy","href":"https://open-telekom-cloud.com/en/data-protection","icon":"alert-imprint-dataprivacy"}]</script>
+  <!-- jQuery -->
+<script type="text/javascript" src="../_static/js/jquery-3.2.1.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script type="text/javascript" src="../_static/js/bootstrap.min.js"></script>
+
+<!-- Telekom Scale -->
+<script type="module" src="https://unpkg.com/@telekom/scale-components@3.0.0-beta.32/dist/scale-components/scale-components.esm.js"></script>
+
+<!-- The rest of the JS -->
+<script type="text/javascript" src="../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script type="text/javascript" src="../_static/js/docs.js"></script>
+
+<!-- Popovers -->
+<script type="text/javascript" src="../_static/js/webui-popover.js"></script>
+
+<!-- standard sphinx include libraries, which allow search highlighting -->
+<script type="text/javascript" src="../_static/underscore.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+<script type="text/javascript" src="../_static/searchtools.js"></script>
+
+<script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.24.3.dev2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+</script>
+
+
+<!-- Javascript for page -->
+<script language="JavaScript">
+/* build a description of this page including SHA, source location on git repo,
+   build time and the project's launchpad bug tag. Set the HREF of the bug
+   buttons */
+</script>
+  
+  </body>
+</html>

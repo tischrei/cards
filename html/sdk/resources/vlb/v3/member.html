@@ -1,0 +1,350 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>otcextensions.sdk.vlb.v3.member &#8212; otcextensions 0.24.3.dev2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/css/basic.css" />
+    <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="otcextensions.sdk.vlb.v3.pool" href="pool.html" />
+    <link rel="prev" title="otcextensions.sdk.vlb.v3.listener" href="listener.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap CSS -->
+<link href="../../../../_static/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../../../../_static/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="../../../../_static/css/combined.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../../../../_static/pygments.css" rel="stylesheet">
+
+<!-- Telekom Scale -->
+<link href="https://unpkg.com/@telekom/scale-components@3.0.0-beta.32/dist/scale-components/scale-components.css" rel="stylesheet">
+
+<!-- Otcdocstheme CSS -->
+<link href="../../../../_static/css/otcdocstheme.css" rel="stylesheet">
+
+
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-17511903-1', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+  </head><body>
+  
+<!-- SOURCE_FILE: sdk/resources/vlb/v3/member.rst -->
+
+
+<scale-app-shell
+  id="app-shell"
+  claim-lang="en"
+  logo-title="PAGENAME"
+  logo-href="/"
+>
+
+
+
+<script>
+  const app_shell = document.getElementById(
+  'app-shell');
+  app_shell.mainNavigation = [
+    {
+      "name": "Software",
+      "id": "Software",
+      "children": [
+        {
+          "name": "Automation",
+          "id": "Automation",
+          "children": [
+            {
+              "name": "Terraform OTC Driver",
+              "id": "Terraform OTC Driver",
+              "href": "https://docs.otc-service.com/terraform-provider-opentelekomcloud"
+            },
+                      {
+              "name": "Ansible Collection Cloud",
+              "id": "Ansible Collection Cloud",
+              "href": "https://docs.otc-service.com/ansible-collection-cloud"
+            },
+          ]
+        },
+        {
+          "name": "Client Tools",
+          "id": "Client Tools",
+          "children": [
+            {
+              "name": "OTC Extensions",
+              "id": "OTC Extensions",
+              "href": "https://docs.otc-service.com/python-otcextensions"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Release Notes",
+      "id": "Release Notes",
+      "children": [
+        {
+          "name": "Automation",
+          "id": "Automation",
+          "children": [
+            {
+              "name": "Terraform OTC Driver",
+              "id": "Terraform OTC Driver",
+              "href": "https://docs.otc-service.com/releasenotes/terraform-provider-opentelekomcloud"
+            }
+          ]
+        },
+        {
+          "name": "Client Tools",
+          "id": "Client Tools",
+          "children": [
+            {
+              "name": "OTC Extensions",
+              "id": "OTC Extensions",
+              "href": "https://docs.otc-service.com/releasenotes/python-otcextensions"
+            }
+          ]
+        }
+      ]
+    }
+  ];
+</script>
+  
+      <div class="container docs-book-wrapper">
+        <div class="row">
+          <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
+  <div class="row docs-title">
+  <div class="col-lg-8">
+      <h1>otcextensions.sdk.vlb.v3.member</h1>
+    
+  </div>
+  <div class="docs-actions">
+    
+    <a href="listener.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: otcextensions.sdk.vlb.v3.listener"></i></a>
+    
+    
+    <a href="pool.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: otcextensions.sdk.vlb.v3.pool"></i></a>
+    
+  </div>
+</div>
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="docs-body" role="main">
+  
+  <section id="module-otcextensions.sdk.vlb.v3.member">
+<span id="otcextensions-sdk-vlb-v3-member"></span><h1>otcextensions.sdk.vlb.v3.member<a class="headerlink" href="#module-otcextensions.sdk.vlb.v3.member" title="Permalink to this headline">¶</a></h1>
+<section id="the-member-class">
+<h2>The Member Class<a class="headerlink" href="#the-member-class" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">Member</span></code> class inherits from
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Resource</span></code>.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="otcextensions.sdk.vlb.v3.member.Member">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">otcextensions.sdk.vlb.v3.member.</span></span><span class="sig-name descname"><span class="pre">Member</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_synchronized</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#otcextensions.sdk.vlb.v3.member.Member" title="Permalink to this definition">¶</a></dt>
+<dd><p>The base resource</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>_synchronized</strong> (<em>bool</em>) – This is not intended to be used directly. See
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">new()</span></code> and
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">existing()</span></code>.</p></li>
+<li><p><strong>connection</strong> (<em>openstack.connection.Connection</em>) – Reference to the Connection being used. Defaults to None to allow
+Resource objects to be used without an active Connection, such as
+in unit tests. Use of <code class="docutils literal notranslate"><span class="pre">self._connection</span></code> in Resource code should
+protect itself with a check for None.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="otcextensions.sdk.vlb.v3.member.Member.pool_id">
+<span class="sig-name descname"><span class="pre">pool_id</span></span><a class="headerlink" href="#otcextensions.sdk.vlb.v3.member.Member.pool_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the ID of the backend server group.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="otcextensions.sdk.vlb.v3.member.Member.address">
+<span class="sig-name descname"><span class="pre">address</span></span><a class="headerlink" href="#otcextensions.sdk.vlb.v3.member.Member.address" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the IP address of the backend server.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="otcextensions.sdk.vlb.v3.member.Member.ip_version">
+<span class="sig-name descname"><span class="pre">ip_version</span></span><a class="headerlink" href="#otcextensions.sdk.vlb.v3.member.Member.ip_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Address parameter</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="otcextensions.sdk.vlb.v3.member.Member.is_admin_state_up">
+<span class="sig-name descname"><span class="pre">is_admin_state_up</span></span><a class="headerlink" href="#otcextensions.sdk.vlb.v3.member.Member.is_admin_state_up" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the administrative status of the backend server.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="otcextensions.sdk.vlb.v3.member.Member.operating_status">
+<span class="sig-name descname"><span class="pre">operating_status</span></span><a class="headerlink" href="#otcextensions.sdk.vlb.v3.member.Member.operating_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the operating status of the backend server.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="otcextensions.sdk.vlb.v3.member.Member.project_id">
+<span class="sig-name descname"><span class="pre">project_id</span></span><a class="headerlink" href="#otcextensions.sdk.vlb.v3.member.Member.project_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the project ID.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="otcextensions.sdk.vlb.v3.member.Member.protocol_port">
+<span class="sig-name descname"><span class="pre">protocol_port</span></span><a class="headerlink" href="#otcextensions.sdk.vlb.v3.member.Member.protocol_port" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the port used by the backend server to receive requests.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="otcextensions.sdk.vlb.v3.member.Member.subnet_cidr_id">
+<span class="sig-name descname"><span class="pre">subnet_cidr_id</span></span><a class="headerlink" href="#otcextensions.sdk.vlb.v3.member.Member.subnet_cidr_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the ID of the subnet where the backend server works.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="otcextensions.sdk.vlb.v3.member.Member.weight">
+<span class="sig-name descname"><span class="pre">weight</span></span><a class="headerlink" href="#otcextensions.sdk.vlb.v3.member.Member.weight" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the weight of the backend server.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+                </div>
+              </div>
+            </div>
+            <div class="docs-actions">
+            
+              <a href="listener.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: otcextensions.sdk.vlb.v3.listener"></i></a>
+            
+            
+              <a href="pool.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: otcextensions.sdk.vlb.v3.pool"></i></a>
+            
+            </div>
+            <div class="row docs-byline bottom">
+              <div class="docs-updated">updated: 2021-12-08 13:15</div>
+            </div>
+          </div>
+  <div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 docs-sidebar">
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <a href="../../../../index.html" class="docs-sidebar-section-title"><h4>otcextensions 0.24.3.dev2</h4></a>
+      <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../install/index.html">1. Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../install/configuration.html">2. Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../cli/index.html">3. OpenStack Client (CLI)</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html">4. Using the OpenStack SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../architecture.html">Architecture Overview and Important Terms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../getting_started.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../guides/index.html">Guides for SDK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../proxies/index.html">Service Proxies</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html">Resources and Attributes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributor/index.html">5. Contributing to the OTC Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../coverage.html">6. Service Coverage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../appendices/index.html">7. Appendices</a></li>
+</ul>
+
+    </div>
+
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="local-table-of-contents">
+      <h4 class="docs-sidebar-section-title">Page Contents</h4>
+      <ul>
+<li><a class="reference internal" href="#">otcextensions.sdk.vlb.v3.member</a><ul>
+<li><a class="reference internal" href="#the-member-class">The Member Class</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+  </div>
+</div>
+        </div>
+      </div>
+  </scale-app-shell>
+<scale-app-footer id="footer-shell" variant="standard" claim-lang="en">
+</scale-app-footer>
+<script>
+  const footer_shell = document.getElementById("footer-shell");
+  footer_shell.footerNavigation = [{"name":"Contact","id":"Contact","href":"https://cloud.telekom.de/en/contact/"},{"name":"Legal notice","id":"Legal notice","href":"https://cloud.telekom.de/en/imprint-adress"},{"name":"Data privacy","id":"Data privacy","href":"https://open-telekom-cloud.com/en/data-protection","icon":"alert-imprint-dataprivacy"}]</script>
+  <!-- jQuery -->
+<script type="text/javascript" src="../../../../_static/js/jquery-3.2.1.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script type="text/javascript" src="../../../../_static/js/bootstrap.min.js"></script>
+
+<!-- Telekom Scale -->
+<script type="module" src="https://unpkg.com/@telekom/scale-components@3.0.0-beta.32/dist/scale-components/scale-components.esm.js"></script>
+
+<!-- The rest of the JS -->
+<script type="text/javascript" src="../../../../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script type="text/javascript" src="../../../../_static/js/docs.js"></script>
+
+<!-- Popovers -->
+<script type="text/javascript" src="../../../../_static/js/webui-popover.js"></script>
+
+<!-- standard sphinx include libraries, which allow search highlighting -->
+<script type="text/javascript" src="../../../../_static/underscore.js"></script>
+<script type="text/javascript" src="../../../../_static/doctools.js"></script>
+<script type="text/javascript" src="../../../../_static/searchtools.js"></script>
+
+<script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.24.3.dev2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+</script>
+
+
+<!-- Javascript for page -->
+<script language="JavaScript">
+/* build a description of this page including SHA, source location on git repo,
+   build time and the project's launchpad bug tag. Set the HREF of the bug
+   buttons */
+</script>
+  
+  </body>
+</html>

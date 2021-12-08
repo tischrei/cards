@@ -1,0 +1,568 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Web Application Firewall API &#8212; otcextensions 0.24.3.dev2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/basic.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Resources and Attributes" href="../resources/index.html" />
+    <link rel="prev" title="VPC API" href="vpc.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap CSS -->
+<link href="../../_static/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../../_static/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="../../_static/css/combined.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../../_static/pygments.css" rel="stylesheet">
+
+<!-- Telekom Scale -->
+<link href="https://unpkg.com/@telekom/scale-components@3.0.0-beta.32/dist/scale-components/scale-components.css" rel="stylesheet">
+
+<!-- Otcdocstheme CSS -->
+<link href="../../_static/css/otcdocstheme.css" rel="stylesheet">
+
+
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-17511903-1', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+  </head><body>
+  
+<!-- SOURCE_FILE: sdk/proxies/waf.rst -->
+
+
+<scale-app-shell
+  id="app-shell"
+  claim-lang="en"
+  logo-title="PAGENAME"
+  logo-href="/"
+>
+
+
+
+<script>
+  const app_shell = document.getElementById(
+  'app-shell');
+  app_shell.mainNavigation = [
+    {
+      "name": "Software",
+      "id": "Software",
+      "children": [
+        {
+          "name": "Automation",
+          "id": "Automation",
+          "children": [
+            {
+              "name": "Terraform OTC Driver",
+              "id": "Terraform OTC Driver",
+              "href": "https://docs.otc-service.com/terraform-provider-opentelekomcloud"
+            },
+                      {
+              "name": "Ansible Collection Cloud",
+              "id": "Ansible Collection Cloud",
+              "href": "https://docs.otc-service.com/ansible-collection-cloud"
+            },
+          ]
+        },
+        {
+          "name": "Client Tools",
+          "id": "Client Tools",
+          "children": [
+            {
+              "name": "OTC Extensions",
+              "id": "OTC Extensions",
+              "href": "https://docs.otc-service.com/python-otcextensions"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Release Notes",
+      "id": "Release Notes",
+      "children": [
+        {
+          "name": "Automation",
+          "id": "Automation",
+          "children": [
+            {
+              "name": "Terraform OTC Driver",
+              "id": "Terraform OTC Driver",
+              "href": "https://docs.otc-service.com/releasenotes/terraform-provider-opentelekomcloud"
+            }
+          ]
+        },
+        {
+          "name": "Client Tools",
+          "id": "Client Tools",
+          "children": [
+            {
+              "name": "OTC Extensions",
+              "id": "OTC Extensions",
+              "href": "https://docs.otc-service.com/releasenotes/python-otcextensions"
+            }
+          ]
+        }
+      ]
+    }
+  ];
+</script>
+  
+      <div class="container docs-book-wrapper">
+        <div class="row">
+          <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
+  <div class="row docs-title">
+  <div class="col-lg-8">
+      <h1>Web Application Firewall API</h1>
+    
+  </div>
+  <div class="docs-actions">
+    
+    <a href="vpc.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: VPC API"></i></a>
+    
+    
+    <a href="../resources/index.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Resources and Attributes"></i></a>
+    
+  </div>
+</div>
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="docs-body" role="main">
+  
+  <section id="module-otcextensions.sdk.waf.v1._proxy">
+<span id="web-application-firewall-api"></span><h1>Web Application Firewall API<a class="headerlink" href="#module-otcextensions.sdk.waf.v1._proxy" title="Permalink to this headline">¶</a></h1>
+<section id="the-waf-service-class">
+<h2>The WAF Service Class<a class="headerlink" href="#the-waf-service-class" title="Permalink to this headline">¶</a></h2>
+<p>The waf high-level interface is available through the <code class="docutils literal notranslate"><span class="pre">waf</span></code>
+member of a <code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code> object.  The
+<code class="docutils literal notranslate"><span class="pre">waf</span></code> member will only be added if the
+<code class="docutils literal notranslate"><span class="pre">otcextensions.sdk.register_otc_extensions(conn)</span></code> method is called.</p>
+<section id="certificate-operations">
+<h3>Certificate Operations<a class="headerlink" href="#certificate-operations" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">otcextensions.sdk.waf.v1._proxy.</span></span><span class="sig-name descname"><span class="pre">Proxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">certificates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Retrieve a generator of certificates</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>query</strong> (<em>dict</em>) – Optional query parameters to be sent to limit the
+resources being returned.
+* <cite>limit</cite>: pagination limit
+* <cite>offset</cite>: pagination offset</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A generator of certificate
+<a class="reference internal" href="../resources/waf/v1/certificate.html#otcextensions.sdk.waf.v1.certificate.Certificate" title="otcextensions.sdk.waf.v1.certificate.Certificate"><code class="xref py py-class docutils literal notranslate"><span class="pre">Certificate</span></code></a>
+instances</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">create_certificate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Upload certificate from attributes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>attrs</strong> (<em>dict</em>) – Keyword arguments which will be used to create
+a <a class="reference internal" href="../resources/waf/v1/certificate.html#otcextensions.sdk.waf.v1.certificate.Certificate" title="otcextensions.sdk.waf.v1.certificate.Certificate"><code class="xref py py-class docutils literal notranslate"><span class="pre">Certificate</span></code></a>,
+comprised of the properties on the Certificate class.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The results of certificate creation</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../resources/waf/v1/certificate.html#otcextensions.sdk.waf.v1.certificate.Certificate" title="otcextensions.sdk.waf.v1.certificate.Certificate"><code class="xref py py-class docutils literal notranslate"><span class="pre">Certificate</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_certificate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">certificate</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Get a certificate</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>certificate</strong> – The value can be the ID of a certificate
+or a <a class="reference internal" href="../resources/waf/v1/certificate.html#otcextensions.sdk.waf.v1.certificate.Certificate" title="otcextensions.sdk.waf.v1.certificate.Certificate"><code class="xref py py-class docutils literal notranslate"><span class="pre">Certificate</span></code></a>
+instance.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Certificate instance</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../resources/waf/v1/certificate.html#otcextensions.sdk.waf.v1.certificate.Certificate" title="otcextensions.sdk.waf.v1.certificate.Certificate"><code class="xref py py-class docutils literal notranslate"><span class="pre">Certificate</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">delete_certificate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">certificate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Delete a certificate</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>certificate</strong> – The value can be the ID of a certificate
+or a <a class="reference internal" href="../resources/waf/v1/certificate.html#otcextensions.sdk.waf.v1.certificate.Certificate" title="otcextensions.sdk.waf.v1.certificate.Certificate"><code class="xref py py-class docutils literal notranslate"><span class="pre">Certificate</span></code></a>
+instance.</p></li>
+<li><p><strong>ignore_missing</strong> (<em>bool</em>) – When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code> will be raised when
+the certificate does not exist.
+When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, no exception will be set when attempting to
+delete a nonexistent certificate.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Certificate been deleted</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../resources/waf/v1/certificate.html#otcextensions.sdk.waf.v1.certificate.Certificate" title="otcextensions.sdk.waf.v1.certificate.Certificate"><code class="xref py py-class docutils literal notranslate"><span class="pre">Certificate</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">update_certificate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">certificate</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Update certificate attributes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>certificate</strong> – The id or an instance of
+<a class="reference internal" href="../resources/waf/v1/certificate.html#otcextensions.sdk.waf.v1.certificate.Certificate" title="otcextensions.sdk.waf.v1.certificate.Certificate"><code class="xref py py-class docutils literal notranslate"><span class="pre">Certificate</span></code></a></p></li>
+<li><p><strong>attrs</strong> (<em>dict</em>) – attributes for update on
+<a class="reference internal" href="../resources/waf/v1/certificate.html#otcextensions.sdk.waf.v1.certificate.Certificate" title="otcextensions.sdk.waf.v1.certificate.Certificate"><code class="xref py py-class docutils literal notranslate"><span class="pre">Certificate</span></code></a></p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="../resources/waf/v1/certificate.html#otcextensions.sdk.waf.v1.certificate.Certificate" title="otcextensions.sdk.waf.v1.certificate.Certificate"><code class="xref py py-class docutils literal notranslate"><span class="pre">Certificate</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">find_certificate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_or_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Find a single certificate</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name_or_id</strong> – The name or ID of a certificate</p></li>
+<li><p><strong>ignore_missing</strong> (<em>bool</em>) – When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code> will be raised
+when the certificate does not exist.
+When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, no exception will be set when attempting
+to delete a nonexistent certificate.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="domain-operations">
+<h3>Domain Operations<a class="headerlink" href="#domain-operations" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">otcextensions.sdk.waf.v1._proxy.</span></span><span class="sig-name descname"><span class="pre">Proxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">domains</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Retrieve a generator of domains</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>query</strong> (<em>dict</em>) – Optional query parameters to be sent to limit the
+resources being returned.
+* <cite>limit</cite>: pagination limit
+* <cite>offset</cite>: pagination offset
+* <cite>name</cite>: domain name (hostname)
+* <cite>policy_name</cite>: policy name</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A generator of domain
+<a class="reference internal" href="../resources/waf/v1/domain.html#otcextensions.sdk.waf.v1.domain.Domain" title="otcextensions.sdk.waf.v1.domain.Domain"><code class="xref py py-class docutils literal notranslate"><span class="pre">Domain</span></code></a>
+instances</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">create_domain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Upload domain from attributes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>attrs</strong> (<em>dict</em>) – Keyword arguments which will be used to create
+a <a class="reference internal" href="../resources/waf/v1/domain.html#otcextensions.sdk.waf.v1.domain.Domain" title="otcextensions.sdk.waf.v1.domain.Domain"><code class="xref py py-class docutils literal notranslate"><span class="pre">Domain</span></code></a>,
+comprised of the properties on the Domain class.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The results of domain creation</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../resources/waf/v1/domain.html#otcextensions.sdk.waf.v1.domain.Domain" title="otcextensions.sdk.waf.v1.domain.Domain"><code class="xref py py-class docutils literal notranslate"><span class="pre">Domain</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_domain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">domain</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Get a domain</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>domain</strong> – The value can be the ID of a domain
+or a <a class="reference internal" href="../resources/waf/v1/domain.html#otcextensions.sdk.waf.v1.domain.Domain" title="otcextensions.sdk.waf.v1.domain.Domain"><code class="xref py py-class docutils literal notranslate"><span class="pre">Domain</span></code></a>
+instance.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Domain instance</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../resources/waf/v1/domain.html#otcextensions.sdk.waf.v1.domain.Domain" title="otcextensions.sdk.waf.v1.domain.Domain"><code class="xref py py-class docutils literal notranslate"><span class="pre">Domain</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">delete_domain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">domain</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Delete a domain</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>domain</strong> – The value can be the ID of a domain
+or a <a class="reference internal" href="../resources/waf/v1/domain.html#otcextensions.sdk.waf.v1.domain.Domain" title="otcextensions.sdk.waf.v1.domain.Domain"><code class="xref py py-class docutils literal notranslate"><span class="pre">Domain</span></code></a>
+instance.</p></li>
+<li><p><strong>ignore_missing</strong> (<em>bool</em>) – When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code> will be raised when
+the domain does not exist.
+When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, no exception will be set when attempting to
+delete a nonexistent domain.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Domain been deleted</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../resources/waf/v1/domain.html#otcextensions.sdk.waf.v1.domain.Domain" title="otcextensions.sdk.waf.v1.domain.Domain"><code class="xref py py-class docutils literal notranslate"><span class="pre">Domain</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">update_domain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">domain</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Update domain attributes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>domain</strong> – The id or an instance of
+<a class="reference internal" href="../resources/waf/v1/domain.html#otcextensions.sdk.waf.v1.domain.Domain" title="otcextensions.sdk.waf.v1.domain.Domain"><code class="xref py py-class docutils literal notranslate"><span class="pre">Domain</span></code></a></p></li>
+<li><p><strong>attrs</strong> (<em>dict</em>) – attributes for update on
+<a class="reference internal" href="../resources/waf/v1/domain.html#otcextensions.sdk.waf.v1.domain.Domain" title="otcextensions.sdk.waf.v1.domain.Domain"><code class="xref py py-class docutils literal notranslate"><span class="pre">Domain</span></code></a></p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="../resources/waf/v1/domain.html#otcextensions.sdk.waf.v1.domain.Domain" title="otcextensions.sdk.waf.v1.domain.Domain"><code class="xref py py-class docutils literal notranslate"><span class="pre">Domain</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">find_domain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_or_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Find a single domain</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name_or_id</strong> – The name or ID of a domain</p></li>
+<li><p><strong>ignore_missing</strong> (<em>bool</em>) – When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code> will be raised
+when the domain does not exist.
+When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, no exception will be set when attempting
+to delete a nonexistent domain.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">find_domain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_or_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Find a single domain</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name_or_id</strong> – The name or ID of a domain</p></li>
+<li><p><strong>ignore_missing</strong> (<em>bool</em>) – When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code> will be raised
+when the domain does not exist.
+When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, no exception will be set when attempting
+to delete a nonexistent domain.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+                </div>
+              </div>
+            </div>
+            <div class="docs-actions">
+            
+              <a href="vpc.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: VPC API"></i></a>
+            
+            
+              <a href="../resources/index.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Resources and Attributes"></i></a>
+            
+            </div>
+            <div class="row docs-byline bottom">
+              <div class="docs-updated">updated: 2021-12-08 13:15</div>
+            </div>
+          </div>
+  <div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 docs-sidebar">
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <a href="../../index.html" class="docs-sidebar-section-title"><h4>otcextensions 0.24.3.dev2</h4></a>
+      <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../install/index.html">1. Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../install/configuration.html">2. Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cli/index.html">3. OpenStack Client (CLI)</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">4. Using the OpenStack SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../architecture.html">Architecture Overview and Important Terms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guides/index.html">Guides for SDK</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Service Proxies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../resources/index.html">Resources and Attributes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributor/index.html">5. Contributing to the OTC Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../coverage.html">6. Service Coverage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendices/index.html">7. Appendices</a></li>
+</ul>
+
+    </div>
+
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="local-table-of-contents">
+      <h4 class="docs-sidebar-section-title">Page Contents</h4>
+      <ul>
+<li><a class="reference internal" href="#">Web Application Firewall API</a><ul>
+<li><a class="reference internal" href="#the-waf-service-class">The WAF Service Class</a><ul>
+<li><a class="reference internal" href="#certificate-operations">Certificate Operations</a></li>
+<li><a class="reference internal" href="#domain-operations">Domain Operations</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+  </div>
+</div>
+        </div>
+      </div>
+  </scale-app-shell>
+<scale-app-footer id="footer-shell" variant="standard" claim-lang="en">
+</scale-app-footer>
+<script>
+  const footer_shell = document.getElementById("footer-shell");
+  footer_shell.footerNavigation = [{"name":"Contact","id":"Contact","href":"https://cloud.telekom.de/en/contact/"},{"name":"Legal notice","id":"Legal notice","href":"https://cloud.telekom.de/en/imprint-adress"},{"name":"Data privacy","id":"Data privacy","href":"https://open-telekom-cloud.com/en/data-protection","icon":"alert-imprint-dataprivacy"}]</script>
+  <!-- jQuery -->
+<script type="text/javascript" src="../../_static/js/jquery-3.2.1.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script type="text/javascript" src="../../_static/js/bootstrap.min.js"></script>
+
+<!-- Telekom Scale -->
+<script type="module" src="https://unpkg.com/@telekom/scale-components@3.0.0-beta.32/dist/scale-components/scale-components.esm.js"></script>
+
+<!-- The rest of the JS -->
+<script type="text/javascript" src="../../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script type="text/javascript" src="../../_static/js/docs.js"></script>
+
+<!-- Popovers -->
+<script type="text/javascript" src="../../_static/js/webui-popover.js"></script>
+
+<!-- standard sphinx include libraries, which allow search highlighting -->
+<script type="text/javascript" src="../../_static/underscore.js"></script>
+<script type="text/javascript" src="../../_static/doctools.js"></script>
+<script type="text/javascript" src="../../_static/searchtools.js"></script>
+
+<script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.24.3.dev2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+</script>
+
+
+<!-- Javascript for page -->
+<script language="JavaScript">
+/* build a description of this page including SHA, source location on git repo,
+   build time and the project's launchpad bug tag. Set the HREF of the bug
+   buttons */
+</script>
+  
+  </body>
+</html>

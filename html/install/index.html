@@ -1,0 +1,352 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>1. Installation &#8212; otcextensions 0.24.3.dev2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/basic.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Installation with PiP Installer" href="pip_install.html" />
+    <link rel="prev" title="Welcome to the OTC Extensions of the OpenStack SDK and CLI!" href="../index.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap CSS -->
+<link href="../_static/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../_static/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="../_static/css/combined.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../_static/pygments.css" rel="stylesheet">
+
+<!-- Telekom Scale -->
+<link href="https://unpkg.com/@telekom/scale-components@3.0.0-beta.32/dist/scale-components/scale-components.css" rel="stylesheet">
+
+<!-- Otcdocstheme CSS -->
+<link href="../_static/css/otcdocstheme.css" rel="stylesheet">
+
+
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-17511903-1', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+  </head><body>
+  
+<!-- SOURCE_FILE: install/index.rst -->
+
+
+<scale-app-shell
+  id="app-shell"
+  claim-lang="en"
+  logo-title="PAGENAME"
+  logo-href="/"
+>
+
+
+
+<script>
+  const app_shell = document.getElementById(
+  'app-shell');
+  app_shell.mainNavigation = [
+    {
+      "name": "Software",
+      "id": "Software",
+      "children": [
+        {
+          "name": "Automation",
+          "id": "Automation",
+          "children": [
+            {
+              "name": "Terraform OTC Driver",
+              "id": "Terraform OTC Driver",
+              "href": "https://docs.otc-service.com/terraform-provider-opentelekomcloud"
+            },
+                      {
+              "name": "Ansible Collection Cloud",
+              "id": "Ansible Collection Cloud",
+              "href": "https://docs.otc-service.com/ansible-collection-cloud"
+            },
+          ]
+        },
+        {
+          "name": "Client Tools",
+          "id": "Client Tools",
+          "children": [
+            {
+              "name": "OTC Extensions",
+              "id": "OTC Extensions",
+              "href": "https://docs.otc-service.com/python-otcextensions"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Release Notes",
+      "id": "Release Notes",
+      "children": [
+        {
+          "name": "Automation",
+          "id": "Automation",
+          "children": [
+            {
+              "name": "Terraform OTC Driver",
+              "id": "Terraform OTC Driver",
+              "href": "https://docs.otc-service.com/releasenotes/terraform-provider-opentelekomcloud"
+            }
+          ]
+        },
+        {
+          "name": "Client Tools",
+          "id": "Client Tools",
+          "children": [
+            {
+              "name": "OTC Extensions",
+              "id": "OTC Extensions",
+              "href": "https://docs.otc-service.com/releasenotes/python-otcextensions"
+            }
+          ]
+        }
+      ]
+    }
+  ];
+</script>
+  
+      <div class="container docs-book-wrapper">
+        <div class="row">
+          <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
+  <div class="row docs-title">
+  <div class="col-lg-8">
+      <h1><span class="section-number">1. </span>Installation</h1>
+    
+  </div>
+  <div class="docs-actions">
+    
+    <a href="../index.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Welcome to the OTC Extensions of the OpenStack SDK and CLI!"></i></a>
+    
+    
+    <a href="pip_install.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Installation with PiP Installer"></i></a>
+    
+  </div>
+</div>
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="docs-body" role="main">
+  
+  <section id="installation">
+<h1><span class="section-number">1. </span>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<p>There are several install options for OTC Extensions to enhance the
+native <a class="reference external" href="https://docs.openstack.org/python-openstackclient/">OpenStack Client</a> and to extend the <a class="reference external" href="https://docs.openstack.org/openstacksdk/">OpenStack SDK</a>. Once
+installed, they cover additional <a class="reference external" href="https://open-telekom-cloud.com/">Open Telekom Cloud</a> services and
+provide extra functionality on top of the stock OpenStack SDK and CLI.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="pip_install.html">Installation with PiP Installer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pip_install.html#pip-installation-in-user-space">PiP Installation in User Space</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pip_install.html#ubuntu-or-debian">Ubuntu or Debian</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pip_install.html#centos">CentOS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pip_install.html#fedora">Fedora</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pip_install.html#pip-installation-within-a-virtual-environment">PiP Installation within a Virtual Environment</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pip_install.html#id1">Ubuntu or Debian</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pip_install.html#id2">CentOS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pip_install.html#id3">Fedora</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="source_install.html">Installation from GitHub sources</a></li>
+</ul>
+</div>
+<section id="overview-of-related-packages">
+<h2>Overview of Related Packages<a class="headerlink" href="#overview-of-related-packages" title="Permalink to this headline">¶</a></h2>
+<p>The OTC Extensions are, as most software in OpenStack, written in
+Python and are eventually a Python package. These packages come with
+dependencies to other packages. Usually a package manager such as pip
+is used to resolve those dependencies or all requirements are bundled
+in a single packet. These are the main packages and their relations to
+each other:</p>
+<p><strong>OpenStack SDK:</strong> A library on the client side that translates Python
+function calls into API calls to an OpenStack cloud. It depends only
+on other, internal Python packages.</p>
+<p><strong>OpenStack Client:</strong> An application that turns the Python interface
+of OpenStack SDK and OTC Extensions into a CLI tool. If installed, it
+requires the SDK.</p>
+<p><strong>OTC Extensions:</strong> An addition to OpenStack SDK with enhanced
+functionality that is specific for the Open Telekom Cloud. This is the
+package you are currently looking at. It requires the SDK since it
+extends its interfaces. If it is installed as a Python package it is
+detected and integrated automatically by the other two packages
+without further installation or configuration.</p>
+<p>So effectively, using a package manager like pip it is sufficient to
+install the packages like this:</p>
+<p>Other packaging methods may or may not have these dependencies built
+in already.</p>
+</section>
+<section id="installation-options">
+<h2>Installation Options<a class="headerlink" href="#installation-options" title="Permalink to this headline">¶</a></h2>
+<p>There are a number of alternatives available to install OTC Extensions
+(including the SDK and CLI):</p>
+<ul class="simple">
+<li><p><strong>Installing from operating system packages (deb, rpm, yum, dnf):</strong>
+This is a very easy way that is also easy to revert. The downside of
+this aproach is that operating system packages for the major
+distributions are often quite outdated, as many of the internal
+dependencies are also often outdated. You often experience a backlog
+of several months up to years behind the latest development.</p></li>
+<li><p><strong>Installing with a Python package manager (pip):</strong> Python comes
+with its own package manager <cite>pip</cite> for the <a class="reference external" href="https://pypi.org/">Python Package Index
+(PyPI)</a>. That is today the standard way to install Python
+packages. All other described options use this method under the
+hood. This way is operating system independent. Installing with
+<cite>pip</cite> comes with three sub-options: Installing system-wide, for a
+single user, or inside a virtual environemt. <strong>This is the
+recommended way to install OTC Extensions.</strong></p></li>
+<li><p><strong>Installing from sources:</strong> All related projects are hosted on
+public source code repositories. So if you need a bleeding edge
+feature or want to contribute directly to the project yourself,
+installation from sources is for you. It requires some extra steps,
+though.</p></li>
+</ul>
+<p>There are also ready-made installation packages for various operating
+systems which have their own versions, package names and sometimes
+bugs.  A repository based on openSUSE’s build services tries to cover
+these issues which is available under:
+<a class="reference external" href="https://build.opensuse.org/project/show/Cloud:OTC:Tools:OpenStack">https://build.opensuse.org/project/show/Cloud:OTC:Tools:OpenStack</a>.</p>
+</section>
+</section>
+
+
+                </div>
+              </div>
+            </div>
+            <div class="docs-actions">
+            
+              <a href="../index.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Welcome to the OTC Extensions of the OpenStack SDK and CLI!"></i></a>
+            
+            
+              <a href="pip_install.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Installation with PiP Installer"></i></a>
+            
+            </div>
+            <div class="row docs-byline bottom">
+              <div class="docs-updated">updated: 2021-12-08 13:15</div>
+            </div>
+          </div>
+  <div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 docs-sidebar">
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <a href="../index.html" class="docs-sidebar-section-title"><h4>otcextensions 0.24.3.dev2</h4></a>
+      <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">1. Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pip_install.html">Installation with PiP Installer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source_install.html">Installation from GitHub sources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#overview-of-related-packages">Overview of Related Packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installation-options">Installation Options</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">2. Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">3. OpenStack Client (CLI)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sdk/index.html">4. Using the OpenStack SDK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributor/index.html">5. Contributing to the OTC Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../coverage.html">6. Service Coverage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendices/index.html">7. Appendices</a></li>
+</ul>
+
+    </div>
+
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="local-table-of-contents">
+      <h4 class="docs-sidebar-section-title">Page Contents</h4>
+      <ul>
+<li><a class="reference internal" href="#">1. Installation</a><ul>
+<li><a class="reference internal" href="#overview-of-related-packages">Overview of Related Packages</a></li>
+<li><a class="reference internal" href="#installation-options">Installation Options</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+  </div>
+</div>
+        </div>
+      </div>
+  </scale-app-shell>
+<scale-app-footer id="footer-shell" variant="standard" claim-lang="en">
+</scale-app-footer>
+<script>
+  const footer_shell = document.getElementById("footer-shell");
+  footer_shell.footerNavigation = [{"name":"Contact","id":"Contact","href":"https://cloud.telekom.de/en/contact/"},{"name":"Legal notice","id":"Legal notice","href":"https://cloud.telekom.de/en/imprint-adress"},{"name":"Data privacy","id":"Data privacy","href":"https://open-telekom-cloud.com/en/data-protection","icon":"alert-imprint-dataprivacy"}]</script>
+  <!-- jQuery -->
+<script type="text/javascript" src="../_static/js/jquery-3.2.1.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script type="text/javascript" src="../_static/js/bootstrap.min.js"></script>
+
+<!-- Telekom Scale -->
+<script type="module" src="https://unpkg.com/@telekom/scale-components@3.0.0-beta.32/dist/scale-components/scale-components.esm.js"></script>
+
+<!-- The rest of the JS -->
+<script type="text/javascript" src="../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script type="text/javascript" src="../_static/js/docs.js"></script>
+
+<!-- Popovers -->
+<script type="text/javascript" src="../_static/js/webui-popover.js"></script>
+
+<!-- standard sphinx include libraries, which allow search highlighting -->
+<script type="text/javascript" src="../_static/underscore.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+<script type="text/javascript" src="../_static/searchtools.js"></script>
+
+<script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.24.3.dev2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+</script>
+
+
+<!-- Javascript for page -->
+<script language="JavaScript">
+/* build a description of this page including SHA, source location on git repo,
+   build time and the project's launchpad bug tag. Set the HREF of the bug
+   buttons */
+</script>
+  
+  </body>
+</html>

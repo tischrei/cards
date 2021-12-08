@@ -1,0 +1,2117 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Identity API v3 &#8212; otcextensions 0.24.3.dev2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/basic.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="KMS API" href="kms.html" />
+    <link rel="prev" title="DNS API" href="dns.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap CSS -->
+<link href="../../_static/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../../_static/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="../../_static/css/combined.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../../_static/pygments.css" rel="stylesheet">
+
+<!-- Telekom Scale -->
+<link href="https://unpkg.com/@telekom/scale-components@3.0.0-beta.32/dist/scale-components/scale-components.css" rel="stylesheet">
+
+<!-- Otcdocstheme CSS -->
+<link href="../../_static/css/otcdocstheme.css" rel="stylesheet">
+
+
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-17511903-1', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+  </head><body>
+  
+<!-- SOURCE_FILE: sdk/proxies/identity_v3.rst -->
+
+
+<scale-app-shell
+  id="app-shell"
+  claim-lang="en"
+  logo-title="PAGENAME"
+  logo-href="/"
+>
+
+
+
+<script>
+  const app_shell = document.getElementById(
+  'app-shell');
+  app_shell.mainNavigation = [
+    {
+      "name": "Software",
+      "id": "Software",
+      "children": [
+        {
+          "name": "Automation",
+          "id": "Automation",
+          "children": [
+            {
+              "name": "Terraform OTC Driver",
+              "id": "Terraform OTC Driver",
+              "href": "https://docs.otc-service.com/terraform-provider-opentelekomcloud"
+            },
+                      {
+              "name": "Ansible Collection Cloud",
+              "id": "Ansible Collection Cloud",
+              "href": "https://docs.otc-service.com/ansible-collection-cloud"
+            },
+          ]
+        },
+        {
+          "name": "Client Tools",
+          "id": "Client Tools",
+          "children": [
+            {
+              "name": "OTC Extensions",
+              "id": "OTC Extensions",
+              "href": "https://docs.otc-service.com/python-otcextensions"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Release Notes",
+      "id": "Release Notes",
+      "children": [
+        {
+          "name": "Automation",
+          "id": "Automation",
+          "children": [
+            {
+              "name": "Terraform OTC Driver",
+              "id": "Terraform OTC Driver",
+              "href": "https://docs.otc-service.com/releasenotes/terraform-provider-opentelekomcloud"
+            }
+          ]
+        },
+        {
+          "name": "Client Tools",
+          "id": "Client Tools",
+          "children": [
+            {
+              "name": "OTC Extensions",
+              "id": "OTC Extensions",
+              "href": "https://docs.otc-service.com/releasenotes/python-otcextensions"
+            }
+          ]
+        }
+      ]
+    }
+  ];
+</script>
+  
+      <div class="container docs-book-wrapper">
+        <div class="row">
+          <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
+  <div class="row docs-title">
+  <div class="col-lg-8">
+      <h1>Identity API v3</h1>
+    
+  </div>
+  <div class="docs-actions">
+    
+    <a href="dns.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: DNS API"></i></a>
+    
+    
+    <a href="kms.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: KMS API"></i></a>
+    
+  </div>
+</div>
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="docs-body" role="main">
+  
+  <section id="module-otcextensions.sdk.identity.v3._proxy">
+<span id="identity-api-v3"></span><h1>Identity API v3<a class="headerlink" href="#module-otcextensions.sdk.identity.v3._proxy" title="Permalink to this headline">¶</a></h1>
+<section id="the-identity-v3-class">
+<h2>The Identity v3 Class<a class="headerlink" href="#the-identity-v3-class" title="Permalink to this headline">¶</a></h2>
+<p>The identity high-level interface is available through the <code class="docutils literal notranslate"><span class="pre">identity</span></code>
+member of a <code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code> object.  The
+<code class="docutils literal notranslate"><span class="pre">identity</span></code> member will only be added if the service is detected.</p>
+<section id="agency-operations">
+<h3>Agency Operations<a class="headerlink" href="#agency-operations" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">otcextensions.sdk.identity.v3._proxy.</span></span><span class="sig-name descname"><span class="pre">Proxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">agencies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Retrieve a generator of agencies</p>
+<p>When domain_id query parameter is not set - current domain_id will be
+used. Passing domain_id=None allow removing filtering.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>attrs</strong> (<em>dict</em>) – Optional query parameters to be sent to limit the
+resources being returned.
+* <cite>domain_id</cite>: Current domain ID
+* <cite>name</cite>: Name of the agency
+* <cite>trust_domain_id</cite>: ID of the delegated domain.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A generator of agencies
+<a class="reference internal" href="../resources/identity/v3/agency.html#otcextensions.sdk.identity.v3.agency.Agency" title="otcextensions.sdk.identity.v3.agency.Agency"><code class="xref py py-class docutils literal notranslate"><span class="pre">Agency</span></code></a>
+instances</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">create_agency</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Create a new agency from attributes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>attrs</strong> (<em>dict</em>) – Keyword arguments which will be used to create
+a <a class="reference internal" href="../resources/identity/v3/agency.html#otcextensions.sdk.identity.v3.agency.Agency" title="otcextensions.sdk.identity.v3.agency.Agency"><code class="xref py py-class docutils literal notranslate"><span class="pre">Agency</span></code></a>,
+comprised of the properties on the Agency class.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The results of agency creation</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../resources/identity/v3/agency.html#otcextensions.sdk.identity.v3.agency.Agency" title="otcextensions.sdk.identity.v3.agency.Agency"><code class="xref py py-class docutils literal notranslate"><span class="pre">Agency</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_agency</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agency</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Get a agency</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>agency</strong> – The value can be the ID of a agency
+or a <a class="reference internal" href="../resources/identity/v3/agency.html#otcextensions.sdk.identity.v3.agency.Agency" title="otcextensions.sdk.identity.v3.agency.Agency"><code class="xref py py-class docutils literal notranslate"><span class="pre">Agency</span></code></a>
+instance.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Agency instance</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../resources/identity/v3/agency.html#otcextensions.sdk.identity.v3.agency.Agency" title="otcextensions.sdk.identity.v3.agency.Agency"><code class="xref py py-class docutils literal notranslate"><span class="pre">Agency</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">find_agency</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_or_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Find a single agency</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name_or_id</strong> – The name or ID of a agency</p></li>
+<li><p><strong>ignore_missing</strong> (<em>bool</em>) – When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code> will be raised
+when the agency does not exist.
+When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, no exception will be set when attempting
+to delete a nonexistent agency.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">delete_agency</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agency</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Delete a agency</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>agency</strong> – The value can be the ID of a agency
+or a <a class="reference internal" href="../resources/identity/v3/agency.html#otcextensions.sdk.identity.v3.agency.Agency" title="otcextensions.sdk.identity.v3.agency.Agency"><code class="xref py py-class docutils literal notranslate"><span class="pre">Agency</span></code></a>
+instance.</p></li>
+<li><p><strong>ignore_missing</strong> (<em>bool</em>) – When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code> will be raised when
+the agency does not exist.
+When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, no exception will be set when attempting to
+delete a nonexistent agency.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Agency been deleted</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../resources/identity/v3/agency.html#otcextensions.sdk.identity.v3.agency.Agency" title="otcextensions.sdk.identity.v3.agency.Agency"><code class="xref py py-class docutils literal notranslate"><span class="pre">Agency</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">update_agency</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agency</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Update agency attributes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>agency</strong> – The id or an instance of
+<a class="reference internal" href="../resources/identity/v3/agency.html#otcextensions.sdk.identity.v3.agency.Agency" title="otcextensions.sdk.identity.v3.agency.Agency"><code class="xref py py-class docutils literal notranslate"><span class="pre">Agency</span></code></a></p></li>
+<li><p><strong>attrs</strong> (<em>dict</em>) – attributes for update on
+<a class="reference internal" href="../resources/identity/v3/agency.html#otcextensions.sdk.identity.v3.agency.Agency" title="otcextensions.sdk.identity.v3.agency.Agency"><code class="xref py py-class docutils literal notranslate"><span class="pre">Agency</span></code></a></p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="../resources/identity/v3/agency.html#otcextensions.sdk.identity.v3.agency.Agency" title="otcextensions.sdk.identity.v3.agency.Agency"><code class="xref py py-class docutils literal notranslate"><span class="pre">Agency</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">agency_project_roles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agency</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project_id</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Retrieve a generator of agency roles on a project</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>agency</strong> – The id or an instance of
+<a class="reference internal" href="../resources/identity/v3/agency.html#otcextensions.sdk.identity.v3.agency.Agency" title="otcextensions.sdk.identity.v3.agency.Agency"><code class="xref py py-class docutils literal notranslate"><span class="pre">Agency</span></code></a></p></li>
+<li><p><strong>project_id</strong> – ID of a project</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A generator of agencies
+<a class="reference internal" href="../resources/identity/v3/agency_role.html#otcextensions.sdk.identity.v3.agency_role.AgencyRole" title="otcextensions.sdk.identity.v3.agency_role.AgencyRole"><code class="xref py py-class docutils literal notranslate"><span class="pre">AgencyRole</span></code></a>
+instances</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">check_agency_project_role</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agency</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">role_id</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Check whether role is granted on the project through agency</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>agency</strong> – The id or an instance of
+<a class="reference internal" href="../resources/identity/v3/agency.html#otcextensions.sdk.identity.v3.agency.Agency" title="otcextensions.sdk.identity.v3.agency.Agency"><code class="xref py py-class docutils literal notranslate"><span class="pre">Agency</span></code></a></p></li>
+<li><p><strong>project_id</strong> – ID of a project</p></li>
+<li><p><strong>role_id</strong> – ID of a role to check</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="../resources/identity/v3/agency_role.html#otcextensions.sdk.identity.v3.agency_role.AgencyRole" title="otcextensions.sdk.identity.v3.agency_role.AgencyRole"><code class="xref py py-class docutils literal notranslate"><span class="pre">AgencyRole</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">grant_agency_project_role</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agency</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">role_id</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Grant permission of agency on a project</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>agency</strong> – The id or an instance of
+<a class="reference internal" href="../resources/identity/v3/agency.html#otcextensions.sdk.identity.v3.agency.Agency" title="otcextensions.sdk.identity.v3.agency.Agency"><code class="xref py py-class docutils literal notranslate"><span class="pre">Agency</span></code></a></p></li>
+<li><p><strong>project_id</strong> – ID of a project</p></li>
+<li><p><strong>role_id</strong> – ID of a role to revoke</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">revoke_agency_project_role</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agency</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">role_id</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Revoke permission of agency on a project</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>agency</strong> – The id or an instance of
+<a class="reference internal" href="../resources/identity/v3/agency.html#otcextensions.sdk.identity.v3.agency.Agency" title="otcextensions.sdk.identity.v3.agency.Agency"><code class="xref py py-class docutils literal notranslate"><span class="pre">Agency</span></code></a></p></li>
+<li><p><strong>project_id</strong> – ID of a project</p></li>
+<li><p><strong>role_id</strong> – ID of a role to revoke</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">agency_domain_roles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agency</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">domain_id</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Retrieve a generator of agency roles on a domain</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>agency</strong> – The id or an instance of
+<a class="reference internal" href="../resources/identity/v3/agency.html#otcextensions.sdk.identity.v3.agency.Agency" title="otcextensions.sdk.identity.v3.agency.Agency"><code class="xref py py-class docutils literal notranslate"><span class="pre">Agency</span></code></a></p></li>
+<li><p><strong>domain_id</strong> – ID of a domain</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A generator of agencies
+<a class="reference internal" href="../resources/identity/v3/agency_role.html#otcextensions.sdk.identity.v3.agency_role.AgencyRole" title="otcextensions.sdk.identity.v3.agency_role.AgencyRole"><code class="xref py py-class docutils literal notranslate"><span class="pre">AgencyRole</span></code></a>
+instances</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">check_agency_domain_role</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agency</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">domain_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">role_id</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Check whether role is granted on the domain through agency</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>agency</strong> – The id or an instance of
+<a class="reference internal" href="../resources/identity/v3/agency.html#otcextensions.sdk.identity.v3.agency.Agency" title="otcextensions.sdk.identity.v3.agency.Agency"><code class="xref py py-class docutils literal notranslate"><span class="pre">Agency</span></code></a></p></li>
+<li><p><strong>domain_id</strong> – ID of a domain</p></li>
+<li><p><strong>role_id</strong> – ID of a role to check</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="../resources/identity/v3/agency_role.html#otcextensions.sdk.identity.v3.agency_role.AgencyRole" title="otcextensions.sdk.identity.v3.agency_role.AgencyRole"><code class="xref py py-class docutils literal notranslate"><span class="pre">AgencyRole</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">grant_agency_domain_role</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agency</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">domain_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">role_id</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Grant permission of agency on a domain</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>agency</strong> – The id or an instance of
+<a class="reference internal" href="../resources/identity/v3/agency.html#otcextensions.sdk.identity.v3.agency.Agency" title="otcextensions.sdk.identity.v3.agency.Agency"><code class="xref py py-class docutils literal notranslate"><span class="pre">Agency</span></code></a></p></li>
+<li><p><strong>domain_id</strong> – ID of a domain</p></li>
+<li><p><strong>role_id</strong> – ID of a role to revoke</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">revoke_agency_domain_role</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agency</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">domain_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">role_id</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Revoke permission of agency on a domain</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>agency</strong> – The id or an instance of
+<a class="reference internal" href="../resources/identity/v3/agency.html#otcextensions.sdk.identity.v3.agency.Agency" title="otcextensions.sdk.identity.v3.agency.Agency"><code class="xref py py-class docutils literal notranslate"><span class="pre">Agency</span></code></a></p></li>
+<li><p><strong>domain_id</strong> – ID of a domain</p></li>
+<li><p><strong>role_id</strong> – ID of a role to revoke</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="credential-operations">
+<h3>Credential Operations<a class="headerlink" href="#credential-operations" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">otcextensions.sdk.identity.v3._proxy.</span></span><span class="sig-name descname"><span class="pre">Proxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">credentials</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Retrieve a generator of credentials</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>query</strong> (<em>dict</em>) – Optional query parameters to be sent to limit the
+resources being returned.
+* <cite>user_id</cite>: user_id</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A generator of credentials
+<a class="reference internal" href="../resources/identity/v3/credential.html#otcextensions.sdk.identity.v3.credential.Credential" title="otcextensions.sdk.identity.v3.credential.Credential"><code class="xref py py-class docutils literal notranslate"><span class="pre">Credential</span></code></a>
+instances</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">create_credential</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Create a new credential from attributes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>attrs</strong> (<em>dict</em>) – Keyword arguments which will be used to create
+a <a class="reference internal" href="../resources/identity/v3/credential.html#otcextensions.sdk.identity.v3.credential.Credential" title="otcextensions.sdk.identity.v3.credential.Credential"><code class="xref py py-class docutils literal notranslate"><span class="pre">Credential</span></code></a>,
+comprised of the properties on the Credential class.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The results of credential creation</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../resources/identity/v3/credential.html#otcextensions.sdk.identity.v3.credential.Credential" title="otcextensions.sdk.identity.v3.credential.Credential"><code class="xref py py-class docutils literal notranslate"><span class="pre">Credential</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_credential</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">credential</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Get a credential</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>credential</strong> – The value can be the ID of a credential
+or a <a class="reference internal" href="../resources/identity/v3/credential.html#otcextensions.sdk.identity.v3.credential.Credential" title="otcextensions.sdk.identity.v3.credential.Credential"><code class="xref py py-class docutils literal notranslate"><span class="pre">Credential</span></code></a>
+instance.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Credential instance</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../resources/identity/v3/credential.html#otcextensions.sdk.identity.v3.credential.Credential" title="otcextensions.sdk.identity.v3.credential.Credential"><code class="xref py py-class docutils literal notranslate"><span class="pre">Credential</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">find_credential</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_or_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Find a single credential</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name_or_id</strong> – The name or ID of a credential</p></li>
+<li><p><strong>ignore_missing</strong> (<em>bool</em>) – When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code> will be raised
+when the credential does not exist.
+When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, no exception will be set when attempting
+to delete a nonexistent credential.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">delete_credential</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">credential</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Delete a credential</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>credential</strong> – The value can be the ID of a credential
+or a <a class="reference internal" href="../resources/identity/v3/credential.html#otcextensions.sdk.identity.v3.credential.Credential" title="otcextensions.sdk.identity.v3.credential.Credential"><code class="xref py py-class docutils literal notranslate"><span class="pre">Credential</span></code></a>
+instance.</p></li>
+<li><p><strong>ignore_missing</strong> (<em>bool</em>) – When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code> will be raised when
+the credential does not exist.
+When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, no exception will be set when attempting to
+delete a nonexistent credential.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Credential been deleted</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../resources/identity/v3/credential.html#otcextensions.sdk.identity.v3.credential.Credential" title="otcextensions.sdk.identity.v3.credential.Credential"><code class="xref py py-class docutils literal notranslate"><span class="pre">Credential</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">update_credential</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">credential</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Update credential attributes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>credential</strong> – The id or an instance of
+<a class="reference internal" href="../resources/identity/v3/credential.html#otcextensions.sdk.identity.v3.credential.Credential" title="otcextensions.sdk.identity.v3.credential.Credential"><code class="xref py py-class docutils literal notranslate"><span class="pre">Credential</span></code></a></p></li>
+<li><p><strong>attrs</strong> (<em>dict</em>) – attributes for update on
+<a class="reference internal" href="../resources/identity/v3/credential.html#otcextensions.sdk.identity.v3.credential.Credential" title="otcextensions.sdk.identity.v3.credential.Credential"><code class="xref py py-class docutils literal notranslate"><span class="pre">Credential</span></code></a></p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="../resources/identity/v3/credential.html#otcextensions.sdk.identity.v3.credential.Credential" title="otcextensions.sdk.identity.v3.credential.Credential"><code class="xref py py-class docutils literal notranslate"><span class="pre">Credential</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="domain-operations">
+<h3>Domain Operations<a class="headerlink" href="#domain-operations" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">otcextensions.sdk.identity.v3._proxy.</span></span><span class="sig-name descname"><span class="pre">Proxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">create_domain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Create a new domain from attributes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>attrs</strong> (<em>dict</em>) – Keyword arguments which will be used to create
+a <a class="reference internal" href="../resources/identity/v3/domain.html#openstack.identity.v3.domain.Domain" title="openstack.identity.v3.domain.Domain"><code class="xref py py-class docutils literal notranslate"><span class="pre">Domain</span></code></a>,
+comprised of the properties on the Domain class.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The results of domain creation</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../resources/identity/v3/domain.html#openstack.identity.v3.domain.Domain" title="openstack.identity.v3.domain.Domain"><code class="xref py py-class docutils literal notranslate"><span class="pre">Domain</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">update_domain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">domain</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Update a domain</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>domain</strong> – Either the ID of a domain or a
+<a class="reference internal" href="../resources/identity/v3/domain.html#openstack.identity.v3.domain.Domain" title="openstack.identity.v3.domain.Domain"><code class="xref py py-class docutils literal notranslate"><span class="pre">Domain</span></code></a> instance.</p>
+</dd>
+<dt class="field-even">Attrs kwargs<span class="colon">:</span></dt>
+<dd class="field-even"><p>The attributes to update on the domain represented
+by <code class="docutils literal notranslate"><span class="pre">value</span></code>.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The updated domain</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="../resources/identity/v3/domain.html#openstack.identity.v3.domain.Domain" title="openstack.identity.v3.domain.Domain"><code class="xref py py-class docutils literal notranslate"><span class="pre">Domain</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">delete_domain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">domain</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Delete a domain</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>domain</strong> – The value can be either the ID of a domain or a
+<a class="reference internal" href="../resources/identity/v3/domain.html#openstack.identity.v3.domain.Domain" title="openstack.identity.v3.domain.Domain"><code class="xref py py-class docutils literal notranslate"><span class="pre">Domain</span></code></a> instance.</p></li>
+<li><p><strong>ignore_missing</strong> (<em>bool</em>) – When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code> will be
+raised when the domain does not exist.
+When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, no exception will be set when
+attempting to delete a nonexistent domain.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_domain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">domain</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Get a single domain</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>domain</strong> – The value can be the ID of a domain or a
+<a class="reference internal" href="../resources/identity/v3/domain.html#openstack.identity.v3.domain.Domain" title="openstack.identity.v3.domain.Domain"><code class="xref py py-class docutils literal notranslate"><span class="pre">Domain</span></code></a> instance.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>One <a class="reference internal" href="../resources/identity/v3/domain.html#openstack.identity.v3.domain.Domain" title="openstack.identity.v3.domain.Domain"><code class="xref py py-class docutils literal notranslate"><span class="pre">Domain</span></code></a></p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code>
+when no resource can be found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">find_domain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_or_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Find a single domain</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name_or_id</strong> – The name or ID of a domain.</p></li>
+<li><p><strong>ignore_missing</strong> (<em>bool</em>) – When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code> will be
+raised when the resource does not exist.
+When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, None will be returned when
+attempting to find a nonexistent resource.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>One <a class="reference internal" href="../resources/identity/v3/domain.html#openstack.identity.v3.domain.Domain" title="openstack.identity.v3.domain.Domain"><code class="xref py py-class docutils literal notranslate"><span class="pre">Domain</span></code></a> or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">domains</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Retrieve a generator of domains</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>query</strong> (<em>kwargs</em>) – Optional query parameters to be sent to limit
+the resources being returned.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A generator of domain instances.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../resources/identity/v3/domain.html#openstack.identity.v3.domain.Domain" title="openstack.identity.v3.domain.Domain"><code class="xref py py-class docutils literal notranslate"><span class="pre">Domain</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="endpoint-operations">
+<h3>Endpoint Operations<a class="headerlink" href="#endpoint-operations" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">otcextensions.sdk.identity.v3._proxy.</span></span><span class="sig-name descname"><span class="pre">Proxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">create_endpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Create a new endpoint from attributes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>attrs</strong> (<em>dict</em>) – Keyword arguments which will be used to create
+a <a class="reference internal" href="../resources/identity/v3/endpoint.html#openstack.identity.v3.endpoint.Endpoint" title="openstack.identity.v3.endpoint.Endpoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Endpoint</span></code></a>,
+comprised of the properties on the Endpoint class.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The results of endpoint creation</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../resources/identity/v3/endpoint.html#openstack.identity.v3.endpoint.Endpoint" title="openstack.identity.v3.endpoint.Endpoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Endpoint</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">update_endpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Update a endpoint</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>endpoint</strong> – Either the ID of a endpoint or a
+<a class="reference internal" href="../resources/identity/v3/endpoint.html#openstack.identity.v3.endpoint.Endpoint" title="openstack.identity.v3.endpoint.Endpoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Endpoint</span></code></a>
+instance.</p>
+</dd>
+<dt class="field-even">Attrs kwargs<span class="colon">:</span></dt>
+<dd class="field-even"><p>The attributes to update on the endpoint represented
+by <code class="docutils literal notranslate"><span class="pre">value</span></code>.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The updated endpoint</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="../resources/identity/v3/endpoint.html#openstack.identity.v3.endpoint.Endpoint" title="openstack.identity.v3.endpoint.Endpoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Endpoint</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">delete_endpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Delete an endpoint</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>endpoint</strong> – The value can be either the ID of an endpoint or a
+<a class="reference internal" href="../resources/identity/v3/endpoint.html#openstack.identity.v3.endpoint.Endpoint" title="openstack.identity.v3.endpoint.Endpoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Endpoint</span></code></a> instance.</p></li>
+<li><p><strong>ignore_missing</strong> (<em>bool</em>) – When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code> will be
+raised when the endpoint does not exist.
+When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, no exception will be set when
+attempting to delete a nonexistent endpoint.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_endpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Get a single endpoint</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>endpoint</strong> – The value can be the ID of an endpoint or a
+<a class="reference internal" href="../resources/identity/v3/endpoint.html#openstack.identity.v3.endpoint.Endpoint" title="openstack.identity.v3.endpoint.Endpoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Endpoint</span></code></a>
+instance.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>One <a class="reference internal" href="../resources/identity/v3/endpoint.html#openstack.identity.v3.endpoint.Endpoint" title="openstack.identity.v3.endpoint.Endpoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Endpoint</span></code></a></p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code>
+when no resource can be found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">find_endpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_or_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Find a single endpoint</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name_or_id</strong> – The name or ID of a endpoint.</p></li>
+<li><p><strong>ignore_missing</strong> (<em>bool</em>) – When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code> will be
+raised when the resource does not exist.
+When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, None will be returned when
+attempting to find a nonexistent resource.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>One <a class="reference internal" href="../resources/identity/v3/endpoint.html#openstack.identity.v3.endpoint.Endpoint" title="openstack.identity.v3.endpoint.Endpoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Endpoint</span></code></a> or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">endpoints</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Retrieve a generator of endpoints</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>query</strong> (<em>kwargs</em>) – Optional query parameters to be sent to limit
+the resources being returned.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A generator of endpoint instances.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../resources/identity/v3/endpoint.html#openstack.identity.v3.endpoint.Endpoint" title="openstack.identity.v3.endpoint.Endpoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Endpoint</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="group-operations">
+<h3>Group Operations<a class="headerlink" href="#group-operations" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">otcextensions.sdk.identity.v3._proxy.</span></span><span class="sig-name descname"><span class="pre">Proxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">create_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Create a new group from attributes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>attrs</strong> (<em>dict</em>) – Keyword arguments which will be used to create
+a <a class="reference internal" href="../resources/identity/v3/group.html#openstack.identity.v3.group.Group" title="openstack.identity.v3.group.Group"><code class="xref py py-class docutils literal notranslate"><span class="pre">Group</span></code></a>,
+comprised of the properties on the Group class.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The results of group creation</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../resources/identity/v3/group.html#openstack.identity.v3.group.Group" title="openstack.identity.v3.group.Group"><code class="xref py py-class docutils literal notranslate"><span class="pre">Group</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">update_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Update a group</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>group</strong> – Either the ID of a group or a
+<a class="reference internal" href="../resources/identity/v3/group.html#openstack.identity.v3.group.Group" title="openstack.identity.v3.group.Group"><code class="xref py py-class docutils literal notranslate"><span class="pre">Group</span></code></a> instance.</p>
+</dd>
+<dt class="field-even">Attrs kwargs<span class="colon">:</span></dt>
+<dd class="field-even"><p>The attributes to update on the group represented
+by <code class="docutils literal notranslate"><span class="pre">value</span></code>.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The updated group</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="../resources/identity/v3/group.html#openstack.identity.v3.group.Group" title="openstack.identity.v3.group.Group"><code class="xref py py-class docutils literal notranslate"><span class="pre">Group</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">delete_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Delete a group</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>group</strong> – The value can be either the ID of a group or a
+<a class="reference internal" href="../resources/identity/v3/group.html#openstack.identity.v3.group.Group" title="openstack.identity.v3.group.Group"><code class="xref py py-class docutils literal notranslate"><span class="pre">Group</span></code></a> instance.</p></li>
+<li><p><strong>ignore_missing</strong> (<em>bool</em>) – When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code> will be
+raised when the group does not exist.
+When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, no exception will be set when
+attempting to delete a nonexistent group.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Get a single group</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>group</strong> – The value can be the ID of a group or a
+<a class="reference internal" href="../resources/identity/v3/group.html#openstack.identity.v3.group.Group" title="openstack.identity.v3.group.Group"><code class="xref py py-class docutils literal notranslate"><span class="pre">Group</span></code></a>
+instance.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>One <a class="reference internal" href="../resources/identity/v3/group.html#openstack.identity.v3.group.Group" title="openstack.identity.v3.group.Group"><code class="xref py py-class docutils literal notranslate"><span class="pre">Group</span></code></a></p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code>
+when no resource can be found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">find_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_or_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Find a single group</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name_or_id</strong> – The name or ID of a group.</p></li>
+<li><p><strong>ignore_missing</strong> (<em>bool</em>) – When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code> will be
+raised when the resource does not exist.
+When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, None will be returned when
+attempting to find a nonexistent resource.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>One <a class="reference internal" href="../resources/identity/v3/group.html#openstack.identity.v3.group.Group" title="openstack.identity.v3.group.Group"><code class="xref py py-class docutils literal notranslate"><span class="pre">Group</span></code></a> or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">groups</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Retrieve a generator of groups</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>query</strong> (<em>kwargs</em>) – Optional query parameters to be sent to limit
+the resources being returned.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A generator of group instances.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../resources/identity/v3/group.html#openstack.identity.v3.group.Group" title="openstack.identity.v3.group.Group"><code class="xref py py-class docutils literal notranslate"><span class="pre">Group</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="policy-operations">
+<h3>Policy Operations<a class="headerlink" href="#policy-operations" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">otcextensions.sdk.identity.v3._proxy.</span></span><span class="sig-name descname"><span class="pre">Proxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">create_policy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Create a new policy from attributes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>attrs</strong> (<em>dict</em>) – Keyword arguments which will be used to create
+a <a class="reference internal" href="../resources/identity/v3/policy.html#openstack.identity.v3.policy.Policy" title="openstack.identity.v3.policy.Policy"><code class="xref py py-class docutils literal notranslate"><span class="pre">Policy</span></code></a>,
+comprised of the properties on the Policy class.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The results of policy creation</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../resources/identity/v3/policy.html#openstack.identity.v3.policy.Policy" title="openstack.identity.v3.policy.Policy"><code class="xref py py-class docutils literal notranslate"><span class="pre">Policy</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">update_policy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">policy</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Update a policy</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>policy</strong> – Either the ID of a policy or a
+<a class="reference internal" href="../resources/identity/v3/policy.html#openstack.identity.v3.policy.Policy" title="openstack.identity.v3.policy.Policy"><code class="xref py py-class docutils literal notranslate"><span class="pre">Policy</span></code></a> instance.</p>
+</dd>
+<dt class="field-even">Attrs kwargs<span class="colon">:</span></dt>
+<dd class="field-even"><p>The attributes to update on the policy represented
+by <code class="docutils literal notranslate"><span class="pre">value</span></code>.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The updated policy</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="../resources/identity/v3/policy.html#openstack.identity.v3.policy.Policy" title="openstack.identity.v3.policy.Policy"><code class="xref py py-class docutils literal notranslate"><span class="pre">Policy</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">delete_policy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">policy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Delete a policy</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>policy</strong> – The value can be either the ID of a policy or a
+<a class="reference internal" href="../resources/identity/v3/policy.html#openstack.identity.v3.policy.Policy" title="openstack.identity.v3.policy.Policy"><code class="xref py py-class docutils literal notranslate"><span class="pre">Policy</span></code></a> instance.</p></li>
+<li><p><strong>ignore_missing</strong> (<em>bool</em>) – When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code> will be
+raised when the policy does not exist.
+When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, no exception will be set when
+attempting to delete a nonexistent policy.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_policy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">policy</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Get a single policy</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>policy</strong> – The value can be the ID of a policy or a
+<a class="reference internal" href="../resources/identity/v3/policy.html#openstack.identity.v3.policy.Policy" title="openstack.identity.v3.policy.Policy"><code class="xref py py-class docutils literal notranslate"><span class="pre">Policy</span></code></a> instance.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>One <a class="reference internal" href="../resources/identity/v3/policy.html#openstack.identity.v3.policy.Policy" title="openstack.identity.v3.policy.Policy"><code class="xref py py-class docutils literal notranslate"><span class="pre">Policy</span></code></a></p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code>
+when no resource can be found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">find_policy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_or_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Find a single policy</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name_or_id</strong> – The name or ID of a policy.</p></li>
+<li><p><strong>ignore_missing</strong> (<em>bool</em>) – When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code> will be
+raised when the resource does not exist.
+When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, None will be returned when
+attempting to find a nonexistent resource.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>One <a class="reference internal" href="../resources/identity/v3/policy.html#openstack.identity.v3.policy.Policy" title="openstack.identity.v3.policy.Policy"><code class="xref py py-class docutils literal notranslate"><span class="pre">Policy</span></code></a> or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">policies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Retrieve a generator of policies</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>query</strong> (<em>kwargs</em>) – Optional query parameters to be sent to limit
+the resources being returned.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A generator of policy instances.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../resources/identity/v3/policy.html#openstack.identity.v3.policy.Policy" title="openstack.identity.v3.policy.Policy"><code class="xref py py-class docutils literal notranslate"><span class="pre">Policy</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="project-operations">
+<h3>Project Operations<a class="headerlink" href="#project-operations" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">otcextensions.sdk.identity.v3._proxy.</span></span><span class="sig-name descname"><span class="pre">Proxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">create_project</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Create a new project from attributes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>attrs</strong> (<em>dict</em>) – Keyword arguments which will be used to create
+a <a class="reference internal" href="../resources/identity/v3/project.html#openstack.identity.v3.project.Project" title="openstack.identity.v3.project.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a>,
+comprised of the properties on the Project class.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The results of project creation</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../resources/identity/v3/project.html#openstack.identity.v3.project.Project" title="openstack.identity.v3.project.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">update_project</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Update a project</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>project</strong> – Either the ID of a project or a
+<a class="reference internal" href="../resources/identity/v3/project.html#openstack.identity.v3.project.Project" title="openstack.identity.v3.project.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a> instance.</p>
+</dd>
+<dt class="field-even">Attrs kwargs<span class="colon">:</span></dt>
+<dd class="field-even"><p>The attributes to update on the project represented
+by <code class="docutils literal notranslate"><span class="pre">value</span></code>.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The updated project</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="../resources/identity/v3/project.html#openstack.identity.v3.project.Project" title="openstack.identity.v3.project.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">delete_project</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Delete a project</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>project</strong> – The value can be either the ID of a project or a
+<a class="reference internal" href="../resources/identity/v3/project.html#openstack.identity.v3.project.Project" title="openstack.identity.v3.project.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a> instance.</p></li>
+<li><p><strong>ignore_missing</strong> (<em>bool</em>) – When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code> will be
+raised when the project does not exist.
+When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, no exception will be set when
+attempting to delete a nonexistent project.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_project</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Get a single project</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>project</strong> – The value can be the ID of a project or a
+<a class="reference internal" href="../resources/identity/v3/project.html#openstack.identity.v3.project.Project" title="openstack.identity.v3.project.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a> instance.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>One <a class="reference internal" href="../resources/identity/v3/project.html#openstack.identity.v3.project.Project" title="openstack.identity.v3.project.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a></p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code>
+when no resource can be found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">find_project</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_or_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Find a single project</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name_or_id</strong> – The name or ID of a project.</p></li>
+<li><p><strong>ignore_missing</strong> (<em>bool</em>) – When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code> will be
+raised when the resource does not exist.
+When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, None will be returned when
+attempting to find a nonexistent resource.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>One <a class="reference internal" href="../resources/identity/v3/project.html#openstack.identity.v3.project.Project" title="openstack.identity.v3.project.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a> or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">projects</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Retrieve a generator of projects</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>query</strong> (<em>kwargs</em>) – Optional query parameters to be sent to limit
+the resources being returned.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A generator of project instances.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../resources/identity/v3/project.html#openstack.identity.v3.project.Project" title="openstack.identity.v3.project.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="region-operations">
+<h3>Region Operations<a class="headerlink" href="#region-operations" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">otcextensions.sdk.identity.v3._proxy.</span></span><span class="sig-name descname"><span class="pre">Proxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">create_region</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Create a new region from attributes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>attrs</strong> (<em>dict</em>) – Keyword arguments which will be used to create
+a <code class="xref py py-class docutils literal notranslate"><span class="pre">Region</span></code>,
+comprised of the properties on the Region class.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The results of region creation.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Region</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">update_region</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">region</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Update a region</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>region</strong> – Either the ID of a region or a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Region</span></code> instance.</p>
+</dd>
+<dt class="field-even">Attrs kwargs<span class="colon">:</span></dt>
+<dd class="field-even"><p>The attributes to update on the region represented
+by <code class="docutils literal notranslate"><span class="pre">value</span></code>.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The updated region.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Region</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">delete_region</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">region</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Delete a region</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>region</strong> – The value can be either the ID of a region or a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Region</span></code> instance.</p></li>
+<li><p><strong>ignore_missing</strong> (<em>bool</em>) – When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code> will be
+raised when the region does not exist.
+When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, no exception will be thrown when
+attempting to delete a nonexistent region.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_region</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">region</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Get a single region</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>region</strong> – The value can be the ID of a region or a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Region</span></code> instance.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>One <code class="xref py py-class docutils literal notranslate"><span class="pre">Region</span></code></p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code>
+when no matching region can be found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">find_region</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_or_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Find a single region</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name_or_id</strong> – The name or ID of a region.</p></li>
+<li><p><strong>ignore_missing</strong> (<em>bool</em>) – When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code> will be
+raised when the region does not exist.
+When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, None will be returned when
+attempting to find a nonexistent region.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>One <code class="xref py py-class docutils literal notranslate"><span class="pre">Region</span></code> or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">regions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Retrieve a generator of regions</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>query</strong> (<em>kwargs</em>) – Optional query parameters to be sent to limit
+the regions being returned.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A generator of region instances.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Region</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="role-operations">
+<h3>Role Operations<a class="headerlink" href="#role-operations" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">otcextensions.sdk.identity.v3._proxy.</span></span><span class="sig-name descname"><span class="pre">Proxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">create_role</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Create a new role from attributes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>attrs</strong> (<em>dict</em>) – Keyword arguments which will be used to create
+a <code class="xref py py-class docutils literal notranslate"><span class="pre">Role</span></code>,
+comprised of the properties on the Role class.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The results of role creation.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Role</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">update_role</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">role</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Update a role</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>role</strong> – Either the ID of a role or a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Role</span></code> instance.</p></li>
+<li><p><strong>kwargs</strong> (<em>dict</em>) – The attributes to update on the role represented
+by <code class="docutils literal notranslate"><span class="pre">value</span></code>. Only name can be updated</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The updated role.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Role</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">delete_role</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">role</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Delete a role</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>role</strong> – The value can be either the ID of a role or a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Role</span></code> instance.</p></li>
+<li><p><strong>ignore_missing</strong> (<em>bool</em>) – When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code> will be
+raised when the role does not exist.
+When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, no exception will be thrown when
+attempting to delete a nonexistent role.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_role</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">role</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Get a single role</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>role</strong> – The value can be the ID of a role or a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Role</span></code> instance.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>One <code class="xref py py-class docutils literal notranslate"><span class="pre">Role</span></code></p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code>
+when no matching role can be found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">find_role</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_or_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Find a single role</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name_or_id</strong> – The name or ID of a role.</p></li>
+<li><p><strong>ignore_missing</strong> (<em>bool</em>) – When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code> will be
+raised when the role does not exist.
+When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, None will be returned when
+attempting to find a nonexistent role.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>One <code class="xref py py-class docutils literal notranslate"><span class="pre">Role</span></code> or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">roles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Retrieve a generator of roles</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>query</strong> (<em>kwargs</em>) – Optional query parameters to be sent to limit
+the resources being returned. The options
+are: domain_id, name.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A generator of role instances.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Role</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="role-assignment-operations">
+<h3>Role Assignment Operations<a class="headerlink" href="#role-assignment-operations" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">otcextensions.sdk.identity.v3._proxy.</span></span><span class="sig-name descname"><span class="pre">Proxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">role_assignments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Retrieve a generator of role assignments</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>query</strong> (<em>kwargs</em>) – Optional query parameters to be sent to limit
+the resources being returned. The options
+are: group_id, role_id, scope_domain_id,
+scope_project_id, user_id, include_names,
+include_subtree.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">RoleAssignment</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">role_assignments_filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Retrieve a generator of roles assigned to user/group</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>domain</strong> – Either the ID of a domain or a
+<a class="reference internal" href="../resources/identity/v3/domain.html#openstack.identity.v3.domain.Domain" title="openstack.identity.v3.domain.Domain"><code class="xref py py-class docutils literal notranslate"><span class="pre">Domain</span></code></a> instance.</p></li>
+<li><p><strong>project</strong> – Either the ID of a project or a
+<a class="reference internal" href="../resources/identity/v3/project.html#openstack.identity.v3.project.Project" title="openstack.identity.v3.project.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a>
+instance.</p></li>
+<li><p><strong>group</strong> – Either the ID of a group or a
+<a class="reference internal" href="../resources/identity/v3/group.html#openstack.identity.v3.group.Group" title="openstack.identity.v3.group.Group"><code class="xref py py-class docutils literal notranslate"><span class="pre">Group</span></code></a> instance.</p></li>
+<li><p><strong>user</strong> – Either the ID of a user or a
+<a class="reference internal" href="../resources/identity/v3/user.html#openstack.identity.v3.user.User" title="openstack.identity.v3.user.User"><code class="xref py py-class docutils literal notranslate"><span class="pre">User</span></code></a> instance.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A generator of role instances.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Role</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">assign_project_role_to_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">role</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Assign role to user on a project</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>project</strong> – Either the ID of a project or a
+<a class="reference internal" href="../resources/identity/v3/project.html#openstack.identity.v3.project.Project" title="openstack.identity.v3.project.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a>
+instance.</p></li>
+<li><p><strong>user</strong> – Either the ID of a user or a
+<a class="reference internal" href="../resources/identity/v3/user.html#openstack.identity.v3.user.User" title="openstack.identity.v3.user.User"><code class="xref py py-class docutils literal notranslate"><span class="pre">User</span></code></a> instance.</p></li>
+<li><p><strong>role</strong> – Either the ID of a role or a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Role</span></code> instance.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">unassign_project_role_from_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">role</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Unassign role from user on a project</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>project</strong> – Either the ID of a project or a
+<a class="reference internal" href="../resources/identity/v3/project.html#openstack.identity.v3.project.Project" title="openstack.identity.v3.project.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a>
+instance.</p></li>
+<li><p><strong>user</strong> – Either the ID of a user or a
+<a class="reference internal" href="../resources/identity/v3/user.html#openstack.identity.v3.user.User" title="openstack.identity.v3.user.User"><code class="xref py py-class docutils literal notranslate"><span class="pre">User</span></code></a> instance.</p></li>
+<li><p><strong>role</strong> – Either the ID of a role or a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Role</span></code> instance.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">validate_user_has_role</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">role</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Validates that a user has a role on a project</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>project</strong> – Either the ID of a project or a
+<a class="reference internal" href="../resources/identity/v3/project.html#openstack.identity.v3.project.Project" title="openstack.identity.v3.project.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a>
+instance.</p></li>
+<li><p><strong>user</strong> – Either the ID of a user or a
+<a class="reference internal" href="../resources/identity/v3/user.html#openstack.identity.v3.user.User" title="openstack.identity.v3.user.User"><code class="xref py py-class docutils literal notranslate"><span class="pre">User</span></code></a> instance.</p></li>
+<li><p><strong>role</strong> – Either the ID of a role or a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Role</span></code> instance.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if user has role in project</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">assign_project_role_to_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">role</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Assign role to group on a project</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>project</strong> – Either the ID of a project or a
+<a class="reference internal" href="../resources/identity/v3/project.html#openstack.identity.v3.project.Project" title="openstack.identity.v3.project.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a>
+instance.</p></li>
+<li><p><strong>group</strong> – Either the ID of a group or a
+<a class="reference internal" href="../resources/identity/v3/group.html#openstack.identity.v3.group.Group" title="openstack.identity.v3.group.Group"><code class="xref py py-class docutils literal notranslate"><span class="pre">Group</span></code></a> instance.</p></li>
+<li><p><strong>role</strong> – Either the ID of a role or a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Role</span></code> instance.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">unassign_project_role_from_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">role</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Unassign role from group on a project</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>project</strong> – Either the ID of a project or a
+<a class="reference internal" href="../resources/identity/v3/project.html#openstack.identity.v3.project.Project" title="openstack.identity.v3.project.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a>
+instance.</p></li>
+<li><p><strong>group</strong> – Either the ID of a group or a
+<a class="reference internal" href="../resources/identity/v3/group.html#openstack.identity.v3.group.Group" title="openstack.identity.v3.group.Group"><code class="xref py py-class docutils literal notranslate"><span class="pre">Group</span></code></a> instance.</p></li>
+<li><p><strong>role</strong> – Either the ID of a role or a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Role</span></code> instance.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">validate_group_has_role</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">role</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Validates that a group has a role on a project</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>project</strong> – Either the ID of a project or a
+<a class="reference internal" href="../resources/identity/v3/project.html#openstack.identity.v3.project.Project" title="openstack.identity.v3.project.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">Project</span></code></a>
+instance.</p></li>
+<li><p><strong>group</strong> – Either the ID of a group or a
+<a class="reference internal" href="../resources/identity/v3/group.html#openstack.identity.v3.group.Group" title="openstack.identity.v3.group.Group"><code class="xref py py-class docutils literal notranslate"><span class="pre">Group</span></code></a> instance.</p></li>
+<li><p><strong>role</strong> – Either the ID of a role or a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Role</span></code> instance.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if group has role in project</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="service-operations">
+<h3>Service Operations<a class="headerlink" href="#service-operations" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">otcextensions.sdk.identity.v3._proxy.</span></span><span class="sig-name descname"><span class="pre">Proxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">create_service</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Create a new service from attributes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>attrs</strong> (<em>dict</em>) – Keyword arguments which will be used to create
+a <a class="reference internal" href="../resources/identity/v3/service.html#openstack.identity.v3.service.Service" title="openstack.identity.v3.service.Service"><code class="xref py py-class docutils literal notranslate"><span class="pre">Service</span></code></a>,
+comprised of the properties on the Service class.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The results of service creation</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../resources/identity/v3/service.html#openstack.identity.v3.service.Service" title="openstack.identity.v3.service.Service"><code class="xref py py-class docutils literal notranslate"><span class="pre">Service</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">update_service</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">service</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Update a service</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>service</strong> – Either the ID of a service or a
+<a class="reference internal" href="../resources/identity/v3/service.html#openstack.identity.v3.service.Service" title="openstack.identity.v3.service.Service"><code class="xref py py-class docutils literal notranslate"><span class="pre">Service</span></code></a> instance.</p>
+</dd>
+<dt class="field-even">Attrs kwargs<span class="colon">:</span></dt>
+<dd class="field-even"><p>The attributes to update on the service represented
+by <code class="docutils literal notranslate"><span class="pre">value</span></code>.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The updated service</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="../resources/identity/v3/service.html#openstack.identity.v3.service.Service" title="openstack.identity.v3.service.Service"><code class="xref py py-class docutils literal notranslate"><span class="pre">Service</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">delete_service</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">service</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Delete a service</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>service</strong> – The value can be either the ID of a service or a
+<a class="reference internal" href="../resources/identity/v3/service.html#openstack.identity.v3.service.Service" title="openstack.identity.v3.service.Service"><code class="xref py py-class docutils literal notranslate"><span class="pre">Service</span></code></a> instance.</p></li>
+<li><p><strong>ignore_missing</strong> (<em>bool</em>) – When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code> will be
+raised when the service does not exist.
+When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, no exception will be set when
+attempting to delete a nonexistent service.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_service</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">service</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Get a single service</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>service</strong> – The value can be the ID of a service or a
+<a class="reference internal" href="../resources/identity/v3/service.html#openstack.identity.v3.service.Service" title="openstack.identity.v3.service.Service"><code class="xref py py-class docutils literal notranslate"><span class="pre">Service</span></code></a> instance.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>One <a class="reference internal" href="../resources/identity/v3/service.html#openstack.identity.v3.service.Service" title="openstack.identity.v3.service.Service"><code class="xref py py-class docutils literal notranslate"><span class="pre">Service</span></code></a></p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code>
+when no resource can be found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">find_service</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_or_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Find a single service</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name_or_id</strong> – The name or ID of a service.</p></li>
+<li><p><strong>ignore_missing</strong> (<em>bool</em>) – When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code> will be
+raised when the resource does not exist.
+When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, None will be returned when
+attempting to find a nonexistent resource.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>One <a class="reference internal" href="../resources/identity/v3/service.html#openstack.identity.v3.service.Service" title="openstack.identity.v3.service.Service"><code class="xref py py-class docutils literal notranslate"><span class="pre">Service</span></code></a> or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">services</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Retrieve a generator of services</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>query</strong> (<em>kwargs</em>) – Optional query parameters to be sent to limit
+the resources being returned.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A generator of service instances.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../resources/identity/v3/service.html#openstack.identity.v3.service.Service" title="openstack.identity.v3.service.Service"><code class="xref py py-class docutils literal notranslate"><span class="pre">Service</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="user-operations">
+<h3>User Operations<a class="headerlink" href="#user-operations" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">otcextensions.sdk.identity.v3._proxy.</span></span><span class="sig-name descname"><span class="pre">Proxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">create_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Create a new user from attributes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>attrs</strong> (<em>dict</em>) – Keyword arguments which will be used to create
+a <a class="reference internal" href="../resources/identity/v3/user.html#openstack.identity.v3.user.User" title="openstack.identity.v3.user.User"><code class="xref py py-class docutils literal notranslate"><span class="pre">User</span></code></a>,
+comprised of the properties on the User class.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The results of user creation</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../resources/identity/v3/user.html#openstack.identity.v3.user.User" title="openstack.identity.v3.user.User"><code class="xref py py-class docutils literal notranslate"><span class="pre">User</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">update_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Update a user</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>user</strong> – Either the ID of a user or a
+<a class="reference internal" href="../resources/identity/v3/user.html#openstack.identity.v3.user.User" title="openstack.identity.v3.user.User"><code class="xref py py-class docutils literal notranslate"><span class="pre">User</span></code></a> instance.</p>
+</dd>
+<dt class="field-even">Attrs kwargs<span class="colon">:</span></dt>
+<dd class="field-even"><p>The attributes to update on the user represented
+by <code class="docutils literal notranslate"><span class="pre">value</span></code>.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The updated user</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="../resources/identity/v3/user.html#openstack.identity.v3.user.User" title="openstack.identity.v3.user.User"><code class="xref py py-class docutils literal notranslate"><span class="pre">User</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">delete_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Delete a user</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user</strong> – The value can be either the ID of a user or a
+<a class="reference internal" href="../resources/identity/v3/user.html#openstack.identity.v3.user.User" title="openstack.identity.v3.user.User"><code class="xref py py-class docutils literal notranslate"><span class="pre">User</span></code></a> instance.</p></li>
+<li><p><strong>ignore_missing</strong> (<em>bool</em>) – When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code> will be
+raised when the user does not exist.
+When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, no exception will be set when
+attempting to delete a nonexistent user.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Get a single user</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>user</strong> – The value can be the ID of a user or a
+<a class="reference internal" href="../resources/identity/v3/user.html#openstack.identity.v3.user.User" title="openstack.identity.v3.user.User"><code class="xref py py-class docutils literal notranslate"><span class="pre">User</span></code></a> instance.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>One <a class="reference internal" href="../resources/identity/v3/user.html#openstack.identity.v3.user.User" title="openstack.identity.v3.user.User"><code class="xref py py-class docutils literal notranslate"><span class="pre">User</span></code></a></p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code>
+when no resource can be found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">find_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_or_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Find a single user</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name_or_id</strong> – The name or ID of a user.</p></li>
+<li><p><strong>ignore_missing</strong> (<em>bool</em>) – When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code> will be
+raised when the resource does not exist.
+When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, None will be returned when
+attempting to find a nonexistent resource.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>One <a class="reference internal" href="../resources/identity/v3/user.html#openstack.identity.v3.user.User" title="openstack.identity.v3.user.User"><code class="xref py py-class docutils literal notranslate"><span class="pre">User</span></code></a> or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">users</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Retrieve a generator of users</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>query</strong> (<em>kwargs</em>) – Optional query parameters to be sent to limit
+the resources being returned.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A generator of user instances.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../resources/identity/v3/user.html#openstack.identity.v3.user.User" title="openstack.identity.v3.user.User"><code class="xref py py-class docutils literal notranslate"><span class="pre">User</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">user_projects</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span></dt>
+<dd><dl class="simple">
+<dt>Retrieve a generator of projects to which the user has authorization</dt><dd><p>to access.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user</strong> – Either the user id or an instance of
+<a class="reference internal" href="../resources/identity/v3/user.html#openstack.identity.v3.user.User" title="openstack.identity.v3.user.User"><code class="xref py py-class docutils literal notranslate"><span class="pre">User</span></code></a></p></li>
+<li><p><strong>query</strong> (<em>kwargs</em>) – Optional query parameters to be sent to limit
+the resources being returned.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A generator of project instances.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">UserProject</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="security-token-operations">
+<h3>Security Token Operations<a class="headerlink" href="#security-token-operations" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">otcextensions.sdk.identity.v3._proxy.</span></span><span class="sig-name descname"><span class="pre">Proxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">create_security_token</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">duration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'token'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Create a new temporary AK/SK</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>duration</strong> (<em>int</em>) – Duration in seconds for the token validity.</p></li>
+<li><p><strong>method</strong> (<em>str</em>) – Authorization method (token or agency)</p></li>
+<li><p><strong>attrs</strong> (<em>dict</em>) – Keyword arguments which will be used to create a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">SecurityToken</span></code>,
+comprised of the properties on the SecurityToken class.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The results of temporary security token creation</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">SecurityToken</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+                </div>
+              </div>
+            </div>
+            <div class="docs-actions">
+            
+              <a href="dns.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: DNS API"></i></a>
+            
+            
+              <a href="kms.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: KMS API"></i></a>
+            
+            </div>
+            <div class="row docs-byline bottom">
+              <div class="docs-updated">updated: 2021-12-08 13:15</div>
+            </div>
+          </div>
+  <div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 docs-sidebar">
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <a href="../../index.html" class="docs-sidebar-section-title"><h4>otcextensions 0.24.3.dev2</h4></a>
+      <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../install/index.html">1. Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../install/configuration.html">2. Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cli/index.html">3. OpenStack Client (CLI)</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">4. Using the OpenStack SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../architecture.html">Architecture Overview and Important Terms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guides/index.html">Guides for SDK</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Service Proxies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../resources/index.html">Resources and Attributes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributor/index.html">5. Contributing to the OTC Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../coverage.html">6. Service Coverage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendices/index.html">7. Appendices</a></li>
+</ul>
+
+    </div>
+
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="local-table-of-contents">
+      <h4 class="docs-sidebar-section-title">Page Contents</h4>
+      <ul>
+<li><a class="reference internal" href="#">Identity API v3</a><ul>
+<li><a class="reference internal" href="#the-identity-v3-class">The Identity v3 Class</a><ul>
+<li><a class="reference internal" href="#agency-operations">Agency Operations</a></li>
+<li><a class="reference internal" href="#credential-operations">Credential Operations</a></li>
+<li><a class="reference internal" href="#domain-operations">Domain Operations</a></li>
+<li><a class="reference internal" href="#endpoint-operations">Endpoint Operations</a></li>
+<li><a class="reference internal" href="#group-operations">Group Operations</a></li>
+<li><a class="reference internal" href="#policy-operations">Policy Operations</a></li>
+<li><a class="reference internal" href="#project-operations">Project Operations</a></li>
+<li><a class="reference internal" href="#region-operations">Region Operations</a></li>
+<li><a class="reference internal" href="#role-operations">Role Operations</a></li>
+<li><a class="reference internal" href="#role-assignment-operations">Role Assignment Operations</a></li>
+<li><a class="reference internal" href="#service-operations">Service Operations</a></li>
+<li><a class="reference internal" href="#user-operations">User Operations</a></li>
+<li><a class="reference internal" href="#security-token-operations">Security Token Operations</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+  </div>
+</div>
+        </div>
+      </div>
+  </scale-app-shell>
+<scale-app-footer id="footer-shell" variant="standard" claim-lang="en">
+</scale-app-footer>
+<script>
+  const footer_shell = document.getElementById("footer-shell");
+  footer_shell.footerNavigation = [{"name":"Contact","id":"Contact","href":"https://cloud.telekom.de/en/contact/"},{"name":"Legal notice","id":"Legal notice","href":"https://cloud.telekom.de/en/imprint-adress"},{"name":"Data privacy","id":"Data privacy","href":"https://open-telekom-cloud.com/en/data-protection","icon":"alert-imprint-dataprivacy"}]</script>
+  <!-- jQuery -->
+<script type="text/javascript" src="../../_static/js/jquery-3.2.1.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script type="text/javascript" src="../../_static/js/bootstrap.min.js"></script>
+
+<!-- Telekom Scale -->
+<script type="module" src="https://unpkg.com/@telekom/scale-components@3.0.0-beta.32/dist/scale-components/scale-components.esm.js"></script>
+
+<!-- The rest of the JS -->
+<script type="text/javascript" src="../../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script type="text/javascript" src="../../_static/js/docs.js"></script>
+
+<!-- Popovers -->
+<script type="text/javascript" src="../../_static/js/webui-popover.js"></script>
+
+<!-- standard sphinx include libraries, which allow search highlighting -->
+<script type="text/javascript" src="../../_static/underscore.js"></script>
+<script type="text/javascript" src="../../_static/doctools.js"></script>
+<script type="text/javascript" src="../../_static/searchtools.js"></script>
+
+<script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.24.3.dev2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+</script>
+
+
+<!-- Javascript for page -->
+<script language="JavaScript">
+/* build a description of this page including SHA, source location on git repo,
+   build time and the project's launchpad bug tag. Set the HREF of the bug
+   buttons */
+</script>
+  
+  </body>
+</html>

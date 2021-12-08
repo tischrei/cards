@@ -1,0 +1,736 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Distributed Cache Service (DCS) &#8212; otcextensions 0.24.3.dev2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/basic.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Dedicated Hosts (DeH)" href="deh.html" />
+    <link rel="prev" title="Cloud Trace Service (CTS)" href="cts.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap CSS -->
+<link href="../../_static/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../../_static/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="../../_static/css/combined.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../../_static/pygments.css" rel="stylesheet">
+
+<!-- Telekom Scale -->
+<link href="https://unpkg.com/@telekom/scale-components@3.0.0-beta.32/dist/scale-components/scale-components.css" rel="stylesheet">
+
+<!-- Otcdocstheme CSS -->
+<link href="../../_static/css/otcdocstheme.css" rel="stylesheet">
+
+
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-17511903-1', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+  </head><body>
+  
+<!-- SOURCE_FILE: sdk/guides/dcs.rst -->
+
+
+<scale-app-shell
+  id="app-shell"
+  claim-lang="en"
+  logo-title="PAGENAME"
+  logo-href="/"
+>
+
+
+
+<script>
+  const app_shell = document.getElementById(
+  'app-shell');
+  app_shell.mainNavigation = [
+    {
+      "name": "Software",
+      "id": "Software",
+      "children": [
+        {
+          "name": "Automation",
+          "id": "Automation",
+          "children": [
+            {
+              "name": "Terraform OTC Driver",
+              "id": "Terraform OTC Driver",
+              "href": "https://docs.otc-service.com/terraform-provider-opentelekomcloud"
+            },
+                      {
+              "name": "Ansible Collection Cloud",
+              "id": "Ansible Collection Cloud",
+              "href": "https://docs.otc-service.com/ansible-collection-cloud"
+            },
+          ]
+        },
+        {
+          "name": "Client Tools",
+          "id": "Client Tools",
+          "children": [
+            {
+              "name": "OTC Extensions",
+              "id": "OTC Extensions",
+              "href": "https://docs.otc-service.com/python-otcextensions"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Release Notes",
+      "id": "Release Notes",
+      "children": [
+        {
+          "name": "Automation",
+          "id": "Automation",
+          "children": [
+            {
+              "name": "Terraform OTC Driver",
+              "id": "Terraform OTC Driver",
+              "href": "https://docs.otc-service.com/releasenotes/terraform-provider-opentelekomcloud"
+            }
+          ]
+        },
+        {
+          "name": "Client Tools",
+          "id": "Client Tools",
+          "children": [
+            {
+              "name": "OTC Extensions",
+              "id": "OTC Extensions",
+              "href": "https://docs.otc-service.com/releasenotes/python-otcextensions"
+            }
+          ]
+        }
+      ]
+    }
+  ];
+</script>
+  
+      <div class="container docs-book-wrapper">
+        <div class="row">
+          <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
+  <div class="row docs-title">
+  <div class="col-lg-8">
+      <h1>Distributed Cache Service (DCS)</h1>
+    
+  </div>
+  <div class="docs-actions">
+    
+    <a href="cts.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Cloud Trace Service (CTS)"></i></a>
+    
+    
+    <a href="deh.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Dedicated Hosts (DeH)"></i></a>
+    
+  </div>
+</div>
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="docs-body" role="main">
+  
+  <section id="distributed-cache-service-dcs">
+<h1>Distributed Cache Service (DCS)<a class="headerlink" href="#distributed-cache-service-dcs" title="Permalink to this headline">¶</a></h1>
+<nav class="contents local" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#instances" id="id1">Instances</a></p>
+<ul>
+<li><p><a class="reference internal" href="#list-instances" id="id2">List Instances</a></p></li>
+<li><p><a class="reference internal" href="#create-instance" id="id3">Create Instance</a></p></li>
+<li><p><a class="reference internal" href="#get-instance" id="id4">Get Instance</a></p></li>
+<li><p><a class="reference internal" href="#find-instance" id="id5">Find Instance</a></p></li>
+<li><p><a class="reference internal" href="#update-instance" id="id6">Update Instance</a></p></li>
+<li><p><a class="reference internal" href="#delete-instance" id="id7">Delete Instance</a></p></li>
+<li><p><a class="reference internal" href="#extend-instance" id="id8">Extend Instance</a></p></li>
+<li><p><a class="reference internal" href="#stop-instance" id="id9">Stop Instance</a></p></li>
+<li><p><a class="reference internal" href="#start-instance" id="id10">Start Instance</a></p></li>
+<li><p><a class="reference internal" href="#restart-instance" id="id11">Restart Instance</a></p></li>
+<li><p><a class="reference internal" href="#change-instance-password" id="id12">Change Instance Password</a></p></li>
+<li><p><a class="reference internal" href="#list-statistics-of-all-instances" id="id13">List Statistics of all Instances</a></p></li>
+<li><p><a class="reference internal" href="#list-config-parameters" id="id14">List Config Parameters</a></p></li>
+<li><p><a class="reference internal" href="#update-instance-config-parameters" id="id15">Update Instance Config Parameters</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#backup-dcs-instance" id="id16">Backup DCS Instance</a></p>
+<ul>
+<li><p><a class="reference internal" href="#list-backups" id="id17">List Backups</a></p></li>
+<li><p><a class="reference internal" href="#create-instance-backup" id="id18">Create Instance Backup</a></p></li>
+<li><p><a class="reference internal" href="#delete-instance-backup" id="id19">Delete Instance Backup</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#restore-dcs-instances" id="id20">Restore DCS Instances</a></p>
+<ul>
+<li><p><a class="reference internal" href="#list-restore-records" id="id21">List Restore Records</a></p></li>
+<li><p><a class="reference internal" href="#restore-instance" id="id22">Restore Instance</a></p></li>
+</ul>
+</li>
+</ul>
+</nav>
+<p>Redis is a NoSQL database. It can handle various data structures, but should
+not be used for complex data structures; relational databases are better
+suited for these. While caching the storage in the RAM allows fast data
+access, Redis is ideal for all applications in which speed is the main focus.
+However, the storage cache not persistent, meaning that the stored data is
+deleted if the virtual machine is switched off.
+The Distributed Cache Service is ideal for use as a cache server (e.g. in
+order to accelerate the loading times of websites), for real-time analyses,
+high-speed transactions, and message queuing. Clusters made up of individual
+DCS instances can be used for applications with extremely high performance
+requirements. Redis is available in the Open Telekom Cloud as the Distributed
+Cache Service. Via the console, the database can be defined in three variants:
+as a single-node database for temporary data storage, as a master/standby
+database for higher availability, and as a cluster for high performance.
+The Distributed Cache Service is billed on an hourly basis in accordance with
+the chosen RAM size and type (master/standby or single-node database).</p>
+<section id="instances">
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Instances</a><a class="headerlink" href="#instances" title="Permalink to this headline">¶</a></h2>
+<p>A Distributed Cache Service Instance is a Redis instance on top of
+Open Telekom Cloud.</p>
+<section id="list-instances">
+<h3><a class="toc-backref" href="#id2" role="doc-backlink">List Instances</a><a class="headerlink" href="#list-instances" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to query all DCS Instances and to filter
+the output with query parameters.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="k">for</span> <span class="n">instance</span> <span class="ow">in</span> <span class="n">conn</span><span class="o">.</span><span class="n">dcs</span><span class="o">.</span><span class="n">instances</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="create-instance">
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">Create Instance</a><a class="headerlink" href="#create-instance" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to create a DCS instance with
+parameters.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="n">instance</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">dcs</span><span class="o">.</span><span class="n">create_instance</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;dcs-test&quot;</span><span class="p">,</span>
+    <span class="n">available_zones</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;eu-de-03&quot;</span><span class="p">],</span>
+    <span class="n">capacity</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">engine</span><span class="o">=</span><span class="s2">&quot;Redis&quot;</span><span class="p">,</span>
+    <span class="n">engine_version</span><span class="o">=</span><span class="s2">&quot;3.0.7&quot;</span><span class="p">,</span>
+    <span class="n">maintain_begin</span><span class="o">=</span><span class="s2">&quot;02:00:00&quot;</span><span class="p">,</span>
+    <span class="n">maintain_end</span><span class="o">=</span><span class="s2">&quot;06:00:00&quot;</span><span class="p">,</span>
+    <span class="n">password</span><span class="o">=</span><span class="s2">&quot;Password.123&quot;</span><span class="p">,</span>
+    <span class="n">product_id</span><span class="o">=</span><span class="s2">&quot;OTC_DCS_SINGLE&quot;</span><span class="p">,</span>
+    <span class="n">resource_spec_code</span><span class="o">=</span><span class="s2">&quot;dcs.single_node&quot;</span><span class="p">,</span>
+    <span class="n">security_group_id</span><span class="o">=</span><span class="s2">&quot;bb0e60ab-b6e0-4c61-a503-63213c18effa&quot;</span><span class="p">,</span>
+    <span class="n">subnet_id</span><span class="o">=</span><span class="s2">&quot;25d24fc8-d019-4a34-9fff-0a09fde6a9cb&quot;</span><span class="p">,</span>
+    <span class="n">vpc_id</span><span class="o">=</span><span class="s2">&quot;26ca2783-dc40-4e3a-95b1-5a0756441e12&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
+
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">attrs = {</span>
+<span class="sd">    &quot;name&quot;: &quot;dcs-test&quot;,</span>
+<span class="sd">    &quot;engine&quot;: &quot;Redis&quot;,</span>
+<span class="sd">    &quot;capacity&quot;: 2,</span>
+<span class="sd">    &quot;resource_spec_code&quot;: &quot;dcs.single_node&quot;,</span>
+<span class="sd">    &quot;engine_version&quot;: &quot;3.0.7&quot;,</span>
+<span class="sd">    &quot;vpc_id&quot;: &quot;26ca2783-dc40-4e3a-95b1-5a0756441e12&quot;,</span>
+<span class="sd">    &quot;product_id&quot;: &quot;OTC_DCS_SINGLE&quot;,</span>
+<span class="sd">    &quot;password&quot;: &quot;Password.123&quot;,</span>
+<span class="sd">    &quot;user_id&quot;: &quot;18569c6d589c4be3a300b6401c74d936&quot;,</span>
+<span class="sd">    &quot;user_name&quot;: &quot;iam_user&quot;,</span>
+<span class="sd">    &quot;maintain_begin&quot;: &quot;02:00:00&quot;,</span>
+<span class="sd">    &quot;maintain_end&quot;: &quot;06:00:00&quot;,</span>
+<span class="sd">    &quot;enable_publicip&quot;: False,</span>
+<span class="sd">    &quot;enable_ssl&quot;: False,</span>
+<span class="sd">    &quot;service_upgrade&quot;: False,</span>
+<span class="sd">    &quot;service_task_id&quot;: &quot;&quot;,</span>
+<span class="sd">    &quot;available_zones&quot;: [</span>
+<span class="sd">        &quot;eu-de-03&quot;</span>
+<span class="sd">    ],</span>
+<span class="sd">    &quot;subnet_id&quot;: &quot;25d24fc8-d019-4a34-9fff-0a09fde6a9cb&quot;,</span>
+<span class="sd">    &quot;security_group_id&quot;: &quot;bb0e60ab-b6e0-4c61-a503-63213c18effa&quot;</span>
+<span class="sd">}</span>
+
+<span class="sd">instance = conn.dcs.create_instance(**attrs)</span>
+<span class="sd">print(instance)</span>
+<span class="sd">&#39;&#39;&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="get-instance">
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">Get Instance</a><a class="headerlink" href="#get-instance" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to get a DCS instance by ID
+or an instance of class
+<a class="reference internal" href="../resources/dcs/v1/instance.html#otcextensions.sdk.dcs.v1.instance.Instance" title="otcextensions.sdk.dcs.v1.instance.Instance"><code class="xref py py-class docutils literal notranslate"><span class="pre">Instance</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="n">instance</span> <span class="o">=</span> <span class="s2">&quot;instance_id&quot;</span>
+<span class="n">instance</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">dcs</span><span class="o">.</span><span class="n">get_instance</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="find-instance">
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Find Instance</a><a class="headerlink" href="#find-instance" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to find a DCS instance by
+name or id.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="n">instance</span> <span class="o">=</span> <span class="s2">&quot;dcs-test&quot;</span>
+<span class="n">instance</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">dcs</span><span class="o">.</span><span class="n">find_instance</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="update-instance">
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">Update Instance</a><a class="headerlink" href="#update-instance" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to update a DCS instance by
+name or id.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;dcs002&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;instance description&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">instance</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">dcs</span><span class="o">.</span><span class="n">get_instance</span><span class="p">(</span><span class="s2">&quot;ca9697c4-9ddb-4474-9304-576dbf973b00&quot;</span><span class="p">)</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">dcs</span><span class="o">.</span><span class="n">update_instance</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="o">**</span><span class="n">attrs</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="delete-instance">
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">Delete Instance</a><a class="headerlink" href="#delete-instance" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to delete a DCS instance by
+id or an instance of class
+<a class="reference internal" href="../resources/dcs/v1/instance.html#otcextensions.sdk.dcs.v1.instance.Instance" title="otcextensions.sdk.dcs.v1.instance.Instance"><code class="xref py py-class docutils literal notranslate"><span class="pre">Instance</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="n">instance_id</span> <span class="o">=</span> <span class="s2">&quot;instance_id&quot;</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">dcs</span><span class="o">.</span><span class="n">delete_instance</span><span class="p">(</span><span class="n">instance_id</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="extend-instance">
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">Extend Instance</a><a class="headerlink" href="#extend-instance" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to extend a DCS instance with additional RAM.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="n">instance</span> <span class="o">=</span> <span class="s1">&#39;instance_id_or_class_instance&#39;</span>
+<span class="n">capacity</span> <span class="o">=</span> <span class="mi">8</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">dcs</span><span class="o">.</span><span class="n">extend_instance</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">capacity</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="stop-instance">
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">Stop Instance</a><a class="headerlink" href="#stop-instance" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to stop a DCS instance.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="n">instance</span> <span class="o">=</span> <span class="s2">&quot;instance_id_or_name&quot;</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">dcs</span><span class="o">.</span><span class="n">stop_instance</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="start-instance">
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">Start Instance</a><a class="headerlink" href="#start-instance" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to start a DCS instance.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="n">instance</span> <span class="o">=</span> <span class="s2">&quot;instance_id_or_name&quot;</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">dcs</span><span class="o">.</span><span class="n">start_instance</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="restart-instance">
+<h3><a class="toc-backref" href="#id11" role="doc-backlink">Restart Instance</a><a class="headerlink" href="#restart-instance" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to restart a DCS instance.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="n">instance</span> <span class="o">=</span> <span class="s2">&quot;instance_id_or_name&quot;</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">dcs</span><span class="o">.</span><span class="n">restart_instance</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="change-instance-password">
+<h3><a class="toc-backref" href="#id12" role="doc-backlink">Change Instance Password</a><a class="headerlink" href="#change-instance-password" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to change the login password of a DCS instance.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="n">instance</span> <span class="o">=</span> <span class="s1">&#39;name_or_id&#39;</span>
+<span class="n">old_password</span> <span class="o">=</span> <span class="s1">&#39;old_pwd&#39;</span>
+<span class="n">new_password</span> <span class="o">=</span> <span class="s1">&#39;new_pwd&#39;</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">dcs</span><span class="o">.</span><span class="n">change_instance_password</span><span class="p">(</span>
+    <span class="n">instance</span><span class="o">=</span><span class="n">instance</span><span class="p">,</span>
+    <span class="n">current_password</span><span class="o">=</span><span class="n">old_password</span><span class="p">,</span>
+    <span class="n">new_password</span><span class="o">=</span><span class="n">new_password</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="list-statistics-of-all-instances">
+<h3><a class="toc-backref" href="#id13" role="doc-backlink">List Statistics of all Instances</a><a class="headerlink" href="#list-statistics-of-all-instances" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to query all Statistics of all DCS Instances and
+to filter the output with query parameters.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="k">for</span> <span class="n">statistic</span> <span class="ow">in</span> <span class="n">conn</span><span class="o">.</span><span class="n">dcs</span><span class="o">.</span><span class="n">statistics</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">statistic</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="list-config-parameters">
+<h3><a class="toc-backref" href="#id14" role="doc-backlink">List Config Parameters</a><a class="headerlink" href="#list-config-parameters" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to query all Config Parameters of a DCS Instance
+and to filter the output with query parameters.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="n">instance</span> <span class="o">=</span> <span class="s1">&#39;name_or_id&#39;</span>
+<span class="n">instance</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">dcs</span><span class="o">.</span><span class="n">find_instance</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">conn</span><span class="o">.</span><span class="n">dcs</span><span class="o">.</span><span class="n">instance_params</span><span class="p">(</span><span class="n">instance</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">param</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="update-instance-config-parameters">
+<h3><a class="toc-backref" href="#id15" role="doc-backlink">Update Instance Config Parameters</a><a class="headerlink" href="#update-instance-config-parameters" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to update config parameters of a DCS instance.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="n">params</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;param_id&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;param_name&#39;</span><span class="p">:</span> <span class="s1">&#39;timeout&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;default_value&#39;</span><span class="p">:</span> <span class="s1">&#39;0&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;value_range&#39;</span><span class="p">:</span> <span class="s1">&#39;0-7200&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;value_type&#39;</span><span class="p">:</span> <span class="s1">&#39;Interger&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;param_value&#39;</span><span class="p">:</span> <span class="s1">&#39;11&#39;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;param_id&#39;</span><span class="p">:</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;param_name&#39;</span><span class="p">:</span> <span class="s1">&#39;maxmemory-policy&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;default_value&#39;</span><span class="p">:</span> <span class="s1">&#39;noeviction&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;value_range&#39;</span><span class="p">:</span>
+            <span class="s1">&#39;volatile-lru,allkeys-lru,volatile-random,&#39;</span>
+            <span class="s1">&#39;allkeys-random,volatile-ttl,noeviction&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;value_type&#39;</span><span class="p">:</span> <span class="s1">&#39;Enum&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;param_value&#39;</span><span class="p">:</span> <span class="s1">&#39;allkeys-random&#39;</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+<span class="n">instance</span> <span class="o">=</span> <span class="s1">&#39;name_or_id&#39;</span>
+<span class="n">instance</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">dcs</span><span class="o">.</span><span class="n">find_instance</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">dcs</span><span class="o">.</span><span class="n">update_instance_params</span><span class="p">(</span>
+    <span class="n">instance</span><span class="o">=</span><span class="n">instance</span><span class="p">,</span>
+    <span class="n">params</span><span class="o">=</span><span class="n">params</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="backup-dcs-instance">
+<h2><a class="toc-backref" href="#id16" role="doc-backlink">Backup DCS Instance</a><a class="headerlink" href="#backup-dcs-instance" title="Permalink to this headline">¶</a></h2>
+<p>This API is used to backup a Distributed Cache Service instance.</p>
+<section id="list-backups">
+<h3><a class="toc-backref" href="#id17" role="doc-backlink">List Backups</a><a class="headerlink" href="#list-backups" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to query all Backups of a DCS Instance and to filter
+the output with query parameters.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="n">instance</span> <span class="o">=</span> <span class="s2">&quot;instance_id&quot;</span>
+<span class="k">for</span> <span class="n">backup</span> <span class="ow">in</span> <span class="n">conn</span><span class="o">.</span><span class="n">dcs</span><span class="o">.</span><span class="n">backups</span><span class="p">(</span><span class="n">instance</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">backup</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="create-instance-backup">
+<h3><a class="toc-backref" href="#id18" role="doc-backlink">Create Instance Backup</a><a class="headerlink" href="#create-instance-backup" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to backup a DCS Instance.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="n">instance</span> <span class="o">=</span> <span class="s1">&#39;instance_id&#39;</span>
+<span class="n">backup</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">dcs</span><span class="o">.</span><span class="n">backup_instance</span><span class="p">(</span>
+    <span class="n">instance</span><span class="o">=</span><span class="n">instance</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s1">&#39;My new backup.&#39;</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">backup</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="delete-instance-backup">
+<h3><a class="toc-backref" href="#id19" role="doc-backlink">Delete Instance Backup</a><a class="headerlink" href="#delete-instance-backup" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to backup a DCS Instance.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="n">backup_id</span> <span class="o">=</span> <span class="s1">&#39;backup_id&#39;</span>
+<span class="n">instance</span> <span class="o">=</span> <span class="s1">&#39;instance_name_or_id&#39;</span>
+<span class="n">instance</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">dcs</span><span class="o">.</span><span class="n">find_instance</span><span class="p">(</span><span class="n">name_or_id</span><span class="o">=</span><span class="n">instance</span><span class="p">)</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">dcs</span><span class="o">.</span><span class="n">delete_instance_backup</span><span class="p">(</span>
+    <span class="n">backup</span><span class="o">=</span><span class="n">backup_id</span><span class="p">,</span>
+    <span class="n">instance</span><span class="o">=</span><span class="n">instance</span><span class="p">,</span>
+    <span class="n">ignore_missing</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="restore-dcs-instances">
+<h2><a class="toc-backref" href="#id20" role="doc-backlink">Restore DCS Instances</a><a class="headerlink" href="#restore-dcs-instances" title="Permalink to this headline">¶</a></h2>
+<p>This API is used to restore a Distributed Cache Service instance.</p>
+<section id="list-restore-records">
+<h3><a class="toc-backref" href="#id21" role="doc-backlink">List Restore Records</a><a class="headerlink" href="#list-restore-records" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to query all Restore Records.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="n">instance</span> <span class="o">=</span> <span class="s1">&#39;instance_id&#39;</span>
+<span class="k">for</span> <span class="n">rr</span> <span class="ow">in</span> <span class="n">conn</span><span class="o">.</span><span class="n">dcs</span><span class="o">.</span><span class="n">restore_records</span><span class="p">(</span><span class="n">instance</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">rr</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="restore-instance">
+<h3><a class="toc-backref" href="#id22" role="doc-backlink">Restore Instance</a><a class="headerlink" href="#restore-instance" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to restore a DCS Instance.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="n">instance</span> <span class="o">=</span> <span class="s1">&#39;instance_id&#39;</span>
+<span class="n">backup_id</span> <span class="o">=</span> <span class="s1">&#39;backup_id&#39;</span>
+<span class="n">restore</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">dcs</span><span class="o">.</span><span class="n">restore_instance</span><span class="p">(</span>
+    <span class="n">instance</span><span class="o">=</span><span class="n">instance</span><span class="p">,</span>
+    <span class="n">backup_id</span><span class="o">=</span><span class="n">backup_id</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Test restore of DCS instance&#39;</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+                </div>
+              </div>
+            </div>
+            <div class="docs-actions">
+            
+              <a href="cts.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Cloud Trace Service (CTS)"></i></a>
+            
+            
+              <a href="deh.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Dedicated Hosts (DeH)"></i></a>
+            
+            </div>
+            <div class="row docs-byline bottom">
+              <div class="docs-updated">updated: 2021-12-08 13:15</div>
+            </div>
+          </div>
+  <div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 docs-sidebar">
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <a href="../../index.html" class="docs-sidebar-section-title"><h4>otcextensions 0.24.3.dev2</h4></a>
+      <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../install/index.html">1. Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../install/configuration.html">2. Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cli/index.html">3. OpenStack Client (CLI)</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">4. Using the OpenStack SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../architecture.html">Architecture Overview and Important Terms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Guides for SDK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proxies/index.html">Service Proxies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../resources/index.html">Resources and Attributes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributor/index.html">5. Contributing to the OTC Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../coverage.html">6. Service Coverage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendices/index.html">7. Appendices</a></li>
+</ul>
+
+    </div>
+
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="local-table-of-contents">
+      <h4 class="docs-sidebar-section-title">Page Contents</h4>
+      <ul>
+<li><a class="reference internal" href="#">Distributed Cache Service (DCS)</a><ul>
+<li><a class="reference internal" href="#instances">Instances</a><ul>
+<li><a class="reference internal" href="#list-instances">List Instances</a></li>
+<li><a class="reference internal" href="#create-instance">Create Instance</a></li>
+<li><a class="reference internal" href="#get-instance">Get Instance</a></li>
+<li><a class="reference internal" href="#find-instance">Find Instance</a></li>
+<li><a class="reference internal" href="#update-instance">Update Instance</a></li>
+<li><a class="reference internal" href="#delete-instance">Delete Instance</a></li>
+<li><a class="reference internal" href="#extend-instance">Extend Instance</a></li>
+<li><a class="reference internal" href="#stop-instance">Stop Instance</a></li>
+<li><a class="reference internal" href="#start-instance">Start Instance</a></li>
+<li><a class="reference internal" href="#restart-instance">Restart Instance</a></li>
+<li><a class="reference internal" href="#change-instance-password">Change Instance Password</a></li>
+<li><a class="reference internal" href="#list-statistics-of-all-instances">List Statistics of all Instances</a></li>
+<li><a class="reference internal" href="#list-config-parameters">List Config Parameters</a></li>
+<li><a class="reference internal" href="#update-instance-config-parameters">Update Instance Config Parameters</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#backup-dcs-instance">Backup DCS Instance</a><ul>
+<li><a class="reference internal" href="#list-backups">List Backups</a></li>
+<li><a class="reference internal" href="#create-instance-backup">Create Instance Backup</a></li>
+<li><a class="reference internal" href="#delete-instance-backup">Delete Instance Backup</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#restore-dcs-instances">Restore DCS Instances</a><ul>
+<li><a class="reference internal" href="#list-restore-records">List Restore Records</a></li>
+<li><a class="reference internal" href="#restore-instance">Restore Instance</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+  </div>
+</div>
+        </div>
+      </div>
+  </scale-app-shell>
+<scale-app-footer id="footer-shell" variant="standard" claim-lang="en">
+</scale-app-footer>
+<script>
+  const footer_shell = document.getElementById("footer-shell");
+  footer_shell.footerNavigation = [{"name":"Contact","id":"Contact","href":"https://cloud.telekom.de/en/contact/"},{"name":"Legal notice","id":"Legal notice","href":"https://cloud.telekom.de/en/imprint-adress"},{"name":"Data privacy","id":"Data privacy","href":"https://open-telekom-cloud.com/en/data-protection","icon":"alert-imprint-dataprivacy"}]</script>
+  <!-- jQuery -->
+<script type="text/javascript" src="../../_static/js/jquery-3.2.1.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script type="text/javascript" src="../../_static/js/bootstrap.min.js"></script>
+
+<!-- Telekom Scale -->
+<script type="module" src="https://unpkg.com/@telekom/scale-components@3.0.0-beta.32/dist/scale-components/scale-components.esm.js"></script>
+
+<!-- The rest of the JS -->
+<script type="text/javascript" src="../../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script type="text/javascript" src="../../_static/js/docs.js"></script>
+
+<!-- Popovers -->
+<script type="text/javascript" src="../../_static/js/webui-popover.js"></script>
+
+<!-- standard sphinx include libraries, which allow search highlighting -->
+<script type="text/javascript" src="../../_static/underscore.js"></script>
+<script type="text/javascript" src="../../_static/doctools.js"></script>
+<script type="text/javascript" src="../../_static/searchtools.js"></script>
+
+<script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.24.3.dev2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+</script>
+
+
+<!-- Javascript for page -->
+<script language="JavaScript">
+/* build a description of this page including SHA, source location on git repo,
+   build time and the project's launchpad bug tag. Set the HREF of the bug
+   buttons */
+</script>
+  
+  </body>
+</html>

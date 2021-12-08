@@ -1,0 +1,895 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>CBR API &#8212; otcextensions 0.24.3.dev2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/basic.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="CCE API" href="cce_v1.html" />
+    <link rel="prev" title="AutoScaling API" href="auto_scaling.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap CSS -->
+<link href="../../_static/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../../_static/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="../../_static/css/combined.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../../_static/pygments.css" rel="stylesheet">
+
+<!-- Telekom Scale -->
+<link href="https://unpkg.com/@telekom/scale-components@3.0.0-beta.32/dist/scale-components/scale-components.css" rel="stylesheet">
+
+<!-- Otcdocstheme CSS -->
+<link href="../../_static/css/otcdocstheme.css" rel="stylesheet">
+
+
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-17511903-1', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+  </head><body>
+  
+<!-- SOURCE_FILE: sdk/proxies/cbr.rst -->
+
+
+<scale-app-shell
+  id="app-shell"
+  claim-lang="en"
+  logo-title="PAGENAME"
+  logo-href="/"
+>
+
+
+
+<script>
+  const app_shell = document.getElementById(
+  'app-shell');
+  app_shell.mainNavigation = [
+    {
+      "name": "Software",
+      "id": "Software",
+      "children": [
+        {
+          "name": "Automation",
+          "id": "Automation",
+          "children": [
+            {
+              "name": "Terraform OTC Driver",
+              "id": "Terraform OTC Driver",
+              "href": "https://docs.otc-service.com/terraform-provider-opentelekomcloud"
+            },
+                      {
+              "name": "Ansible Collection Cloud",
+              "id": "Ansible Collection Cloud",
+              "href": "https://docs.otc-service.com/ansible-collection-cloud"
+            },
+          ]
+        },
+        {
+          "name": "Client Tools",
+          "id": "Client Tools",
+          "children": [
+            {
+              "name": "OTC Extensions",
+              "id": "OTC Extensions",
+              "href": "https://docs.otc-service.com/python-otcextensions"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Release Notes",
+      "id": "Release Notes",
+      "children": [
+        {
+          "name": "Automation",
+          "id": "Automation",
+          "children": [
+            {
+              "name": "Terraform OTC Driver",
+              "id": "Terraform OTC Driver",
+              "href": "https://docs.otc-service.com/releasenotes/terraform-provider-opentelekomcloud"
+            }
+          ]
+        },
+        {
+          "name": "Client Tools",
+          "id": "Client Tools",
+          "children": [
+            {
+              "name": "OTC Extensions",
+              "id": "OTC Extensions",
+              "href": "https://docs.otc-service.com/releasenotes/python-otcextensions"
+            }
+          ]
+        }
+      ]
+    }
+  ];
+</script>
+  
+      <div class="container docs-book-wrapper">
+        <div class="row">
+          <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
+  <div class="row docs-title">
+  <div class="col-lg-8">
+      <h1>CBR API</h1>
+    
+  </div>
+  <div class="docs-actions">
+    
+    <a href="auto_scaling.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: AutoScaling API"></i></a>
+    
+    
+    <a href="cce_v1.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: CCE API"></i></a>
+    
+  </div>
+</div>
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="docs-body" role="main">
+  
+  <section id="module-otcextensions.sdk.cbr.v3._proxy">
+<span id="cbr-api"></span><h1>CBR API<a class="headerlink" href="#module-otcextensions.sdk.cbr.v3._proxy" title="Permalink to this headline">¶</a></h1>
+<section id="the-cloud-backup-and-recovery-service-class">
+<h2>The Cloud Backup and Recovery Service Class<a class="headerlink" href="#the-cloud-backup-and-recovery-service-class" title="Permalink to this headline">¶</a></h2>
+<p>The CBR high-level interface is available through the <code class="docutils literal notranslate"><span class="pre">cbr</span></code>
+member of a <code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code> object.  The
+<code class="docutils literal notranslate"><span class="pre">ces</span></code> member will only be added if the
+<code class="docutils literal notranslate"><span class="pre">otcextensions.sdk.register_otc_extensions(conn)</span></code> method is called.</p>
+<section id="backup-operations">
+<h3>Backup Operations<a class="headerlink" href="#backup-operations" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">otcextensions.sdk.cbr.v3._proxy.</span></span><span class="sig-name descname"><span class="pre">Proxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">statsd_client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">statsd_prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prometheus_counter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prometheus_histogram</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">influxdb_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">influxdb_client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">backups</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Retrieve a generator of Backups</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>query</strong> (<em>dict</em>) – Optional query parameters to be sent to limit the
+resources being returned.
+* <cite>checkpoint_id</cite>: Restore point ID
+* <cite>dec</cite>: Dedicated Cloud
+* <cite>end_time</cite>: Time when the backup ends
+* <cite>image_type</cite>: Backup type: backup or replication
+* <cite>limit</cite>: Number of records displayed per page
+* <cite>marker</cite>: ID of the last record displayed
+* <cite>member_status</cite>: Backup sharing status
+* <cite>name</cite>: Backup name
+* <cite>offset</cite>: Offset value
+* <cite>parent_id</cite>: Parent backup ID
+* <cite>resource_az</cite>: AZ-based filtering
+* <cite>resource_id</cite>: Resource ID
+* <cite>resource_name</cite>: Resource name
+* <cite>resource_type</cite>: Resource Type
+* <cite>sort</cite>: sorting
+* <cite>start_time</cite>: Time when the backup starts
+* <cite>status</cite>: Status
+* <cite>vault_id</cite>: Vault ID</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A generator of backup
+<a class="reference internal" href="../resources/cbr/v3/backup.html#otcextensions.sdk.cbr.v3.backup.Backup" title="otcextensions.sdk.cbr.v3.backup.Backup"><code class="xref py py-class docutils literal notranslate"><span class="pre">Backup</span></code></a> instances</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_backup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">backup</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Get the backup by UUID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>backup</strong> – key id or an instance of
+<a class="reference internal" href="../resources/cbr/v3/backup.html#otcextensions.sdk.cbr.v3.backup.Backup" title="otcextensions.sdk.cbr.v3.backup.Backup"><code class="xref py py-class docutils literal notranslate"><span class="pre">Backup</span></code></a></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>instance of
+<a class="reference internal" href="../resources/cbr/v3/backup.html#otcextensions.sdk.cbr.v3.backup.Backup" title="otcextensions.sdk.cbr.v3.backup.Backup"><code class="xref py py-class docutils literal notranslate"><span class="pre">Backup</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">find_backup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_or_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Find a single CBR backup by name or id</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name_or_id</strong> – The name or ID of a backup</p></li>
+<li><p><strong>ignore_missing</strong> (<em>bool</em>) – When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code> will be raised
+when the group does not exist.
+When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, no exception will be set when attempting
+to delete a nonexistent group.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">delete_backup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">backup</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Delete a single CBR backup.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>backup</strong> – The value can be the ID of a backup
+or a <a class="reference internal" href="../resources/cbr/v3/backup.html#otcextensions.sdk.cbr.v3.backup.Backup" title="otcextensions.sdk.cbr.v3.backup.Backup"><code class="xref py py-class docutils literal notranslate"><span class="pre">Backup</span></code></a>
+instance.</p></li>
+<li><p><strong>ignore_missing</strong> (<em>bool</em>) – When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code> will be raised when
+the group does not exist.
+When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, no exception will be set when attempting to
+delete a nonexistent backup.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="share-member-operations">
+<h3>Share Member Operations<a class="headerlink" href="#share-member-operations" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">otcextensions.sdk.cbr.v3._proxy.</span></span><span class="sig-name descname"><span class="pre">Proxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">statsd_client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">statsd_prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prometheus_counter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prometheus_histogram</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">influxdb_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">influxdb_client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">members</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">backup</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>List share members for a backup</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>backup</strong> – The value can be the ID of a backup
+or a <a class="reference internal" href="../resources/cbr/v3/backup.html#otcextensions.sdk.cbr.v3.backup.Backup" title="otcextensions.sdk.cbr.v3.backup.Backup"><code class="xref py py-class docutils literal notranslate"><span class="pre">Backup</span></code></a>
+instance.</p></li>
+<li><p><strong>attrs</strong> (<em>dict</em>) – Keyword arguments which will be used to create
+a <a class="reference internal" href="../resources/cbr/v3/member.html#otcextensions.sdk.cbr.v3.member.Member" title="otcextensions.sdk.cbr.v3.member.Member"><code class="xref py py-class docutils literal notranslate"><span class="pre">Member</span></code></a>,
+comprised of the properties on the Member class.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The results of config creation</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../resources/cbr/v3/member.html#otcextensions.sdk.cbr.v3.member.Member" title="otcextensions.sdk.cbr.v3.member.Member"><code class="xref py py-class docutils literal notranslate"><span class="pre">Member</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_member</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">backup</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">member</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Get one CBR share member by UUID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>member</strong> – key id or an instance of
+<a class="reference internal" href="../resources/cbr/v3/member.html#otcextensions.sdk.cbr.v3.member.Member" title="otcextensions.sdk.cbr.v3.member.Member"><code class="xref py py-class docutils literal notranslate"><span class="pre">Member</span></code></a></p></li>
+<li><p><strong>backup</strong> – The value can be the ID of a backup
+or a <a class="reference internal" href="../resources/cbr/v3/backup.html#otcextensions.sdk.cbr.v3.backup.Backup" title="otcextensions.sdk.cbr.v3.backup.Backup"><code class="xref py py-class docutils literal notranslate"><span class="pre">Backup</span></code></a>
+instance.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>instance of
+<a class="reference internal" href="../resources/cbr/v3/member.html#otcextensions.sdk.cbr.v3.member.Member" title="otcextensions.sdk.cbr.v3.member.Member"><code class="xref py py-class docutils literal notranslate"><span class="pre">Member</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">add_members</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">backup</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">members</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Add a list of share members to an existing backup</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>backup</strong> – The value can be the ID of a backup
+or a <a class="reference internal" href="../resources/cbr/v3/backup.html#otcextensions.sdk.cbr.v3.backup.Backup" title="otcextensions.sdk.cbr.v3.backup.Backup"><code class="xref py py-class docutils literal notranslate"><span class="pre">Backup</span></code></a>
+instance.</p></li>
+<li><p><strong>members</strong> (<em>list</em>) – The list contains the project IDs of the backup
+share members to be added</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The results are the list of share member objects</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">update_member</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">backup</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">member</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'accepted'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vault</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Update CBR share members</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>member</strong> – The id or an instance of
+<a class="reference internal" href="../resources/cbr/v3/member.html#otcextensions.sdk.cbr.v3.member.Member" title="otcextensions.sdk.cbr.v3.member.Member"><code class="xref py py-class docutils literal notranslate"><span class="pre">Member</span></code></a></p></li>
+<li><p><strong>backup</strong> – The value can be the ID of a backup
+or a <a class="reference internal" href="../resources/cbr/v3/backup.html#otcextensions.sdk.cbr.v3.backup.Backup" title="otcextensions.sdk.cbr.v3.backup.Backup"><code class="xref py py-class docutils literal notranslate"><span class="pre">Backup</span></code></a>
+instance.</p></li>
+<li><p><strong>status</strong> (<em>str</em>) – status to be updated share member</p></li>
+<li><p><strong>vault</strong> – The value can be the ID of a vault
+or a <a class="reference internal" href="../resources/cbr/v3/vault.html#otcextensions.sdk.cbr.v3.vault.Vault" title="otcextensions.sdk.cbr.v3.vault.Vault"><code class="xref py py-class docutils literal notranslate"><span class="pre">Vault</span></code></a>
+instance.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">delete_member</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">backup</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">member</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Delete a single CBR share member.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>member</strong> – The id or an instance of
+<a class="reference internal" href="../resources/cbr/v3/member.html#otcextensions.sdk.cbr.v3.member.Member" title="otcextensions.sdk.cbr.v3.member.Member"><code class="xref py py-class docutils literal notranslate"><span class="pre">Member</span></code></a></p></li>
+<li><p><strong>backup</strong> – The value can be the ID of a backup
+or a <a class="reference internal" href="../resources/cbr/v3/backup.html#otcextensions.sdk.cbr.v3.backup.Backup" title="otcextensions.sdk.cbr.v3.backup.Backup"><code class="xref py py-class docutils literal notranslate"><span class="pre">Backup</span></code></a>
+instance.</p></li>
+<li><p><strong>ignore_missing</strong> (<em>bool</em>) – When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code> will be raised when
+the share member does not exist.
+When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, no exception will be set when attempting to
+delete a nonexistent share member.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="policy-operations">
+<h3>Policy Operations<a class="headerlink" href="#policy-operations" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">otcextensions.sdk.cbr.v3._proxy.</span></span><span class="sig-name descname"><span class="pre">Proxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">statsd_client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">statsd_prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prometheus_counter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prometheus_histogram</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">influxdb_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">influxdb_client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">policies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Retrieve a generator of CBR policies</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>query</strong> (<em>dict</em>) – Optional query parameters to be sent to limit the
+resources being returned.
+* <cite>operation_type</cite>: Policy type: backup or replication
+* <cite>vault_id</cite>: Vault ID</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A generator of policies
+<a class="reference internal" href="../resources/cbr/v3/policy.html#otcextensions.sdk.cbr.v3.policy.Policy" title="otcextensions.sdk.cbr.v3.policy.Policy"><code class="xref py py-class docutils literal notranslate"><span class="pre">Policy</span></code></a> instances</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_policy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">policy</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Get the CBR policy by UUID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>policy</strong> – key id or an instance of
+<a class="reference internal" href="../resources/cbr/v3/policy.html#otcextensions.sdk.cbr.v3.policy.Policy" title="otcextensions.sdk.cbr.v3.policy.Policy"><code class="xref py py-class docutils literal notranslate"><span class="pre">Policy</span></code></a></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>instance of
+<a class="reference internal" href="../resources/cbr/v3/policy.html#otcextensions.sdk.cbr.v3.policy.Policy" title="otcextensions.sdk.cbr.v3.policy.Policy"><code class="xref py py-class docutils literal notranslate"><span class="pre">Policy</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">find_policy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_or_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Find a single CBR policy by name or ID</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name_or_id</strong> – The name or ID of a policy</p></li>
+<li><p><strong>ignore_missing</strong> (<em>bool</em>) – When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code> will be raised
+when the policy does not exist.
+When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, no exception will be set when attempting
+to delete a nonexistent policy.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a <a class="reference internal" href="../resources/cbr/v3/policy.html#otcextensions.sdk.cbr.v3.policy.Policy" title="otcextensions.sdk.cbr.v3.policy.Policy"><code class="xref py py-class docutils literal notranslate"><span class="pre">Policy</span></code></a> instance</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">create_policy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Creating a CBR policy using attributes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>attrs</strong> (<em>dict</em>) – Keyword arguments which will be used to create
+a <a class="reference internal" href="../resources/cbr/v3/policy.html#otcextensions.sdk.cbr.v3.policy.Policy" title="otcextensions.sdk.cbr.v3.policy.Policy"><code class="xref py py-class docutils literal notranslate"><span class="pre">Policy</span></code></a>,
+comprised of the properties on the Policy class.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The results of config creation</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../resources/cbr/v3/policy.html#otcextensions.sdk.cbr.v3.policy.Policy" title="otcextensions.sdk.cbr.v3.policy.Policy"><code class="xref py py-class docutils literal notranslate"><span class="pre">Policy</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">update_policy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">policy</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Update CBR policy attributes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>policy</strong> – The id or an instance of
+<a class="reference internal" href="../resources/cbr/v3/policy.html#otcextensions.sdk.cbr.v3.policy.Policy" title="otcextensions.sdk.cbr.v3.policy.Policy"><code class="xref py py-class docutils literal notranslate"><span class="pre">Policy</span></code></a></p></li>
+<li><p><strong>attrs</strong> (<em>dict</em>) – attributes for update on
+<a class="reference internal" href="../resources/cbr/v3/policy.html#otcextensions.sdk.cbr.v3.policy.Policy" title="otcextensions.sdk.cbr.v3.policy.Policy"><code class="xref py py-class docutils literal notranslate"><span class="pre">Policy</span></code></a></p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="../resources/cbr/v3/policy.html#otcextensions.sdk.cbr.v3.policy.Policy" title="otcextensions.sdk.cbr.v3.policy.Policy"><code class="xref py py-class docutils literal notranslate"><span class="pre">Policy</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">delete_policy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">policy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Delete a single CBR policy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>policy</strong> – The value can be the ID of a policy
+or a <a class="reference internal" href="../resources/cbr/v3/policy.html#otcextensions.sdk.cbr.v3.policy.Policy" title="otcextensions.sdk.cbr.v3.policy.Policy"><code class="xref py py-class docutils literal notranslate"><span class="pre">Policy</span></code></a>
+instance.</p></li>
+<li><p><strong>ignore_missing</strong> (<em>bool</em>) – When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code> will be raised when
+the group does not exist.
+When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, no exception will be set when attempting to
+delete a nonexistent policy.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="restore-point-checkpoint-operations">
+<h3>Restore Point (Checkpoint) Operations<a class="headerlink" href="#restore-point-checkpoint-operations" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">otcextensions.sdk.cbr.v3._proxy.</span></span><span class="sig-name descname"><span class="pre">Proxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">statsd_client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">statsd_prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prometheus_counter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prometheus_histogram</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">influxdb_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">influxdb_client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_checkpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">checkpoint</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Get the checkpoint by UUID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>checkpoint</strong> – key id or an instance of
+<a class="reference internal" href="../resources/cbr/v3/checkpoint.html#otcextensions.sdk.cbr.v3.checkpoint.Checkpoint" title="otcextensions.sdk.cbr.v3.checkpoint.Checkpoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Checkpoint</span></code></a></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>instance of
+<a class="reference internal" href="../resources/cbr/v3/checkpoint.html#otcextensions.sdk.cbr.v3.checkpoint.Checkpoint" title="otcextensions.sdk.cbr.v3.checkpoint.Checkpoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Checkpoint</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">create_checkpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Creating a restore point / checkpoint using attributes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>attrs</strong> (<em>dict</em>) – Keyword arguments which will be used to create
+a <a class="reference internal" href="../resources/cbr/v3/checkpoint.html#otcextensions.sdk.cbr.v3.checkpoint.Checkpoint" title="otcextensions.sdk.cbr.v3.checkpoint.Checkpoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Checkpoint</span></code></a>,
+comprised of the properties on the Checkpoint class.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The results of config creation</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../resources/cbr/v3/checkpoint.html#otcextensions.sdk.cbr.v3.checkpoint.Checkpoint" title="otcextensions.sdk.cbr.v3.checkpoint.Checkpoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Checkpoint</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="restore-operations">
+<h3>Restore Operations<a class="headerlink" href="#restore-operations" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">otcextensions.sdk.cbr.v3._proxy.</span></span><span class="sig-name descname"><span class="pre">Proxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">statsd_client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">statsd_prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prometheus_counter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prometheus_histogram</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">influxdb_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">influxdb_client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">restore_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">backup</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Restore data using a backup</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>backup</strong> – The value can be the ID of a backup
+or a <a class="reference internal" href="../resources/cbr/v3/backup.html#otcextensions.sdk.cbr.v3.backup.Backup" title="otcextensions.sdk.cbr.v3.backup.Backup"><code class="xref py py-class docutils literal notranslate"><span class="pre">Backup</span></code></a>
+instance.</p></li>
+<li><p><strong>attrs</strong> (<em>dict</em>) – Keyword arguments which will be used to create
+a <a class="reference internal" href="../resources/cbr/v3/restore.html#otcextensions.sdk.cbr.v3.restore.Restore" title="otcextensions.sdk.cbr.v3.restore.Restore"><code class="xref py py-class docutils literal notranslate"><span class="pre">Restore</span></code></a>,
+comprised of the properties on the Restore class.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The results of config creation</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../resources/cbr/v3/restore.html#otcextensions.sdk.cbr.v3.restore.Restore" title="otcextensions.sdk.cbr.v3.restore.Restore"><code class="xref py py-class docutils literal notranslate"><span class="pre">Restore</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="vault-operations">
+<h3>Vault Operations<a class="headerlink" href="#vault-operations" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">otcextensions.sdk.cbr.v3._proxy.</span></span><span class="sig-name descname"><span class="pre">Proxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">statsd_client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">statsd_prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prometheus_counter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prometheus_histogram</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">influxdb_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">influxdb_client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">vaults</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Retrieve a generator of Vaults</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>query</strong> (<em>dict</em>) – Optional query parameters to be sent to limit the
+resources being returned.
+* <cite>cloud_type</cite>: Cloud type
+* <cite>id</cite>: Vault ID
+* <cite>limit</cite>: Number of records displayed per page, range: 1-100
+* <cite>name</cite>: Vault name
+* <cite>object_type</cite>: Resource type
+* <cite>offset</cite>: Offset value
+* <cite>policy_id</cite>: Policy ID
+* <cite>protect_type</cite>: Protection type
+* <cite>resource_ids</cite>: Resource IDs
+* <cite>status</cite>: Status</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A generator of vault
+<a class="reference internal" href="../resources/cbr/v3/vault.html#otcextensions.sdk.cbr.v3.vault.Vault" title="otcextensions.sdk.cbr.v3.vault.Vault"><code class="xref py py-class docutils literal notranslate"><span class="pre">Vault</span></code></a> instances</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_vault</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vault</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Get the vault by UUID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>vault</strong> – key id or an instance of
+<a class="reference internal" href="../resources/cbr/v3/vault.html#otcextensions.sdk.cbr.v3.vault.Vault" title="otcextensions.sdk.cbr.v3.vault.Vault"><code class="xref py py-class docutils literal notranslate"><span class="pre">Vault</span></code></a></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>instance of
+<a class="reference internal" href="../resources/cbr/v3/vault.html#otcextensions.sdk.cbr.v3.vault.Vault" title="otcextensions.sdk.cbr.v3.vault.Vault"><code class="xref py py-class docutils literal notranslate"><span class="pre">Vault</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">find_vault</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_or_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Find a single CBR vault by name or id</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name_or_id</strong> – The name or ID of a vault</p></li>
+<li><p><strong>ignore_missing</strong> (<em>bool</em>) – When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code> will be raised
+when the group does not exist.
+When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, no exception will be set when attempting
+to delete a nonexistent vault.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">create_vault</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Creating a CBR vault using attributes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>attrs</strong> (<em>dict</em>) – Keyword arguments which will be used to create
+a <a class="reference internal" href="../resources/cbr/v3/vault.html#otcextensions.sdk.cbr.v3.vault.Vault" title="otcextensions.sdk.cbr.v3.vault.Vault"><code class="xref py py-class docutils literal notranslate"><span class="pre">Vault</span></code></a>,
+comprised of the properties on the Vault class.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The results of config creation</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../resources/cbr/v3/vault.html#otcextensions.sdk.cbr.v3.vault.Vault" title="otcextensions.sdk.cbr.v3.vault.Vault"><code class="xref py py-class docutils literal notranslate"><span class="pre">Vault</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">update_vault</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vault</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Update CBR vault attributes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vault</strong> – The id or an instance of
+<a class="reference internal" href="../resources/cbr/v3/vault.html#otcextensions.sdk.cbr.v3.vault.Vault" title="otcextensions.sdk.cbr.v3.vault.Vault"><code class="xref py py-class docutils literal notranslate"><span class="pre">Vault</span></code></a></p></li>
+<li><p><strong>attrs</strong> (<em>dict</em>) – attributes for update on
+<a class="reference internal" href="../resources/cbr/v3/vault.html#otcextensions.sdk.cbr.v3.vault.Vault" title="otcextensions.sdk.cbr.v3.vault.Vault"><code class="xref py py-class docutils literal notranslate"><span class="pre">Vault</span></code></a></p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="../resources/cbr/v3/vault.html#otcextensions.sdk.cbr.v3.vault.Vault" title="otcextensions.sdk.cbr.v3.vault.Vault"><code class="xref py py-class docutils literal notranslate"><span class="pre">Vault</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">delete_vault</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vault</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Delete a single CBR vault.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vault</strong> – The value can be the ID of a vault
+or a <a class="reference internal" href="../resources/cbr/v3/vault.html#otcextensions.sdk.cbr.v3.vault.Vault" title="otcextensions.sdk.cbr.v3.vault.Vault"><code class="xref py py-class docutils literal notranslate"><span class="pre">Vault</span></code></a>
+instance.</p></li>
+<li><p><strong>ignore_missing</strong> (<em>bool</em>) – When set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ResourceNotFound</span></code> will be raised when
+the group does not exist.
+When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, no exception will be set when attempting to
+delete a nonexistent vault.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">unbind_policy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vault</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">policy</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Disassociate policy from CBR vault</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vault</strong> – The value can be the ID of a vault
+or a <a class="reference internal" href="../resources/cbr/v3/vault.html#otcextensions.sdk.cbr.v3.vault.Vault" title="otcextensions.sdk.cbr.v3.vault.Vault"><code class="xref py py-class docutils literal notranslate"><span class="pre">Vault</span></code></a>
+instance.</p></li>
+<li><p><strong>policy</strong> – The value can be the ID of a policy
+or a <a class="reference internal" href="../resources/cbr/v3/policy.html#otcextensions.sdk.cbr.v3.policy.Policy" title="otcextensions.sdk.cbr.v3.policy.Policy"><code class="xref py py-class docutils literal notranslate"><span class="pre">Policy</span></code></a>
+instance.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">bind_policy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vault</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">policy</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Associate policy to an existing CBR vault</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vault</strong> – The value can be the ID of a vault
+or a <a class="reference internal" href="../resources/cbr/v3/vault.html#otcextensions.sdk.cbr.v3.vault.Vault" title="otcextensions.sdk.cbr.v3.vault.Vault"><code class="xref py py-class docutils literal notranslate"><span class="pre">Vault</span></code></a>
+instance.</p></li>
+<li><p><strong>policy</strong> – The value can be the ID of a policy
+or a <a class="reference internal" href="../resources/cbr/v3/policy.html#otcextensions.sdk.cbr.v3.policy.Policy" title="otcextensions.sdk.cbr.v3.policy.Policy"><code class="xref py py-class docutils literal notranslate"><span class="pre">Policy</span></code></a>
+instance.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">associate_resources</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vault</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resources</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Associate resources to an existing CBR vault</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vault</strong> – The value can be the ID of a vault
+or a <a class="reference internal" href="../resources/cbr/v3/vault.html#otcextensions.sdk.cbr.v3.vault.Vault" title="otcextensions.sdk.cbr.v3.vault.Vault"><code class="xref py py-class docutils literal notranslate"><span class="pre">Vault</span></code></a>
+instance.</p></li>
+<li><p><strong>resources</strong> – array of resources in the format: id and type</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">dissociate_resources</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vault</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resources</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Associate resources to an existing CBR vault</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vault</strong> – The value can be the ID of a vault
+or a <a class="reference internal" href="../resources/cbr/v3/vault.html#otcextensions.sdk.cbr.v3.vault.Vault" title="otcextensions.sdk.cbr.v3.vault.Vault"><code class="xref py py-class docutils literal notranslate"><span class="pre">Vault</span></code></a>
+instance.</p></li>
+<li><p><strong>resources</strong> – list of ressource ids to be released from vault</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+                </div>
+              </div>
+            </div>
+            <div class="docs-actions">
+            
+              <a href="auto_scaling.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: AutoScaling API"></i></a>
+            
+            
+              <a href="cce_v1.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: CCE API"></i></a>
+            
+            </div>
+            <div class="row docs-byline bottom">
+              <div class="docs-updated">updated: 2021-12-08 13:15</div>
+            </div>
+          </div>
+  <div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 docs-sidebar">
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <a href="../../index.html" class="docs-sidebar-section-title"><h4>otcextensions 0.24.3.dev2</h4></a>
+      <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../install/index.html">1. Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../install/configuration.html">2. Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cli/index.html">3. OpenStack Client (CLI)</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">4. Using the OpenStack SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../architecture.html">Architecture Overview and Important Terms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guides/index.html">Guides for SDK</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Service Proxies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../resources/index.html">Resources and Attributes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributor/index.html">5. Contributing to the OTC Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../coverage.html">6. Service Coverage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendices/index.html">7. Appendices</a></li>
+</ul>
+
+    </div>
+
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="local-table-of-contents">
+      <h4 class="docs-sidebar-section-title">Page Contents</h4>
+      <ul>
+<li><a class="reference internal" href="#">CBR API</a><ul>
+<li><a class="reference internal" href="#the-cloud-backup-and-recovery-service-class">The Cloud Backup and Recovery Service Class</a><ul>
+<li><a class="reference internal" href="#backup-operations">Backup Operations</a></li>
+<li><a class="reference internal" href="#share-member-operations">Share Member Operations</a></li>
+<li><a class="reference internal" href="#policy-operations">Policy Operations</a></li>
+<li><a class="reference internal" href="#restore-point-checkpoint-operations">Restore Point (Checkpoint) Operations</a></li>
+<li><a class="reference internal" href="#restore-operations">Restore Operations</a></li>
+<li><a class="reference internal" href="#vault-operations">Vault Operations</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+  </div>
+</div>
+        </div>
+      </div>
+  </scale-app-shell>
+<scale-app-footer id="footer-shell" variant="standard" claim-lang="en">
+</scale-app-footer>
+<script>
+  const footer_shell = document.getElementById("footer-shell");
+  footer_shell.footerNavigation = [{"name":"Contact","id":"Contact","href":"https://cloud.telekom.de/en/contact/"},{"name":"Legal notice","id":"Legal notice","href":"https://cloud.telekom.de/en/imprint-adress"},{"name":"Data privacy","id":"Data privacy","href":"https://open-telekom-cloud.com/en/data-protection","icon":"alert-imprint-dataprivacy"}]</script>
+  <!-- jQuery -->
+<script type="text/javascript" src="../../_static/js/jquery-3.2.1.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script type="text/javascript" src="../../_static/js/bootstrap.min.js"></script>
+
+<!-- Telekom Scale -->
+<script type="module" src="https://unpkg.com/@telekom/scale-components@3.0.0-beta.32/dist/scale-components/scale-components.esm.js"></script>
+
+<!-- The rest of the JS -->
+<script type="text/javascript" src="../../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script type="text/javascript" src="../../_static/js/docs.js"></script>
+
+<!-- Popovers -->
+<script type="text/javascript" src="../../_static/js/webui-popover.js"></script>
+
+<!-- standard sphinx include libraries, which allow search highlighting -->
+<script type="text/javascript" src="../../_static/underscore.js"></script>
+<script type="text/javascript" src="../../_static/doctools.js"></script>
+<script type="text/javascript" src="../../_static/searchtools.js"></script>
+
+<script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.24.3.dev2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+</script>
+
+
+<!-- Javascript for page -->
+<script language="JavaScript">
+/* build a description of this page including SHA, source location on git repo,
+   build time and the project's launchpad bug tag. Set the HREF of the bug
+   buttons */
+</script>
+  
+  </body>
+</html>

@@ -1,0 +1,658 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Virtual Private Cloud (VPC) &#8212; otcextensions 0.24.3.dev2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/basic.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="4. Using the OpenStack SDK" href="../sdk/index.html" />
+    <link rel="prev" title="Volume Backup Service (VBS)" href="volume_backup.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap CSS -->
+<link href="../_static/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../_static/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="../_static/css/combined.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../_static/pygments.css" rel="stylesheet">
+
+<!-- Telekom Scale -->
+<link href="https://unpkg.com/@telekom/scale-components@3.0.0-beta.32/dist/scale-components/scale-components.css" rel="stylesheet">
+
+<!-- Otcdocstheme CSS -->
+<link href="../_static/css/otcdocstheme.css" rel="stylesheet">
+
+
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-17511903-1', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+  </head><body>
+  
+<!-- SOURCE_FILE: cli/vpc.rst -->
+
+
+<scale-app-shell
+  id="app-shell"
+  claim-lang="en"
+  logo-title="PAGENAME"
+  logo-href="/"
+>
+
+
+
+<script>
+  const app_shell = document.getElementById(
+  'app-shell');
+  app_shell.mainNavigation = [
+    {
+      "name": "Software",
+      "id": "Software",
+      "children": [
+        {
+          "name": "Automation",
+          "id": "Automation",
+          "children": [
+            {
+              "name": "Terraform OTC Driver",
+              "id": "Terraform OTC Driver",
+              "href": "https://docs.otc-service.com/terraform-provider-opentelekomcloud"
+            },
+                      {
+              "name": "Ansible Collection Cloud",
+              "id": "Ansible Collection Cloud",
+              "href": "https://docs.otc-service.com/ansible-collection-cloud"
+            },
+          ]
+        },
+        {
+          "name": "Client Tools",
+          "id": "Client Tools",
+          "children": [
+            {
+              "name": "OTC Extensions",
+              "id": "OTC Extensions",
+              "href": "https://docs.otc-service.com/python-otcextensions"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Release Notes",
+      "id": "Release Notes",
+      "children": [
+        {
+          "name": "Automation",
+          "id": "Automation",
+          "children": [
+            {
+              "name": "Terraform OTC Driver",
+              "id": "Terraform OTC Driver",
+              "href": "https://docs.otc-service.com/releasenotes/terraform-provider-opentelekomcloud"
+            }
+          ]
+        },
+        {
+          "name": "Client Tools",
+          "id": "Client Tools",
+          "children": [
+            {
+              "name": "OTC Extensions",
+              "id": "OTC Extensions",
+              "href": "https://docs.otc-service.com/releasenotes/python-otcextensions"
+            }
+          ]
+        }
+      ]
+    }
+  ];
+</script>
+  
+      <div class="container docs-book-wrapper">
+        <div class="row">
+          <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
+  <div class="row docs-title">
+  <div class="col-lg-8">
+      <h1>Virtual Private Cloud (VPC)</h1>
+    
+  </div>
+  <div class="docs-actions">
+    
+    <a href="volume_backup.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Volume Backup Service (VBS)"></i></a>
+    
+    
+    <a href="../sdk/index.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: 4. Using the OpenStack SDK"></i></a>
+    
+  </div>
+</div>
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="docs-body" role="main">
+  
+  <section id="virtual-private-cloud-vpc">
+<h1>Virtual Private Cloud (VPC)<a class="headerlink" href="#virtual-private-cloud-vpc" title="Permalink to this headline">¶</a></h1>
+<p>The VPC client is the command-line interface (CLI) for
+the Virtual Private Cloud (VPC) API and its extensions.</p>
+<p>For help on a specific <cite>vpc</cite> command, enter:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>openstack vpc <span class="nb">help</span> SUBCOMMAND
+</pre></div>
+</div>
+<section id="vpc-peering-operations">
+<span id="peering"></span><h2>Vpc Peering Operations<a class="headerlink" href="#vpc-peering-operations" title="Permalink to this headline">¶</a></h2>
+<section id="vpc-peering-create">
+<h3>vpc peering create<a class="headerlink" href="#vpc-peering-create" title="Permalink to this headline">¶</a></h3>
+<p>Create new Vpc Peering.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack vpc peering create
+    <span class="o">[</span>--description &lt;description&gt;<span class="o">]</span>
+    --local-router-id &lt;local_router_id&gt;
+    --peer-router-id &lt;peer_router_id&gt;
+    <span class="o">[</span>--peer-project-id &lt;peer_project_id&gt;<span class="o">]</span>
+    &lt;name&gt;
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-vpc-peering-create-description">
+<span class="sig-name descname"><span class="pre">--description</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;description&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-vpc-peering-create-description" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the description of the VPC peering connection.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-vpc-peering-create-local-router-id">
+<span class="sig-name descname"><span class="pre">--local-router-id</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;local_router_id&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-vpc-peering-create-local-router-id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies information about the local router_id involved in a VPC peering connection.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-vpc-peering-create-peer-router-id">
+<span class="sig-name descname"><span class="pre">--peer-router-id</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;peer_router_id&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-vpc-peering-create-peer-router-id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies information about the peer router_id involved in a VPC peering connection.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-vpc-peering-create-peer-project-id">
+<span class="sig-name descname"><span class="pre">--peer-project-id</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;peer_project_id&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-vpc-peering-create-peer-project-id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the ID of the project to which a peer router belongs. It is required if the peer router is from different project.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-vpc-peering-create-arg-name">
+<span class="sig-name descname"><span class="pre">name</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-vpc-peering-create-arg-name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the name of the VPC peering connection.</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="vpc-peering-delete">
+<h3>vpc peering delete<a class="headerlink" href="#vpc-peering-delete" title="Permalink to this headline">¶</a></h3>
+<p>Deletes VPC Peering.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack vpc peering delete &lt;peering&gt; <span class="o">[</span>&lt;peering&gt; ...<span class="o">]</span>
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-vpc-peering-delete-arg-peering">
+<span class="sig-name descname"><span class="pre">peering</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-vpc-peering-delete-arg-peering" title="Permalink to this definition">¶</a></dt>
+<dd><p>VPC Peering(s) to delete (Name or ID)</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="vpc-peering-list">
+<h3>vpc peering list<a class="headerlink" href="#vpc-peering-list" title="Permalink to this headline">¶</a></h3>
+<p>List Vpc Peerings.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack vpc peering list
+    <span class="o">[</span>--sort-column SORT_COLUMN<span class="o">]</span>
+    <span class="o">[</span>--sort-ascending <span class="p">|</span> --sort-descending<span class="o">]</span>
+    <span class="o">[</span>--id &lt;id&gt;<span class="o">]</span>
+    <span class="o">[</span>--limit &lt;limit&gt;<span class="o">]</span>
+    <span class="o">[</span>--marker &lt;marker&gt;<span class="o">]</span>
+    <span class="o">[</span>--project-id &lt;project_id&gt;<span class="o">]</span>
+    <span class="o">[</span>--name &lt;name&gt;<span class="o">]</span>
+    <span class="o">[</span>--router-id &lt;router_id&gt;<span class="o">]</span>
+    <span class="o">[</span>--status <span class="o">{</span>PENDING_ACCEPTANCE,REJECTED,EXPIRED,DELETED,ACTIVE<span class="o">}]</span>
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-vpc-peering-list-sort-column">
+<span class="sig-name descname"><span class="pre">--sort-column</span></span><span class="sig-prename descclassname"> <span class="pre">SORT_COLUMN</span></span><a class="headerlink" href="#cmdoption-openstack-vpc-peering-list-sort-column" title="Permalink to this definition">¶</a></dt>
+<dd><p>specify the column(s) to sort the data (columns specified first have a priority, non-existing columns are ignored), can be repeated</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-vpc-peering-list-sort-ascending">
+<span class="sig-name descname"><span class="pre">--sort-ascending</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-vpc-peering-list-sort-ascending" title="Permalink to this definition">¶</a></dt>
+<dd><p>sort the column(s) in ascending order</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-vpc-peering-list-sort-descending">
+<span class="sig-name descname"><span class="pre">--sort-descending</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-vpc-peering-list-sort-descending" title="Permalink to this definition">¶</a></dt>
+<dd><p>sort the column(s) in descending order</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-vpc-peering-list-id">
+<span class="sig-name descname"><span class="pre">--id</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;id&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-vpc-peering-list-id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the ID of the VPC peering connection.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-vpc-peering-list-limit">
+<span class="sig-name descname"><span class="pre">--limit</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;limit&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-vpc-peering-list-limit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Limit to fetch number of records.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-vpc-peering-list-marker">
+<span class="sig-name descname"><span class="pre">--marker</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;marker&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-vpc-peering-list-marker" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the start resource ID of pagination query.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-vpc-peering-list-project-id">
+<span class="sig-name descname"><span class="pre">--project-id</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;project_id&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-vpc-peering-list-project-id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the project ID.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-vpc-peering-list-name">
+<span class="sig-name descname"><span class="pre">--name</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;name&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-vpc-peering-list-name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the Name of the VPC peering connection.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-vpc-peering-list-router-id">
+<span class="sig-name descname"><span class="pre">--router-id</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;router_id&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-vpc-peering-list-router-id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the router/vpc ID of requester/accepter of vpc peering.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-vpc-peering-list-status">
+<span class="sig-name descname"><span class="pre">--status</span></span><span class="sig-prename descclassname"> <span class="pre">{PENDING_ACCEPTANCE,REJECTED,EXPIRED,DELETED,ACTIVE}</span></span><a class="headerlink" href="#cmdoption-openstack-vpc-peering-list-status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the status of the VPC peering connection.</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="vpc-peering-set">
+<h3>vpc peering set<a class="headerlink" href="#vpc-peering-set" title="Permalink to this headline">¶</a></h3>
+<p>Accept VPC peering connection Request.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack vpc peering <span class="nb">set</span> <span class="o">[</span>--accept <span class="p">|</span> --reject<span class="o">]</span> &lt;peering&gt;
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-vpc-peering-set-accept">
+<span class="sig-name descname"><span class="pre">--accept</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-vpc-peering-set-accept" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accept VPC peering connection request.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-vpc-peering-set-reject">
+<span class="sig-name descname"><span class="pre">--reject</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-vpc-peering-set-reject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reject VPC peering connection request.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-vpc-peering-set-arg-peering">
+<span class="sig-name descname"><span class="pre">peering</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-vpc-peering-set-arg-peering" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the Name or ID of the VPC peering connection.</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="vpc-peering-show">
+<h3>vpc peering show<a class="headerlink" href="#vpc-peering-show" title="Permalink to this headline">¶</a></h3>
+<p>Show VPC peering connection details.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack vpc peering show &lt;peering&gt;
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-vpc-peering-show-arg-peering">
+<span class="sig-name descname"><span class="pre">peering</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-vpc-peering-show-arg-peering" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the Name or ID of the VPC peering connection.</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="vpc-peering-update">
+<h3>vpc peering update<a class="headerlink" href="#vpc-peering-update" title="Permalink to this headline">¶</a></h3>
+<p>Update a VPC peering connection.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack vpc peering update
+    <span class="o">[</span>--name &lt;name&gt;<span class="o">]</span>
+    <span class="o">[</span>--description &lt;description&gt;<span class="o">]</span>
+    &lt;peering&gt;
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-vpc-peering-update-name">
+<span class="sig-name descname"><span class="pre">--name</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;name&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-vpc-peering-update-name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the new name of the VPC peering connection.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-vpc-peering-update-description">
+<span class="sig-name descname"><span class="pre">--description</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;description&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-vpc-peering-update-description" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the new descrition of the VPC peering connection.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-vpc-peering-update-arg-peering">
+<span class="sig-name descname"><span class="pre">peering</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-vpc-peering-update-arg-peering" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the Name or ID of the VPC peering connection.</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+</section>
+<section id="vpc-route-operations">
+<span id="route"></span><h2>Vpc Route Operations<a class="headerlink" href="#vpc-route-operations" title="Permalink to this headline">¶</a></h2>
+<section id="vpc-route-add">
+<h3>vpc route add<a class="headerlink" href="#vpc-route-add" title="Permalink to this headline">¶</a></h3>
+<p>Add Vpc Route.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack vpc route add
+    --destination &lt;destination&gt;
+    --nexthop &lt;nexthop&gt;
+    <span class="o">[</span>--type &lt;type&gt;<span class="o">]</span>
+    --router-id &lt;router_id&gt;
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-vpc-route-add-destination">
+<span class="sig-name descname"><span class="pre">--destination</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;destination&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-vpc-route-add-destination" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the destination address in the CIDR notation format, for example, 192.168.200.0/24.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-vpc-route-add-nexthop">
+<span class="sig-name descname"><span class="pre">--nexthop</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;nexthop&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-vpc-route-add-nexthop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the next hop. If the type is peering, enter the VPC peering connection ID.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-vpc-route-add-type">
+<span class="sig-name descname"><span class="pre">--type</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;type&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-vpc-route-add-type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the route type. Currently, the value can only be peering.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-vpc-route-add-router-id">
+<span class="sig-name descname"><span class="pre">--router-id</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;router_id&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-vpc-route-add-router-id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the requesting router ID for creating a route.</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="vpc-route-delete">
+<h3>vpc route delete<a class="headerlink" href="#vpc-route-delete" title="Permalink to this headline">¶</a></h3>
+<p>Deletes VPC Route.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack vpc route delete &lt;route&gt; <span class="o">[</span>&lt;route&gt; ...<span class="o">]</span>
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-vpc-route-delete-arg-route">
+<span class="sig-name descname"><span class="pre">route</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-vpc-route-delete-arg-route" title="Permalink to this definition">¶</a></dt>
+<dd><p>VPC Routes(s) ID to delete</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="vpc-route-list">
+<h3>vpc route list<a class="headerlink" href="#vpc-route-list" title="Permalink to this headline">¶</a></h3>
+<p>List Vpc Routes.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack vpc route list
+    <span class="o">[</span>--sort-column SORT_COLUMN<span class="o">]</span>
+    <span class="o">[</span>--sort-ascending <span class="p">|</span> --sort-descending<span class="o">]</span>
+    <span class="o">[</span>--id &lt;id&gt;<span class="o">]</span>
+    <span class="o">[</span>--limit &lt;limit&gt;<span class="o">]</span>
+    <span class="o">[</span>--marker &lt;marker&gt;<span class="o">]</span>
+    <span class="o">[</span>--project-id &lt;project_id&gt;<span class="o">]</span>
+    <span class="o">[</span>--router-id &lt;router_id&gt;<span class="o">]</span>
+    <span class="o">[</span>--destination &lt;destination&gt;<span class="o">]</span>
+    <span class="o">[</span>--type &lt;type&gt;<span class="o">]</span>
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-vpc-route-list-sort-column">
+<span class="sig-name descname"><span class="pre">--sort-column</span></span><span class="sig-prename descclassname"> <span class="pre">SORT_COLUMN</span></span><a class="headerlink" href="#cmdoption-openstack-vpc-route-list-sort-column" title="Permalink to this definition">¶</a></dt>
+<dd><p>specify the column(s) to sort the data (columns specified first have a priority, non-existing columns are ignored), can be repeated</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-vpc-route-list-sort-ascending">
+<span class="sig-name descname"><span class="pre">--sort-ascending</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-vpc-route-list-sort-ascending" title="Permalink to this definition">¶</a></dt>
+<dd><p>sort the column(s) in ascending order</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-vpc-route-list-sort-descending">
+<span class="sig-name descname"><span class="pre">--sort-descending</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-vpc-route-list-sort-descending" title="Permalink to this definition">¶</a></dt>
+<dd><p>sort the column(s) in descending order</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-vpc-route-list-id">
+<span class="sig-name descname"><span class="pre">--id</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;id&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-vpc-route-list-id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the ID of the VPC route.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-vpc-route-list-limit">
+<span class="sig-name descname"><span class="pre">--limit</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;limit&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-vpc-route-list-limit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Limit to fetch number of records.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-vpc-route-list-marker">
+<span class="sig-name descname"><span class="pre">--marker</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;marker&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-vpc-route-list-marker" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the start resource ID of pagination query.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-vpc-route-list-project-id">
+<span class="sig-name descname"><span class="pre">--project-id</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;project_id&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-vpc-route-list-project-id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the project ID.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-vpc-route-list-router-id">
+<span class="sig-name descname"><span class="pre">--router-id</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;router_id&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-vpc-route-list-router-id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the router/vpc ID.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-vpc-route-list-destination">
+<span class="sig-name descname"><span class="pre">--destination</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;destination&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-vpc-route-list-destination" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies that the route destination address (CIDR) is used as the filtering condition.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-vpc-route-list-type">
+<span class="sig-name descname"><span class="pre">--type</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;type&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-vpc-route-list-type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies that the type is used as the filtering condition. Currently, the value can only be peering.</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="vpc-route-show">
+<h3>vpc route show<a class="headerlink" href="#vpc-route-show" title="Permalink to this headline">¶</a></h3>
+<p>Show VPC Route Details.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack vpc route show &lt;route&gt;
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-vpc-route-show-arg-route">
+<span class="sig-name descname"><span class="pre">route</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-vpc-route-show-arg-route" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the ID of the VPC route.</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+</section>
+</section>
+
+
+                </div>
+              </div>
+            </div>
+            <div class="docs-actions">
+            
+              <a href="volume_backup.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Volume Backup Service (VBS)"></i></a>
+            
+            
+              <a href="../sdk/index.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: 4. Using the OpenStack SDK"></i></a>
+            
+            </div>
+            <div class="row docs-byline bottom">
+              <div class="docs-updated">updated: 2021-12-08 13:15</div>
+            </div>
+          </div>
+  <div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 docs-sidebar">
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <a href="../index.html" class="docs-sidebar-section-title"><h4>otcextensions 0.24.3.dev2</h4></a>
+      <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install/index.html">1. Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install/configuration.html">2. Configuration</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">3. OpenStack Client (CLI)</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="anti_ddos.html">Anti DDoS Service (Anti_DDoS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="auto_scaling.html">AutoScaling service (AS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cbr.html">Cloud Backup and Recovery (CBR)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cce_v2.html">Cloud Container Engine (CCE)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ces.html">Cloud Eye Service (CES)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="css.html">Cloud Search Service (CSS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cts.html">Cloud Trace Service (CTS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dcs.html">Distributed Cache Service (DCS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deh.html">Dedicated Host Service (DeH)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dms.html">Distributed Message Service (DMS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dns.html">Domain Name Service (DNS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="identity.html">Identity Service (IAM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kms.html">Key Management Service (KMS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="load_balancer.html">Elastic LoadBalancer (ELB)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nat.html">Network Address Translation (NAT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="obs.html">Object Storage service (OBS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rds_v3.html">Relational Database Service (RDS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="smn.html">Simple Message Notification Service (SMN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="volume_backup.html">Volume Backup Service (VBS)</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Virtual Private Cloud (VPC)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sdk/index.html">4. Using the OpenStack SDK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributor/index.html">5. Contributing to the OTC Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../coverage.html">6. Service Coverage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendices/index.html">7. Appendices</a></li>
+</ul>
+
+    </div>
+
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="local-table-of-contents">
+      <h4 class="docs-sidebar-section-title">Page Contents</h4>
+      <ul>
+<li><a class="reference internal" href="#">Virtual Private Cloud (VPC)</a><ul>
+<li><a class="reference internal" href="#vpc-peering-operations">Vpc Peering Operations</a><ul>
+<li><a class="reference internal" href="#vpc-peering-create">vpc peering create</a></li>
+<li><a class="reference internal" href="#vpc-peering-delete">vpc peering delete</a></li>
+<li><a class="reference internal" href="#vpc-peering-list">vpc peering list</a></li>
+<li><a class="reference internal" href="#vpc-peering-set">vpc peering set</a></li>
+<li><a class="reference internal" href="#vpc-peering-show">vpc peering show</a></li>
+<li><a class="reference internal" href="#vpc-peering-update">vpc peering update</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#vpc-route-operations">Vpc Route Operations</a><ul>
+<li><a class="reference internal" href="#vpc-route-add">vpc route add</a></li>
+<li><a class="reference internal" href="#vpc-route-delete">vpc route delete</a></li>
+<li><a class="reference internal" href="#vpc-route-list">vpc route list</a></li>
+<li><a class="reference internal" href="#vpc-route-show">vpc route show</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+  </div>
+</div>
+        </div>
+      </div>
+  </scale-app-shell>
+<scale-app-footer id="footer-shell" variant="standard" claim-lang="en">
+</scale-app-footer>
+<script>
+  const footer_shell = document.getElementById("footer-shell");
+  footer_shell.footerNavigation = [{"name":"Contact","id":"Contact","href":"https://cloud.telekom.de/en/contact/"},{"name":"Legal notice","id":"Legal notice","href":"https://cloud.telekom.de/en/imprint-adress"},{"name":"Data privacy","id":"Data privacy","href":"https://open-telekom-cloud.com/en/data-protection","icon":"alert-imprint-dataprivacy"}]</script>
+  <!-- jQuery -->
+<script type="text/javascript" src="../_static/js/jquery-3.2.1.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script type="text/javascript" src="../_static/js/bootstrap.min.js"></script>
+
+<!-- Telekom Scale -->
+<script type="module" src="https://unpkg.com/@telekom/scale-components@3.0.0-beta.32/dist/scale-components/scale-components.esm.js"></script>
+
+<!-- The rest of the JS -->
+<script type="text/javascript" src="../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script type="text/javascript" src="../_static/js/docs.js"></script>
+
+<!-- Popovers -->
+<script type="text/javascript" src="../_static/js/webui-popover.js"></script>
+
+<!-- standard sphinx include libraries, which allow search highlighting -->
+<script type="text/javascript" src="../_static/underscore.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+<script type="text/javascript" src="../_static/searchtools.js"></script>
+
+<script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.24.3.dev2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+</script>
+
+
+<!-- Javascript for page -->
+<script language="JavaScript">
+/* build a description of this page including SHA, source location on git repo,
+   build time and the project's launchpad bug tag. Set the HREF of the bug
+   buttons */
+</script>
+  
+  </body>
+</html>

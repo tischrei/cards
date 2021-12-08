@@ -1,0 +1,482 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Anti-DDoS (AS) &#8212; otcextensions 0.24.3.dev2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/basic.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Auto-Scaling (AS)" href="auto_scaling.html" />
+    <link rel="prev" title="Guides for SDK" href="index.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap CSS -->
+<link href="../../_static/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../../_static/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="../../_static/css/combined.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../../_static/pygments.css" rel="stylesheet">
+
+<!-- Telekom Scale -->
+<link href="https://unpkg.com/@telekom/scale-components@3.0.0-beta.32/dist/scale-components/scale-components.css" rel="stylesheet">
+
+<!-- Otcdocstheme CSS -->
+<link href="../../_static/css/otcdocstheme.css" rel="stylesheet">
+
+
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-17511903-1', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+  </head><body>
+  
+<!-- SOURCE_FILE: sdk/guides/anti_ddos.rst -->
+
+
+<scale-app-shell
+  id="app-shell"
+  claim-lang="en"
+  logo-title="PAGENAME"
+  logo-href="/"
+>
+
+
+
+<script>
+  const app_shell = document.getElementById(
+  'app-shell');
+  app_shell.mainNavigation = [
+    {
+      "name": "Software",
+      "id": "Software",
+      "children": [
+        {
+          "name": "Automation",
+          "id": "Automation",
+          "children": [
+            {
+              "name": "Terraform OTC Driver",
+              "id": "Terraform OTC Driver",
+              "href": "https://docs.otc-service.com/terraform-provider-opentelekomcloud"
+            },
+                      {
+              "name": "Ansible Collection Cloud",
+              "id": "Ansible Collection Cloud",
+              "href": "https://docs.otc-service.com/ansible-collection-cloud"
+            },
+          ]
+        },
+        {
+          "name": "Client Tools",
+          "id": "Client Tools",
+          "children": [
+            {
+              "name": "OTC Extensions",
+              "id": "OTC Extensions",
+              "href": "https://docs.otc-service.com/python-otcextensions"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Release Notes",
+      "id": "Release Notes",
+      "children": [
+        {
+          "name": "Automation",
+          "id": "Automation",
+          "children": [
+            {
+              "name": "Terraform OTC Driver",
+              "id": "Terraform OTC Driver",
+              "href": "https://docs.otc-service.com/releasenotes/terraform-provider-opentelekomcloud"
+            }
+          ]
+        },
+        {
+          "name": "Client Tools",
+          "id": "Client Tools",
+          "children": [
+            {
+              "name": "OTC Extensions",
+              "id": "OTC Extensions",
+              "href": "https://docs.otc-service.com/releasenotes/python-otcextensions"
+            }
+          ]
+        }
+      ]
+    }
+  ];
+</script>
+  
+      <div class="container docs-book-wrapper">
+        <div class="row">
+          <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
+  <div class="row docs-title">
+  <div class="col-lg-8">
+      <h1>Anti-DDoS (AS)</h1>
+    
+  </div>
+  <div class="docs-actions">
+    
+    <a href="index.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Guides for SDK"></i></a>
+    
+    
+    <a href="auto_scaling.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Auto-Scaling (AS)"></i></a>
+    
+  </div>
+</div>
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="docs-body" role="main">
+  
+  <section id="anti-ddos-as">
+<h1>Anti-DDoS (AS)<a class="headerlink" href="#anti-ddos-as" title="Permalink to this headline">¶</a></h1>
+<nav class="contents local" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#floating-ip-operations" id="id1">Floating-IP Operations</a></p>
+<ul>
+<li><p><a class="reference internal" href="#list-anti-ddos-floating-ips" id="id2">List Anti-DDoS Floating IPs</a></p></li>
+<li><p><a class="reference internal" href="#protect-an-floating-ip-not-working" id="id3">Protect an Floating IP (not working)</a></p></li>
+<li><p><a class="reference internal" href="#unprotect-an-floating-ip-not-working" id="id4">Unprotect an Floating IP (not working)</a></p></li>
+<li><p><a class="reference internal" href="#get-floating-ip-policies" id="id5">Get Floating IP Policies</a></p></li>
+<li><p><a class="reference internal" href="#update-floating-ip-policies" id="id6">Update Floating IP Policies</a></p></li>
+<li><p><a class="reference internal" href="#get-floating-ip-status" id="id7">Get Floating IP Status</a></p></li>
+<li><p><a class="reference internal" href="#list-floating-ip-events" id="id8">List Floating IP Events</a></p></li>
+<li><p><a class="reference internal" href="#list-floating-ip-day-statistics" id="id9">List Floating IP Day Statistics</a></p></li>
+<li><p><a class="reference internal" href="#list-week-statistics-of-all-floating-ips" id="id10">List Week Statistics of all Floating IPs</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#alarm-configuration" id="id11">Alarm Configuration</a></p>
+<ul>
+<li><p><a class="reference internal" href="#list-alarm-configurations" id="id12">List Alarm Configurations</a></p></li>
+</ul>
+</li>
+</ul>
+</nav>
+<section id="floating-ip-operations">
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Floating-IP Operations</a><a class="headerlink" href="#floating-ip-operations" title="Permalink to this headline">¶</a></h2>
+<p>Floating IP operations lists all methods which are used to query and modify
+Floating IPs settings related to Anti-DDoS.</p>
+<section id="list-anti-ddos-floating-ips">
+<h3><a class="toc-backref" href="#id2" role="doc-backlink">List Anti-DDoS Floating IPs</a><a class="headerlink" href="#list-anti-ddos-floating-ips" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to query all Floating IPs protected by Anti-DDoS and
+limit the output with parameters.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="k">for</span> <span class="n">fip</span> <span class="ow">in</span> <span class="n">conn</span><span class="o">.</span><span class="n">anti_ddos</span><span class="o">.</span><span class="n">floating_ips</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">fip</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="protect-an-floating-ip-not-working">
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">Protect an Floating IP (not working)</a><a class="headerlink" href="#protect-an-floating-ip-not-working" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to enable Anti-DDoS on a Floating IP by using IP id or
+an instance of class
+<a class="reference internal" href="../resources/anti_ddos/v1/floating_ip.html#otcextensions.sdk.anti_ddos.v1.floating_ip.FloatingIP" title="otcextensions.sdk.anti_ddos.v1.floating_ip.FloatingIP"><code class="xref py py-class docutils literal notranslate"><span class="pre">FloatingIP</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="n">fip</span> <span class="o">=</span> <span class="s2">&quot;floating_ip_id&quot;</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">anti_ddos</span><span class="o">.</span><span class="n">protect_floating_ip</span><span class="p">(</span><span class="n">fip</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="unprotect-an-floating-ip-not-working">
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">Unprotect an Floating IP (not working)</a><a class="headerlink" href="#unprotect-an-floating-ip-not-working" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to disable Anti-DDoS on a Floating IP by using IP id or
+an instance of class
+<a class="reference internal" href="../resources/anti_ddos/v1/floating_ip.html#otcextensions.sdk.anti_ddos.v1.floating_ip.FloatingIP" title="otcextensions.sdk.anti_ddos.v1.floating_ip.FloatingIP"><code class="xref py py-class docutils literal notranslate"><span class="pre">FloatingIP</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="n">fip</span> <span class="o">=</span> <span class="s2">&quot;floating_ip_id&quot;</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">anti_ddos</span><span class="o">.</span><span class="n">unprotect_floating_ip</span><span class="p">(</span><span class="n">fip</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="get-floating-ip-policies">
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Get Floating IP Policies</a><a class="headerlink" href="#get-floating-ip-policies" title="Permalink to this headline">¶</a></h3>
+<p>This Interface is used to query the Anti-DDoS Policy for a specific Floating
+IP by using Floating IP id or an instance of class
+<a class="reference internal" href="../resources/anti_ddos/v1/floating_ip.html#otcextensions.sdk.anti_ddos.v1.floating_ip.FloatingIP" title="otcextensions.sdk.anti_ddos.v1.floating_ip.FloatingIP"><code class="xref py py-class docutils literal notranslate"><span class="pre">FloatingIP</span></code></a>. Anti-DDoS
+must be enabled for the specific Floating IP otherwise an error occures.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="n">fip</span> <span class="o">=</span> <span class="s2">&quot;floating_ip_id&quot;</span>
+<span class="n">policy</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">anti_ddos</span><span class="o">.</span><span class="n">get_floating_ip_policies</span><span class="p">(</span><span class="n">fip</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">policy</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="update-floating-ip-policies">
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">Update Floating IP Policies</a><a class="headerlink" href="#update-floating-ip-policies" title="Permalink to this headline">¶</a></h3>
+<p>This Interface is used to update Anti-DDoS Policy attributes.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="n">fip</span> <span class="o">=</span> <span class="s2">&quot;floating_ip_id&quot;</span>
+<span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;enable_L7&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="s2">&quot;traffic_pos_id&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s2">&quot;http_request_pos_id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;cleaning_access_pos_id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;app_type_id&quot;</span><span class="p">:</span> <span class="mi">1</span>
+<span class="p">}</span>
+
+<span class="n">policy</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">anti_ddos</span><span class="o">.</span><span class="n">update_floating_ip_policies</span><span class="p">(</span><span class="n">fip</span><span class="p">,</span> <span class="o">**</span><span class="n">attrs</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="get-floating-ip-status">
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">Get Floating IP Status</a><a class="headerlink" href="#get-floating-ip-status" title="Permalink to this headline">¶</a></h3>
+<p>This Interface is used to query Anti-DDoS status of a Floating IP by using
+id.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="n">fip</span> <span class="o">=</span> <span class="s2">&quot;floating_ip_id&quot;</span>
+
+<span class="n">status</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">anti_ddos</span><span class="o">.</span><span class="n">get_floating_ip_status</span><span class="p">(</span><span class="n">fip</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">status</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="list-floating-ip-events">
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">List Floating IP Events</a><a class="headerlink" href="#list-floating-ip-events" title="Permalink to this headline">¶</a></h3>
+<p>This Interface is used to query all Anti-DDoS events of a Floating IP by using
+id.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="n">fip</span> <span class="o">=</span> <span class="s2">&quot;floating_ip_id&quot;</span>
+
+<span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">conn</span><span class="o">.</span><span class="n">anti_ddos</span><span class="o">.</span><span class="n">floating_ip_events</span><span class="p">(</span><span class="n">fip</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="list-floating-ip-day-statistics">
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">List Floating IP Day Statistics</a><a class="headerlink" href="#list-floating-ip-day-statistics" title="Permalink to this headline">¶</a></h3>
+<p>This Interface is used to query all Anti-DDoS events per day of a Floating IP
+by using id.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="n">fip</span> <span class="o">=</span> <span class="s2">&quot;floating_ip_id&quot;</span>
+
+<span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">conn</span><span class="o">.</span><span class="n">anti_ddos</span><span class="o">.</span><span class="n">floating_ip_stat_day</span><span class="p">(</span><span class="n">fip</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="list-week-statistics-of-all-floating-ips">
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">List Week Statistics of all Floating IPs</a><a class="headerlink" href="#list-week-statistics-of-all-floating-ips" title="Permalink to this headline">¶</a></h3>
+<p>This Interface is used to query all Anti-DDoS events per week of all Floating
+IPs.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">conn</span><span class="o">.</span><span class="n">anti_ddos</span><span class="o">.</span><span class="n">floating_ip_stat_week</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="alarm-configuration">
+<h2><a class="toc-backref" href="#id11" role="doc-backlink">Alarm Configuration</a><a class="headerlink" href="#alarm-configuration" title="Permalink to this headline">¶</a></h2>
+<p>Anti-DDoS alerts can be sent in various ways and notifies in case of defense.</p>
+<section id="list-alarm-configurations">
+<h3><a class="toc-backref" href="#id12" role="doc-backlink">List Alarm Configurations</a><a class="headerlink" href="#list-alarm-configurations" title="Permalink to this headline">¶</a></h3>
+<p>This Interface is used to query Anti-DDoS alarm configurations.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="k">for</span> <span class="n">config</span> <span class="ow">in</span> <span class="n">conn</span><span class="o">.</span><span class="n">anti_ddos</span><span class="o">.</span><span class="n">configs</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+                </div>
+              </div>
+            </div>
+            <div class="docs-actions">
+            
+              <a href="index.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Guides for SDK"></i></a>
+            
+            
+              <a href="auto_scaling.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Auto-Scaling (AS)"></i></a>
+            
+            </div>
+            <div class="row docs-byline bottom">
+              <div class="docs-updated">updated: 2021-12-08 13:15</div>
+            </div>
+          </div>
+  <div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 docs-sidebar">
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <a href="../../index.html" class="docs-sidebar-section-title"><h4>otcextensions 0.24.3.dev2</h4></a>
+      <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../install/index.html">1. Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../install/configuration.html">2. Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cli/index.html">3. OpenStack Client (CLI)</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">4. Using the OpenStack SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../architecture.html">Architecture Overview and Important Terms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Guides for SDK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proxies/index.html">Service Proxies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../resources/index.html">Resources and Attributes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributor/index.html">5. Contributing to the OTC Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../coverage.html">6. Service Coverage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendices/index.html">7. Appendices</a></li>
+</ul>
+
+    </div>
+
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="local-table-of-contents">
+      <h4 class="docs-sidebar-section-title">Page Contents</h4>
+      <ul>
+<li><a class="reference internal" href="#">Anti-DDoS (AS)</a><ul>
+<li><a class="reference internal" href="#floating-ip-operations">Floating-IP Operations</a><ul>
+<li><a class="reference internal" href="#list-anti-ddos-floating-ips">List Anti-DDoS Floating IPs</a></li>
+<li><a class="reference internal" href="#protect-an-floating-ip-not-working">Protect an Floating IP (not working)</a></li>
+<li><a class="reference internal" href="#unprotect-an-floating-ip-not-working">Unprotect an Floating IP (not working)</a></li>
+<li><a class="reference internal" href="#get-floating-ip-policies">Get Floating IP Policies</a></li>
+<li><a class="reference internal" href="#update-floating-ip-policies">Update Floating IP Policies</a></li>
+<li><a class="reference internal" href="#get-floating-ip-status">Get Floating IP Status</a></li>
+<li><a class="reference internal" href="#list-floating-ip-events">List Floating IP Events</a></li>
+<li><a class="reference internal" href="#list-floating-ip-day-statistics">List Floating IP Day Statistics</a></li>
+<li><a class="reference internal" href="#list-week-statistics-of-all-floating-ips">List Week Statistics of all Floating IPs</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#alarm-configuration">Alarm Configuration</a><ul>
+<li><a class="reference internal" href="#list-alarm-configurations">List Alarm Configurations</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+  </div>
+</div>
+        </div>
+      </div>
+  </scale-app-shell>
+<scale-app-footer id="footer-shell" variant="standard" claim-lang="en">
+</scale-app-footer>
+<script>
+  const footer_shell = document.getElementById("footer-shell");
+  footer_shell.footerNavigation = [{"name":"Contact","id":"Contact","href":"https://cloud.telekom.de/en/contact/"},{"name":"Legal notice","id":"Legal notice","href":"https://cloud.telekom.de/en/imprint-adress"},{"name":"Data privacy","id":"Data privacy","href":"https://open-telekom-cloud.com/en/data-protection","icon":"alert-imprint-dataprivacy"}]</script>
+  <!-- jQuery -->
+<script type="text/javascript" src="../../_static/js/jquery-3.2.1.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script type="text/javascript" src="../../_static/js/bootstrap.min.js"></script>
+
+<!-- Telekom Scale -->
+<script type="module" src="https://unpkg.com/@telekom/scale-components@3.0.0-beta.32/dist/scale-components/scale-components.esm.js"></script>
+
+<!-- The rest of the JS -->
+<script type="text/javascript" src="../../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script type="text/javascript" src="../../_static/js/docs.js"></script>
+
+<!-- Popovers -->
+<script type="text/javascript" src="../../_static/js/webui-popover.js"></script>
+
+<!-- standard sphinx include libraries, which allow search highlighting -->
+<script type="text/javascript" src="../../_static/underscore.js"></script>
+<script type="text/javascript" src="../../_static/doctools.js"></script>
+<script type="text/javascript" src="../../_static/searchtools.js"></script>
+
+<script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.24.3.dev2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+</script>
+
+
+<!-- Javascript for page -->
+<script language="JavaScript">
+/* build a description of this page including SHA, source location on git repo,
+   build time and the project's launchpad bug tag. Set the HREF of the bug
+   buttons */
+</script>
+  
+  </body>
+</html>

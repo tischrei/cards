@@ -1,0 +1,760 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Simple Message Notification Service (SMN) &#8212; otcextensions 0.24.3.dev2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/basic.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Volume Backup Service (VBS)" href="volume_backup.html" />
+    <link rel="prev" title="Relational Database Service (RDS)" href="rds_v3.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap CSS -->
+<link href="../_static/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../_static/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="../_static/css/combined.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../_static/pygments.css" rel="stylesheet">
+
+<!-- Telekom Scale -->
+<link href="https://unpkg.com/@telekom/scale-components@3.0.0-beta.32/dist/scale-components/scale-components.css" rel="stylesheet">
+
+<!-- Otcdocstheme CSS -->
+<link href="../_static/css/otcdocstheme.css" rel="stylesheet">
+
+
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-17511903-1', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+  </head><body>
+  
+<!-- SOURCE_FILE: cli/smn.rst -->
+
+
+<scale-app-shell
+  id="app-shell"
+  claim-lang="en"
+  logo-title="PAGENAME"
+  logo-href="/"
+>
+
+
+
+<script>
+  const app_shell = document.getElementById(
+  'app-shell');
+  app_shell.mainNavigation = [
+    {
+      "name": "Software",
+      "id": "Software",
+      "children": [
+        {
+          "name": "Automation",
+          "id": "Automation",
+          "children": [
+            {
+              "name": "Terraform OTC Driver",
+              "id": "Terraform OTC Driver",
+              "href": "https://docs.otc-service.com/terraform-provider-opentelekomcloud"
+            },
+                      {
+              "name": "Ansible Collection Cloud",
+              "id": "Ansible Collection Cloud",
+              "href": "https://docs.otc-service.com/ansible-collection-cloud"
+            },
+          ]
+        },
+        {
+          "name": "Client Tools",
+          "id": "Client Tools",
+          "children": [
+            {
+              "name": "OTC Extensions",
+              "id": "OTC Extensions",
+              "href": "https://docs.otc-service.com/python-otcextensions"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Release Notes",
+      "id": "Release Notes",
+      "children": [
+        {
+          "name": "Automation",
+          "id": "Automation",
+          "children": [
+            {
+              "name": "Terraform OTC Driver",
+              "id": "Terraform OTC Driver",
+              "href": "https://docs.otc-service.com/releasenotes/terraform-provider-opentelekomcloud"
+            }
+          ]
+        },
+        {
+          "name": "Client Tools",
+          "id": "Client Tools",
+          "children": [
+            {
+              "name": "OTC Extensions",
+              "id": "OTC Extensions",
+              "href": "https://docs.otc-service.com/releasenotes/python-otcextensions"
+            }
+          ]
+        }
+      ]
+    }
+  ];
+</script>
+  
+      <div class="container docs-book-wrapper">
+        <div class="row">
+          <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
+  <div class="row docs-title">
+  <div class="col-lg-8">
+      <h1>Simple Message Notification Service (SMN)</h1>
+    
+  </div>
+  <div class="docs-actions">
+    
+    <a href="rds_v3.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Relational Database Service (RDS)"></i></a>
+    
+    
+    <a href="volume_backup.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Volume Backup Service (VBS)"></i></a>
+    
+  </div>
+</div>
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="docs-body" role="main">
+  
+  <section id="simple-message-notification-service-smn">
+<h1>Simple Message Notification Service (SMN)<a class="headerlink" href="#simple-message-notification-service-smn" title="Permalink to this headline">¶</a></h1>
+<p>The SMN client is the command-line interface (CLI) for
+the Simple Message Notification Service (SMN) API and its extensions.</p>
+<p>For help on a specific <cite>smn</cite> command, enter:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>openstack smn <span class="nb">help</span> SUBCOMMAND
+</pre></div>
+</div>
+<section id="topic-operations">
+<span id="smn-topic"></span><h2>Topic operations<a class="headerlink" href="#topic-operations" title="Permalink to this headline">¶</a></h2>
+<section id="smn-topic-create">
+<h3>smn topic create<a class="headerlink" href="#smn-topic-create" title="Permalink to this headline">¶</a></h3>
+<p>Create new SMN topic.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack smn topic create <span class="o">[</span>--display-name &lt;display_name&gt;<span class="o">]</span> &lt;name&gt;
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-smn-topic-create-display-name">
+<span class="sig-name descname"><span class="pre">--display-name</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;display_name&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-smn-topic-create-display-name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Topic display name, which is presented as the name of the email sender in email messages.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-smn-topic-create-arg-name">
+<span class="sig-name descname"><span class="pre">name</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-smn-topic-create-arg-name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the name of the NAT Gateway.</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="smn-topic-delete">
+<h3>smn topic delete<a class="headerlink" href="#smn-topic-delete" title="Permalink to this headline">¶</a></h3>
+<p>Deletes SMN Topic.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack smn topic delete &lt;topic&gt; <span class="o">[</span>&lt;topic&gt; ...<span class="o">]</span>
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-smn-topic-delete-arg-topic">
+<span class="sig-name descname"><span class="pre">topic</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-smn-topic-delete-arg-topic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Smn Topic(s) to delete (Name or ID)</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="smn-topic-list">
+<h3>smn topic list<a class="headerlink" href="#smn-topic-list" title="Permalink to this headline">¶</a></h3>
+<p>List SMN Topics.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack smn topic list
+    <span class="o">[</span>--sort-column SORT_COLUMN<span class="o">]</span>
+    <span class="o">[</span>--sort-ascending <span class="p">|</span> --sort-descending<span class="o">]</span>
+    <span class="o">[</span>--offset &lt;offset&gt;<span class="o">]</span>
+    <span class="o">[</span>--limit &lt;limit&gt;<span class="o">]</span>
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-smn-topic-list-sort-column">
+<span class="sig-name descname"><span class="pre">--sort-column</span></span><span class="sig-prename descclassname"> <span class="pre">SORT_COLUMN</span></span><a class="headerlink" href="#cmdoption-openstack-smn-topic-list-sort-column" title="Permalink to this definition">¶</a></dt>
+<dd><p>specify the column(s) to sort the data (columns specified first have a priority, non-existing columns are ignored), can be repeated</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-smn-topic-list-sort-ascending">
+<span class="sig-name descname"><span class="pre">--sort-ascending</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-smn-topic-list-sort-ascending" title="Permalink to this definition">¶</a></dt>
+<dd><p>sort the column(s) in ascending order</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-smn-topic-list-sort-descending">
+<span class="sig-name descname"><span class="pre">--sort-descending</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-smn-topic-list-sort-descending" title="Permalink to this definition">¶</a></dt>
+<dd><p>sort the column(s) in descending order</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-smn-topic-list-offset">
+<span class="sig-name descname"><span class="pre">--offset</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;offset&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-smn-topic-list-offset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resources after this offset will be queried.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-smn-topic-list-limit">
+<span class="sig-name descname"><span class="pre">--limit</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;limit&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-smn-topic-list-limit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Limit to fetch number of records.</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="smn-topic-show">
+<h3>smn topic show<a class="headerlink" href="#smn-topic-show" title="Permalink to this headline">¶</a></h3>
+<p>Show Smn Topic details.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack smn topic show &lt;topic&gt;
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-smn-topic-show-arg-topic">
+<span class="sig-name descname"><span class="pre">topic</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-smn-topic-show-arg-topic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the Name or ID of the SMN topic.</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="smn-topic-update">
+<h3>smn topic update<a class="headerlink" href="#smn-topic-update" title="Permalink to this headline">¶</a></h3>
+<p>Update a SMN Topic.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack smn topic update --display-name &lt;display_name&gt; &lt;topic&gt;
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-smn-topic-update-display-name">
+<span class="sig-name descname"><span class="pre">--display-name</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;display_name&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-smn-topic-update-display-name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Topic display name, which is presented as the name of the email sender in email messages.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-smn-topic-update-arg-topic">
+<span class="sig-name descname"><span class="pre">topic</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-smn-topic-update-arg-topic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the Name or ID of the SMN Topic.</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+</section>
+<section id="subscription-operations">
+<span id="smn-subscription"></span><h2>Subscription operations<a class="headerlink" href="#subscription-operations" title="Permalink to this headline">¶</a></h2>
+<section id="smn-subscription-create">
+<h3>smn subscription create<a class="headerlink" href="#smn-subscription-create" title="Permalink to this headline">¶</a></h3>
+<p>Add a new Subscription to a SMN topic.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack smn subscription create
+    --endpoint &lt;endpoint&gt;
+    --protocol &lt;protocol&gt;
+    <span class="o">[</span>--remark &lt;remark&gt;<span class="o">]</span>
+    &lt;topic&gt;
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-smn-subscription-create-endpoint">
+<span class="sig-name descname"><span class="pre">--endpoint</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;endpoint&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-smn-subscription-create-endpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Message endpoint.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-smn-subscription-create-protocol">
+<span class="sig-name descname"><span class="pre">--protocol</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;protocol&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-smn-subscription-create-protocol" title="Permalink to this definition">¶</a></dt>
+<dd><p>Subscription protocol.
+Currently, the following protocols are supported:
+email: The endpoints are email address.
+sms: The endpoints are phone numbers.
+http and https: The endpoints are URLs.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-smn-subscription-create-remark">
+<span class="sig-name descname"><span class="pre">--remark</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;remark&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-smn-subscription-create-remark" title="Permalink to this definition">¶</a></dt>
+<dd><p>Description of the subscription.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-smn-subscription-create-arg-topic">
+<span class="sig-name descname"><span class="pre">topic</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-smn-subscription-create-arg-topic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unique resource ID or name of a topic.</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="smn-subscription-delete">
+<h3>smn subscription delete<a class="headerlink" href="#smn-subscription-delete" title="Permalink to this headline">¶</a></h3>
+<p>Deletes SMN subscription.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack smn subscription delete &lt;subscription&gt; <span class="o">[</span>&lt;subscription&gt; ...<span class="o">]</span>
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-smn-subscription-delete-arg-subscription">
+<span class="sig-name descname"><span class="pre">subscription</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-smn-subscription-delete-arg-subscription" title="Permalink to this definition">¶</a></dt>
+<dd><p>SMN Subscrition(s) to delete.</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="smn-subscription-list">
+<h3>smn subscription list<a class="headerlink" href="#smn-subscription-list" title="Permalink to this headline">¶</a></h3>
+<p>List SMN Subscriptions.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack smn subscription list
+    <span class="o">[</span>--sort-column SORT_COLUMN<span class="o">]</span>
+    <span class="o">[</span>--sort-ascending <span class="p">|</span> --sort-descending<span class="o">]</span>
+    <span class="o">[</span>--offset &lt;offset&gt;<span class="o">]</span>
+    <span class="o">[</span>--limit &lt;limit&gt;<span class="o">]</span>
+    <span class="o">[</span>--topic &lt;topic&gt;<span class="o">]</span>
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-smn-subscription-list-sort-column">
+<span class="sig-name descname"><span class="pre">--sort-column</span></span><span class="sig-prename descclassname"> <span class="pre">SORT_COLUMN</span></span><a class="headerlink" href="#cmdoption-openstack-smn-subscription-list-sort-column" title="Permalink to this definition">¶</a></dt>
+<dd><p>specify the column(s) to sort the data (columns specified first have a priority, non-existing columns are ignored), can be repeated</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-smn-subscription-list-sort-ascending">
+<span class="sig-name descname"><span class="pre">--sort-ascending</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-smn-subscription-list-sort-ascending" title="Permalink to this definition">¶</a></dt>
+<dd><p>sort the column(s) in ascending order</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-smn-subscription-list-sort-descending">
+<span class="sig-name descname"><span class="pre">--sort-descending</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-smn-subscription-list-sort-descending" title="Permalink to this definition">¶</a></dt>
+<dd><p>sort the column(s) in descending order</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-smn-subscription-list-offset">
+<span class="sig-name descname"><span class="pre">--offset</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;offset&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-smn-subscription-list-offset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resources after this offset will be queried.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-smn-subscription-list-limit">
+<span class="sig-name descname"><span class="pre">--limit</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;limit&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-smn-subscription-list-limit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Limit to fetch number of records.
+Value range: 1–100</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-smn-subscription-list-topic">
+<span class="sig-name descname"><span class="pre">--topic</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;topic&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-smn-subscription-list-topic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify the topic ID or Name.</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+</section>
+<section id="template-operations">
+<span id="smn-template"></span><h2>Template operations<a class="headerlink" href="#template-operations" title="Permalink to this headline">¶</a></h2>
+<section id="smn-template-create">
+<h3>smn template create<a class="headerlink" href="#smn-template-create" title="Permalink to this headline">¶</a></h3>
+<p>Create new message template.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack smn template create
+    --content &lt;content&gt;
+    <span class="o">[</span>--protocol <span class="o">{</span>email,default,sms,dms,http,https<span class="o">}]</span>
+    &lt;name&gt;
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-smn-template-create-content">
+<span class="sig-name descname"><span class="pre">--content</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;content&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-smn-template-create-content" title="Permalink to this definition">¶</a></dt>
+<dd><p>Template content, which currently supports plain text only.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-smn-template-create-protocol">
+<span class="sig-name descname"><span class="pre">--protocol</span></span><span class="sig-prename descclassname"> <span class="pre">{email,default,sms,dms,http,https}</span></span><a class="headerlink" href="#cmdoption-openstack-smn-template-create-protocol" title="Permalink to this definition">¶</a></dt>
+<dd><p>Protocol supported by the template.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-smn-template-create-arg-name">
+<span class="sig-name descname"><span class="pre">name</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-smn-template-create-arg-name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the name of the message template.</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="smn-template-delete">
+<h3>smn template delete<a class="headerlink" href="#smn-template-delete" title="Permalink to this headline">¶</a></h3>
+<p>Deletes message template.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack smn template delete &lt;template&gt; <span class="o">[</span>&lt;template&gt; ...<span class="o">]</span>
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-smn-template-delete-arg-template">
+<span class="sig-name descname"><span class="pre">template</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-smn-template-delete-arg-template" title="Permalink to this definition">¶</a></dt>
+<dd><p>message template(s) to delete (Name or ID)</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="smn-template-list">
+<h3>smn template list<a class="headerlink" href="#smn-template-list" title="Permalink to this headline">¶</a></h3>
+<p>List message templates.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack smn template list
+    <span class="o">[</span>--sort-column SORT_COLUMN<span class="o">]</span>
+    <span class="o">[</span>--sort-ascending <span class="p">|</span> --sort-descending<span class="o">]</span>
+    <span class="o">[</span>--name &lt;name&gt;<span class="o">]</span>
+    <span class="o">[</span>--protocol <span class="o">{</span>email,default,sms,dms,http,https<span class="o">}]</span>
+    <span class="o">[</span>--offset &lt;offset&gt;<span class="o">]</span>
+    <span class="o">[</span>--limit &lt;limit&gt;<span class="o">]</span>
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-smn-template-list-sort-column">
+<span class="sig-name descname"><span class="pre">--sort-column</span></span><span class="sig-prename descclassname"> <span class="pre">SORT_COLUMN</span></span><a class="headerlink" href="#cmdoption-openstack-smn-template-list-sort-column" title="Permalink to this definition">¶</a></dt>
+<dd><p>specify the column(s) to sort the data (columns specified first have a priority, non-existing columns are ignored), can be repeated</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-smn-template-list-sort-ascending">
+<span class="sig-name descname"><span class="pre">--sort-ascending</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-smn-template-list-sort-ascending" title="Permalink to this definition">¶</a></dt>
+<dd><p>sort the column(s) in ascending order</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-smn-template-list-sort-descending">
+<span class="sig-name descname"><span class="pre">--sort-descending</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-smn-template-list-sort-descending" title="Permalink to this definition">¶</a></dt>
+<dd><p>sort the column(s) in descending order</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-smn-template-list-name">
+<span class="sig-name descname"><span class="pre">--name</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;name&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-smn-template-list-name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Message template name.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-smn-template-list-protocol">
+<span class="sig-name descname"><span class="pre">--protocol</span></span><span class="sig-prename descclassname"> <span class="pre">{email,default,sms,dms,http,https}</span></span><a class="headerlink" href="#cmdoption-openstack-smn-template-list-protocol" title="Permalink to this definition">¶</a></dt>
+<dd><p>Protocol supported by the template.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-smn-template-list-offset">
+<span class="sig-name descname"><span class="pre">--offset</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;offset&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-smn-template-list-offset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resources after this offset will be queried.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-smn-template-list-limit">
+<span class="sig-name descname"><span class="pre">--limit</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;limit&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-smn-template-list-limit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Limit to fetch number of records.</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="smn-template-show">
+<h3>smn template show<a class="headerlink" href="#smn-template-show" title="Permalink to this headline">¶</a></h3>
+<p>Show message template details.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack smn template show &lt;template&gt;
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-smn-template-show-arg-template">
+<span class="sig-name descname"><span class="pre">template</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-smn-template-show-arg-template" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the Name or ID of the message template.</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+<section id="smn-template-update">
+<h3>smn template update<a class="headerlink" href="#smn-template-update" title="Permalink to this headline">¶</a></h3>
+<p>Update a message template.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack smn template update --content &lt;content&gt; &lt;template&gt;
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-smn-template-update-content">
+<span class="sig-name descname"><span class="pre">--content</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;content&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-smn-template-update-content" title="Permalink to this definition">¶</a></dt>
+<dd><p>Template content, which currently supports plain text only.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-smn-template-update-arg-template">
+<span class="sig-name descname"><span class="pre">template</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-smn-template-update-arg-template" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the Name or ID of the message template.</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+</section>
+<section id="sms-operations">
+<span id="smn-sms"></span><h2>SMS operations<a class="headerlink" href="#sms-operations" title="Permalink to this headline">¶</a></h2>
+<section id="smn-sms-send">
+<h3>smn sms send<a class="headerlink" href="#smn-sms-send" title="Permalink to this headline">¶</a></h3>
+<p>Send a transactional SMS message to a specified phone number, usually used for verification code or notification.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack smn sms send &lt;endpoint&gt; &lt;message&gt;
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-smn-sms-send-arg-endpoint">
+<span class="sig-name descname"><span class="pre">endpoint</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-smn-sms-send-arg-endpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Phone number.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-smn-sms-send-arg-message">
+<span class="sig-name descname"><span class="pre">message</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-smn-sms-send-arg-message" title="Permalink to this definition">¶</a></dt>
+<dd><p>SMS message content.</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+</section>
+<section id="message-operations">
+<span id="smn-message"></span><h2>Message operations<a class="headerlink" href="#message-operations" title="Permalink to this headline">¶</a></h2>
+<section id="smn-message-publish">
+<h3>smn message publish<a class="headerlink" href="#smn-message-publish" title="Permalink to this headline">¶</a></h3>
+<p>Publish message. Three message formats are supported:
+- message
+- message_structure
+- message_template_name
+If the three formats are specified at the same time, they take effect in the following sequence:
+message_structure &gt; message_template_name &gt; message.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>openstack smn message publish
+    --subject &lt;subject&gt;
+    <span class="o">[</span>--time-to-live &lt;time_to_live&gt;<span class="o">]</span>
+    <span class="o">[</span>--message &lt;message&gt;<span class="o">]</span>
+    <span class="o">[</span>--message-structure &lt;message_structure&gt;<span class="o">]</span>
+    <span class="o">[</span>--message-template-name &lt;message_template_name&gt;<span class="o">]</span>
+    &lt;topic&gt;
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-smn-message-publish-subject">
+<span class="sig-name descname"><span class="pre">--subject</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;subject&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-smn-message-publish-subject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Message subject, which is used as the email subject when you publish email messages..</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-smn-message-publish-time-to-live">
+<span class="sig-name descname"><span class="pre">--time-to-live</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;time_to_live&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-smn-message-publish-time-to-live" title="Permalink to this definition">¶</a></dt>
+<dd><p>Time-to-live (TTL) of a message, specifically the maximum time period for retaining the message in the system. The default TTL is 3600s (one hour).</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-smn-message-publish-message">
+<span class="sig-name descname"><span class="pre">--message</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;message&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-smn-message-publish-message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Message content. The message content is a UTF-8-coded character string of no more than 256 KB.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-smn-message-publish-message-structure">
+<span class="sig-name descname"><span class="pre">--message-structure</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;message_structure&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-smn-message-publish-message-structure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Message structure, which contains JSON character strings. Specify protocols in the structure, which can be http, https, email, dms, and sms.
+The default protocol is mandatory. If the system fails to match any other protocols, the default message is sent.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-smn-message-publish-message-template-name">
+<span class="sig-name descname"><span class="pre">--message-template-name</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;message_template_name&gt;</span></span><a class="headerlink" href="#cmdoption-openstack-smn-message-publish-message-template-name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Message template name, which can be obtained according to Querying Message Templates.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-openstack-smn-message-publish-arg-topic">
+<span class="sig-name descname"><span class="pre">topic</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-openstack-smn-message-publish-arg-topic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unique resource ID or name of a topic.</p>
+</dd></dl>
+
+<p>This command is provided by the otcextensions plugin.</p>
+</section>
+</section>
+</section>
+
+
+                </div>
+              </div>
+            </div>
+            <div class="docs-actions">
+            
+              <a href="rds_v3.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Relational Database Service (RDS)"></i></a>
+            
+            
+              <a href="volume_backup.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Volume Backup Service (VBS)"></i></a>
+            
+            </div>
+            <div class="row docs-byline bottom">
+              <div class="docs-updated">updated: 2021-12-08 13:15</div>
+            </div>
+          </div>
+  <div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 docs-sidebar">
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <a href="../index.html" class="docs-sidebar-section-title"><h4>otcextensions 0.24.3.dev2</h4></a>
+      <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install/index.html">1. Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install/configuration.html">2. Configuration</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">3. OpenStack Client (CLI)</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="anti_ddos.html">Anti DDoS Service (Anti_DDoS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="auto_scaling.html">AutoScaling service (AS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cbr.html">Cloud Backup and Recovery (CBR)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cce_v2.html">Cloud Container Engine (CCE)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ces.html">Cloud Eye Service (CES)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="css.html">Cloud Search Service (CSS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cts.html">Cloud Trace Service (CTS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dcs.html">Distributed Cache Service (DCS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deh.html">Dedicated Host Service (DeH)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dms.html">Distributed Message Service (DMS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dns.html">Domain Name Service (DNS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="identity.html">Identity Service (IAM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kms.html">Key Management Service (KMS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="load_balancer.html">Elastic LoadBalancer (ELB)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nat.html">Network Address Translation (NAT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="obs.html">Object Storage service (OBS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rds_v3.html">Relational Database Service (RDS)</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Simple Message Notification Service (SMN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="volume_backup.html">Volume Backup Service (VBS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vpc.html">Virtual Private Cloud (VPC)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sdk/index.html">4. Using the OpenStack SDK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributor/index.html">5. Contributing to the OTC Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../coverage.html">6. Service Coverage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendices/index.html">7. Appendices</a></li>
+</ul>
+
+    </div>
+
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="local-table-of-contents">
+      <h4 class="docs-sidebar-section-title">Page Contents</h4>
+      <ul>
+<li><a class="reference internal" href="#">Simple Message Notification Service (SMN)</a><ul>
+<li><a class="reference internal" href="#topic-operations">Topic operations</a><ul>
+<li><a class="reference internal" href="#smn-topic-create">smn topic create</a></li>
+<li><a class="reference internal" href="#smn-topic-delete">smn topic delete</a></li>
+<li><a class="reference internal" href="#smn-topic-list">smn topic list</a></li>
+<li><a class="reference internal" href="#smn-topic-show">smn topic show</a></li>
+<li><a class="reference internal" href="#smn-topic-update">smn topic update</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#subscription-operations">Subscription operations</a><ul>
+<li><a class="reference internal" href="#smn-subscription-create">smn subscription create</a></li>
+<li><a class="reference internal" href="#smn-subscription-delete">smn subscription delete</a></li>
+<li><a class="reference internal" href="#smn-subscription-list">smn subscription list</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#template-operations">Template operations</a><ul>
+<li><a class="reference internal" href="#smn-template-create">smn template create</a></li>
+<li><a class="reference internal" href="#smn-template-delete">smn template delete</a></li>
+<li><a class="reference internal" href="#smn-template-list">smn template list</a></li>
+<li><a class="reference internal" href="#smn-template-show">smn template show</a></li>
+<li><a class="reference internal" href="#smn-template-update">smn template update</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#sms-operations">SMS operations</a><ul>
+<li><a class="reference internal" href="#smn-sms-send">smn sms send</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#message-operations">Message operations</a><ul>
+<li><a class="reference internal" href="#smn-message-publish">smn message publish</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+  </div>
+</div>
+        </div>
+      </div>
+  </scale-app-shell>
+<scale-app-footer id="footer-shell" variant="standard" claim-lang="en">
+</scale-app-footer>
+<script>
+  const footer_shell = document.getElementById("footer-shell");
+  footer_shell.footerNavigation = [{"name":"Contact","id":"Contact","href":"https://cloud.telekom.de/en/contact/"},{"name":"Legal notice","id":"Legal notice","href":"https://cloud.telekom.de/en/imprint-adress"},{"name":"Data privacy","id":"Data privacy","href":"https://open-telekom-cloud.com/en/data-protection","icon":"alert-imprint-dataprivacy"}]</script>
+  <!-- jQuery -->
+<script type="text/javascript" src="../_static/js/jquery-3.2.1.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script type="text/javascript" src="../_static/js/bootstrap.min.js"></script>
+
+<!-- Telekom Scale -->
+<script type="module" src="https://unpkg.com/@telekom/scale-components@3.0.0-beta.32/dist/scale-components/scale-components.esm.js"></script>
+
+<!-- The rest of the JS -->
+<script type="text/javascript" src="../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script type="text/javascript" src="../_static/js/docs.js"></script>
+
+<!-- Popovers -->
+<script type="text/javascript" src="../_static/js/webui-popover.js"></script>
+
+<!-- standard sphinx include libraries, which allow search highlighting -->
+<script type="text/javascript" src="../_static/underscore.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+<script type="text/javascript" src="../_static/searchtools.js"></script>
+
+<script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.24.3.dev2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+</script>
+
+
+<!-- Javascript for page -->
+<script language="JavaScript">
+/* build a description of this page including SHA, source location on git repo,
+   build time and the project's launchpad bug tag. Set the HREF of the bug
+   buttons */
+</script>
+  
+  </body>
+</html>

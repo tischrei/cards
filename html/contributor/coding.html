@@ -1,0 +1,390 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>OpenStack SDK Developer Coding Standards &#8212; otcextensions 0.24.3.dev2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/basic.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Testing" href="testing.html" />
+    <link rel="prev" title="How the SDK is organized" href="layout.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap CSS -->
+<link href="../_static/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../_static/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="../_static/css/combined.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../_static/pygments.css" rel="stylesheet">
+
+<!-- Telekom Scale -->
+<link href="https://unpkg.com/@telekom/scale-components@3.0.0-beta.32/dist/scale-components/scale-components.css" rel="stylesheet">
+
+<!-- Otcdocstheme CSS -->
+<link href="../_static/css/otcdocstheme.css" rel="stylesheet">
+
+
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-17511903-1', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+  </head><body>
+  
+<!-- SOURCE_FILE: contributor/coding.rst -->
+
+
+<scale-app-shell
+  id="app-shell"
+  claim-lang="en"
+  logo-title="PAGENAME"
+  logo-href="/"
+>
+
+
+
+<script>
+  const app_shell = document.getElementById(
+  'app-shell');
+  app_shell.mainNavigation = [
+    {
+      "name": "Software",
+      "id": "Software",
+      "children": [
+        {
+          "name": "Automation",
+          "id": "Automation",
+          "children": [
+            {
+              "name": "Terraform OTC Driver",
+              "id": "Terraform OTC Driver",
+              "href": "https://docs.otc-service.com/terraform-provider-opentelekomcloud"
+            },
+                      {
+              "name": "Ansible Collection Cloud",
+              "id": "Ansible Collection Cloud",
+              "href": "https://docs.otc-service.com/ansible-collection-cloud"
+            },
+          ]
+        },
+        {
+          "name": "Client Tools",
+          "id": "Client Tools",
+          "children": [
+            {
+              "name": "OTC Extensions",
+              "id": "OTC Extensions",
+              "href": "https://docs.otc-service.com/python-otcextensions"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Release Notes",
+      "id": "Release Notes",
+      "children": [
+        {
+          "name": "Automation",
+          "id": "Automation",
+          "children": [
+            {
+              "name": "Terraform OTC Driver",
+              "id": "Terraform OTC Driver",
+              "href": "https://docs.otc-service.com/releasenotes/terraform-provider-opentelekomcloud"
+            }
+          ]
+        },
+        {
+          "name": "Client Tools",
+          "id": "Client Tools",
+          "children": [
+            {
+              "name": "OTC Extensions",
+              "id": "OTC Extensions",
+              "href": "https://docs.otc-service.com/releasenotes/python-otcextensions"
+            }
+          ]
+        }
+      ]
+    }
+  ];
+</script>
+  
+      <div class="container docs-book-wrapper">
+        <div class="row">
+          <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
+  <div class="row docs-title">
+  <div class="col-lg-8">
+      <h1>OpenStack SDK Developer Coding Standards</h1>
+    
+  </div>
+  <div class="docs-actions">
+    
+    <a href="layout.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: How the SDK is organized"></i></a>
+    
+    
+    <a href="testing.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Testing"></i></a>
+    
+  </div>
+</div>
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="docs-body" role="main">
+  
+  <section id="openstack-sdk-developer-coding-standards">
+<h1>OpenStack SDK Developer Coding Standards<a class="headerlink" href="#openstack-sdk-developer-coding-standards" title="Permalink to this headline">¶</a></h1>
+<p>We follow the coding guidelines of
+<a class="reference external" href="https://docs.openstack.org/hacking/latest/">https://docs.openstack.org/hacking/latest/</a> of the OpenStack project in
+general and the adopt the special rules of the OpenStack SDk in
+specific where applicable unless otherwise stated.</p>
+<p>The SDK project which the OTC Extensions augment developed a set of
+coding standards and guidelines were developed. Note that not all code
+of OTC Extensions adheres to these standards just yet. All new code
+has to adhere to these guidelines.</p>
+<p>Below are the patterns and principles that we expect developers to
+follow.</p>
+<section id="release-notes">
+<h2>Release Notes<a class="headerlink" href="#release-notes" title="Permalink to this headline">¶</a></h2>
+<p>OTC Extensions use <a class="reference external" href="https://docs.openstack.org/reno/latest/">reno</a>
+for managing its release notes. A new release note should be added to
+your contribution anytime you add new API calls, fix significant bugs,
+add new functionality or parameters to existing API calls, or make any
+other significant changes to the code base that we should draw
+attention to for the user base.</p>
+<p>It is not necessary to add release notes for minor fixes, such as
+correction of documentation typos, minor code cleanup or
+reorganization, or any other change that a user would not notice
+through normal usage.</p>
+</section>
+<section id="exceptions">
+<h2>Exceptions<a class="headerlink" href="#exceptions" title="Permalink to this headline">¶</a></h2>
+<p>Exceptions should never be wrapped and re-raised inside of a new
+exception.  This removes important debug information from the
+user. All of the exceptions should be raised correctly the first time.</p>
+</section>
+<section id="api-methods-of-openstack-cloud">
+<h2>API Methods  of <code class="docutils literal notranslate"><span class="pre">openstack.cloud</span></code><a class="headerlink" href="#api-methods-of-openstack-cloud" title="Permalink to this headline">¶</a></h2>
+<p>The <cite>openstack.cloud</cite> layer has some specific rules:</p>
+<ul class="simple">
+<li><p>When an API call acts on a resource that has both a unique ID and a
+name, that API call should accept either identifier with a name_or_id
+parameter.</p></li>
+<li><p>All resources should adhere to the get/list/search interface that
+control retrieval of those resources. E.g., <cite>get_image()</cite>, <cite>list_images()</cite>,
+<cite>search_images()</cite>.</p></li>
+<li><p>Resources should have <cite>create_RESOURCE()</cite>, <cite>delete_RESOURCE()</cite>,
+<cite>update_RESOURCE()</cite> API methods (as it makes sense).</p></li>
+<li><p>For those methods that should behave differently for omitted or None-valued
+parameters, use the <cite>_utils.valid_kwargs</cite> decorator. Notably: all Neutron
+<cite>update_*</cite> functions.</p></li>
+<li><p>Deleting a resource should return True if the delete succeeded, or False
+if the resource was not found.</p></li>
+</ul>
+</section>
+<section id="returned-resources">
+<h2>Returned Resources<a class="headerlink" href="#returned-resources" title="Permalink to this headline">¶</a></h2>
+<p>Complex objects returned to the caller must be a <cite>munch.Munch</cite>
+type. The <cite>openstack._adapter.ShadeAdapter</cite> class makes resources into
+<cite>munch.Munch</cite>.</p>
+<p>All objects should be normalized. It is shade’s purpose in life to
+make OpenStack consistent for end users, and this means not trusting
+the clouds to return consistent objects. There should be a normalize
+function in <cite>openstack/cloud/_normalize.py</cite> that is applied to objects
+before returning them to the user.</p>
+<p>Fields should not be in the normalization contract if we cannot commit
+to providing them to all users.</p>
+<p>Fields should be renamed in normalization to be consistent with the
+rest of <cite>openstack.cloud</cite>. For instance, nothing in <cite>openstack.cloud</cite>
+exposes the legacy OpenStack concept of “tenant” to a user, but
+instead uses “project” even if the cloud in question uses tenant.</p>
+</section>
+<section id="tests">
+<h2>Tests<a class="headerlink" href="#tests" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>New API methods must have unit tests.</p></li>
+<li><p>New unit tests should only mock at the REST layer using <cite>requests_mock</cite>.
+Any mocking of openstacksdk itself should be considered legacy and to be
+avoided. Exceptions to this rule can be made when attempting to test the
+internals of a logical shim where the inputs and output of the method aren’t
+actually impacted by remote content.</p></li>
+<li><p>Functional tests should be added, when possible.</p></li>
+<li><p>In functional tests, always use unique names (for resources that have this
+attribute) and use it for clean up (see next point).</p></li>
+<li><p>In functional tests, always define cleanup functions to delete data added
+by your test, should something go wrong. Data removal should be wrapped in
+a try except block and try to delete as many entries added by the test as
+possible.</p></li>
+</ul>
+</section>
+<section id="docstrings">
+<h2>Docstrings<a class="headerlink" href="#docstrings" title="Permalink to this headline">¶</a></h2>
+<p>Docstrings should only use triple-double-quotes (<code class="docutils literal notranslate"><span class="pre">&quot;&quot;&quot;</span></code>).</p>
+<p>Single-line docstrings should never have extraneous whitespace
+between enclosing triple-double-quotes.</p>
+<p>Sentence fragments do not have punctuation. Specifically in the
+command classes the one line docstring is also the help string for
+that command and those do not have periods.</p>
+<blockquote>
+<div><p>“””A one line docstring looks like this”””</p>
+</div></blockquote>
+</section>
+<section id="calling-methods">
+<h2>Calling Methods<a class="headerlink" href="#calling-methods" title="Permalink to this headline">¶</a></h2>
+<p>When breaking up method calls due to the 79 char line length limit,
+use the alternate four space indent. With the first argument on the
+succeeding line all arguments will then be vertically aligned. Use the
+same convention used with other data structure literals and terminate
+the method call with the last argument line ending with a comma and
+the closing paren on its own line indented to the starting line level.</p>
+</section>
+<section id="python-3-compatibility">
+<h2>Python 3 Compatibility<a class="headerlink" href="#python-3-compatibility" title="Permalink to this headline">¶</a></h2>
+<p>The OTC Extensions are developed for Python 3. Compatibility for
+Python 2.7 might be present, but would be so on accident.</p>
+</section>
+</section>
+
+
+                </div>
+              </div>
+            </div>
+            <div class="docs-actions">
+            
+              <a href="layout.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: How the SDK is organized"></i></a>
+            
+            
+              <a href="testing.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Testing"></i></a>
+            
+            </div>
+            <div class="row docs-byline bottom">
+              <div class="docs-updated">updated: 2021-12-08 13:15</div>
+            </div>
+          </div>
+  <div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 docs-sidebar">
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <a href="../index.html" class="docs-sidebar-section-title"><h4>otcextensions 0.24.3.dev2</h4></a>
+      <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install/index.html">1. Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install/configuration.html">2. Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">3. OpenStack Client (CLI)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sdk/index.html">4. Using the OpenStack SDK</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">5. Contributing to the OTC Extensions</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#setting-up-an-development-environment">Setting up an Development Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#project-layout">Project Layout</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#coding-standards">Coding Standards</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#testing">Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#example-sdk-service-and-resource-implementation">Example SDK Service and Resource Implementation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#add-release-notes-to-your-pull-request">Add Release Notes to your Pull Request</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#contacting-the-otc-extensions-developers">Contacting the OTC Extensions Developers</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../coverage.html">6. Service Coverage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendices/index.html">7. Appendices</a></li>
+</ul>
+
+    </div>
+
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="local-table-of-contents">
+      <h4 class="docs-sidebar-section-title">Page Contents</h4>
+      <ul>
+<li><a class="reference internal" href="#">OpenStack SDK Developer Coding Standards</a><ul>
+<li><a class="reference internal" href="#release-notes">Release Notes</a></li>
+<li><a class="reference internal" href="#exceptions">Exceptions</a></li>
+<li><a class="reference internal" href="#api-methods-of-openstack-cloud">API Methods  of <code class="docutils literal notranslate"><span class="pre">openstack.cloud</span></code></a></li>
+<li><a class="reference internal" href="#returned-resources">Returned Resources</a></li>
+<li><a class="reference internal" href="#tests">Tests</a></li>
+<li><a class="reference internal" href="#docstrings">Docstrings</a></li>
+<li><a class="reference internal" href="#calling-methods">Calling Methods</a></li>
+<li><a class="reference internal" href="#python-3-compatibility">Python 3 Compatibility</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+  </div>
+</div>
+        </div>
+      </div>
+  </scale-app-shell>
+<scale-app-footer id="footer-shell" variant="standard" claim-lang="en">
+</scale-app-footer>
+<script>
+  const footer_shell = document.getElementById("footer-shell");
+  footer_shell.footerNavigation = [{"name":"Contact","id":"Contact","href":"https://cloud.telekom.de/en/contact/"},{"name":"Legal notice","id":"Legal notice","href":"https://cloud.telekom.de/en/imprint-adress"},{"name":"Data privacy","id":"Data privacy","href":"https://open-telekom-cloud.com/en/data-protection","icon":"alert-imprint-dataprivacy"}]</script>
+  <!-- jQuery -->
+<script type="text/javascript" src="../_static/js/jquery-3.2.1.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script type="text/javascript" src="../_static/js/bootstrap.min.js"></script>
+
+<!-- Telekom Scale -->
+<script type="module" src="https://unpkg.com/@telekom/scale-components@3.0.0-beta.32/dist/scale-components/scale-components.esm.js"></script>
+
+<!-- The rest of the JS -->
+<script type="text/javascript" src="../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script type="text/javascript" src="../_static/js/docs.js"></script>
+
+<!-- Popovers -->
+<script type="text/javascript" src="../_static/js/webui-popover.js"></script>
+
+<!-- standard sphinx include libraries, which allow search highlighting -->
+<script type="text/javascript" src="../_static/underscore.js"></script>
+<script type="text/javascript" src="../_static/doctools.js"></script>
+<script type="text/javascript" src="../_static/searchtools.js"></script>
+
+<script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.24.3.dev2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+</script>
+
+
+<!-- Javascript for page -->
+<script language="JavaScript">
+/* build a description of this page including SHA, source location on git repo,
+   build time and the project's launchpad bug tag. Set the HREF of the bug
+   buttons */
+</script>
+  
+  </body>
+</html>

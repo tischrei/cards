@@ -1,0 +1,796 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Cloud Container Engine (CCE) &#8212; otcextensions 0.24.3.dev2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/basic.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Cloud Eye Service (CES)" href="ces.html" />
+    <link rel="prev" title="Cloud Backup and Recovery (CBR)" href="cbr.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap CSS -->
+<link href="../../_static/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../../_static/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="../../_static/css/combined.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../../_static/pygments.css" rel="stylesheet">
+
+<!-- Telekom Scale -->
+<link href="https://unpkg.com/@telekom/scale-components@3.0.0-beta.32/dist/scale-components/scale-components.css" rel="stylesheet">
+
+<!-- Otcdocstheme CSS -->
+<link href="../../_static/css/otcdocstheme.css" rel="stylesheet">
+
+
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-17511903-1', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+  </head><body>
+  
+<!-- SOURCE_FILE: sdk/guides/cce.rst -->
+
+
+<scale-app-shell
+  id="app-shell"
+  claim-lang="en"
+  logo-title="PAGENAME"
+  logo-href="/"
+>
+
+
+
+<script>
+  const app_shell = document.getElementById(
+  'app-shell');
+  app_shell.mainNavigation = [
+    {
+      "name": "Software",
+      "id": "Software",
+      "children": [
+        {
+          "name": "Automation",
+          "id": "Automation",
+          "children": [
+            {
+              "name": "Terraform OTC Driver",
+              "id": "Terraform OTC Driver",
+              "href": "https://docs.otc-service.com/terraform-provider-opentelekomcloud"
+            },
+                      {
+              "name": "Ansible Collection Cloud",
+              "id": "Ansible Collection Cloud",
+              "href": "https://docs.otc-service.com/ansible-collection-cloud"
+            },
+          ]
+        },
+        {
+          "name": "Client Tools",
+          "id": "Client Tools",
+          "children": [
+            {
+              "name": "OTC Extensions",
+              "id": "OTC Extensions",
+              "href": "https://docs.otc-service.com/python-otcextensions"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Release Notes",
+      "id": "Release Notes",
+      "children": [
+        {
+          "name": "Automation",
+          "id": "Automation",
+          "children": [
+            {
+              "name": "Terraform OTC Driver",
+              "id": "Terraform OTC Driver",
+              "href": "https://docs.otc-service.com/releasenotes/terraform-provider-opentelekomcloud"
+            }
+          ]
+        },
+        {
+          "name": "Client Tools",
+          "id": "Client Tools",
+          "children": [
+            {
+              "name": "OTC Extensions",
+              "id": "OTC Extensions",
+              "href": "https://docs.otc-service.com/releasenotes/python-otcextensions"
+            }
+          ]
+        }
+      ]
+    }
+  ];
+</script>
+  
+      <div class="container docs-book-wrapper">
+        <div class="row">
+          <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
+  <div class="row docs-title">
+  <div class="col-lg-8">
+      <h1>Cloud Container Engine (CCE)</h1>
+    
+  </div>
+  <div class="docs-actions">
+    
+    <a href="cbr.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Cloud Backup and Recovery (CBR)"></i></a>
+    
+    
+    <a href="ces.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Cloud Eye Service (CES)"></i></a>
+    
+  </div>
+</div>
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="docs-body" role="main">
+  
+  <section id="cloud-container-engine-cce">
+<h1>Cloud Container Engine (CCE)<a class="headerlink" href="#cloud-container-engine-cce" title="Permalink to this headline">¶</a></h1>
+<nav class="contents local" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#cce-cluster" id="id1">CCE Cluster</a></p>
+<ul>
+<li><p><a class="reference internal" href="#list-cce-clusters" id="id2">List CCE Clusters</a></p></li>
+<li><p><a class="reference internal" href="#create-cce-cluster" id="id3">Create CCE Cluster</a></p></li>
+<li><p><a class="reference internal" href="#get-cce-cluster" id="id4">Get CCE Cluster</a></p></li>
+<li><p><a class="reference internal" href="#find-cce-cluster" id="id5">Find CCE Cluster</a></p></li>
+<li><p><a class="reference internal" href="#delete-cce-cluster" id="id6">Delete CCE Cluster</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#cce-node" id="id7">CCE Node</a></p>
+<ul>
+<li><p><a class="reference internal" href="#list-cce-cluster-nodes" id="id8">List CCE Cluster Nodes</a></p></li>
+<li><p><a class="reference internal" href="#create-cce-cluster-node" id="id9">Create CCE Cluster Node</a></p></li>
+<li><p><a class="reference internal" href="#get-cce-cluster-node" id="id10">Get CCE Cluster Node</a></p></li>
+<li><p><a class="reference internal" href="#find-cce-cluster-node" id="id11">Find CCE Cluster Node</a></p></li>
+<li><p><a class="reference internal" href="#delete-cce-cluster-node" id="id12">Delete CCE Cluster Node</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#cce-node-pool" id="id13">CCE Node Pool</a></p>
+<ul>
+<li><p><a class="reference internal" href="#list-cce-node-pools" id="id14">List CCE Node Pools</a></p></li>
+<li><p><a class="reference internal" href="#create-cce-node-pool" id="id15">Create CCE Node Pool</a></p></li>
+<li><p><a class="reference internal" href="#get-cce-node-pool" id="id16">Get CCE Node Pool</a></p></li>
+<li><p><a class="reference internal" href="#find-cce-node-pool" id="id17">Find CCE Node Pool</a></p></li>
+<li><p><a class="reference internal" href="#delete-cce-node-pool" id="id18">Delete CCE Node Pool</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#job-operations" id="id19">Job Operations</a></p>
+<ul>
+<li><p><a class="reference internal" href="#get-job" id="id20">Get Job</a></p></li>
+<li><p><a class="reference internal" href="#wait-for-a-job" id="id21">Wait for a Job</a></p></li>
+</ul>
+</li>
+</ul>
+</nav>
+<section id="cce-cluster">
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">CCE Cluster</a><a class="headerlink" href="#cce-cluster" title="Permalink to this headline">¶</a></h2>
+<p>Cloud Container Engine (CCE) is a highly reliable and high-performance service
+that allows enterprises to manage containerized applications. With support
+for Kubernetes-native applications and tools, CCE makes it simple to set up
+an environment for running containers in the cloud. CCE Clusters are the
+environment where cluster nodes are administrated. The core component
+is a Kubernetes Cluster with advanced features.</p>
+<section id="list-cce-clusters">
+<h3><a class="toc-backref" href="#id2" role="doc-backlink">List CCE Clusters</a><a class="headerlink" href="#list-cce-clusters" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to query all CCE clusters and to filter
+the output with query parameters.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">cluster</span> <span class="ow">in</span> <span class="n">conn</span><span class="o">.</span><span class="n">cce</span><span class="o">.</span><span class="n">clusters</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="create-cce-cluster">
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">Create CCE Cluster</a><a class="headerlink" href="#create-cce-cluster" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to create a CCE cluster instance with
+parameters.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;kind&quot;</span><span class="p">:</span> <span class="s2">&quot;Cluster&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;apiVersion&quot;</span><span class="p">:</span> <span class="s2">&quot;v3&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;metadata&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;test2&quot;</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;spec&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;VirtualMachine&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;flavor&quot;</span><span class="p">:</span> <span class="s2">&quot;cce.s1.small&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;v1.13.10-r0&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;az&quot;</span><span class="p">:</span> <span class="s2">&quot;eu-de-01&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;supportIstio&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s2">&quot;hostNetwork&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;vpc&quot;</span><span class="p">:</span> <span class="s2">&quot;26ca2783-dc40-4e3a-95b1-5a0756441e12&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;subnet&quot;</span><span class="p">:</span> <span class="s2">&quot;25d24fc8-d019-4a34-9fff-0a09fde6a9cb&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;SecurityGroup&quot;</span><span class="p">:</span> <span class="s2">&quot;f9ae0767-25be-44fc-a21c-5b8a0da66dec&quot;</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;containerNetwork&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;mode&quot;</span><span class="p">:</span> <span class="s2">&quot;overlay_l2&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;cidr&quot;</span><span class="p">:</span> <span class="s2">&quot;172.16.0.0/16&quot;</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;authentication&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;mode&quot;</span><span class="p">:</span> <span class="s2">&quot;rbac&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;authenticatingProxy&quot;</span><span class="p">:</span> <span class="p">{}</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;billingMode&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s2">&quot;kubernetesSvcIpRange&quot;</span><span class="p">:</span> <span class="s2">&quot;10.247.0.0/16&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;kubeProxyMode&quot;</span><span class="p">:</span> <span class="s2">&quot;iptables&quot;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">conn</span><span class="o">.</span><span class="n">cce</span><span class="o">.</span><span class="n">create_cluster</span><span class="p">(</span><span class="o">**</span><span class="n">attrs</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="get-cce-cluster">
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">Get CCE Cluster</a><a class="headerlink" href="#get-cce-cluster" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to get a CCE cluster by ID
+or an instance of class
+<a class="reference internal" href="../resources/cce/v3/cluster.html#otcextensions.sdk.cce.v3.cluster.Cluster" title="otcextensions.sdk.cce.v3.cluster.Cluster"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cluster</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="n">cluster_id</span> <span class="o">=</span> <span class="s2">&quot;123456_cluster_id&quot;</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cce</span><span class="o">.</span><span class="n">get_cluster</span><span class="p">(</span><span class="n">cluster_id</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="find-cce-cluster">
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Find CCE Cluster</a><a class="headerlink" href="#find-cce-cluster" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to find a CCE cluster by ID
+or name.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="n">cluster</span> <span class="o">=</span> <span class="s2">&quot;cluster_name_or_id&quot;</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cce</span><span class="o">.</span><span class="n">find_cluster</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="delete-cce-cluster">
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">Delete CCE Cluster</a><a class="headerlink" href="#delete-cce-cluster" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to delete a CCE cluster by ID
+or an instance of class
+<a class="reference internal" href="../resources/cce/v3/cluster.html#otcextensions.sdk.cce.v3.cluster.Cluster" title="otcextensions.sdk.cce.v3.cluster.Cluster"><code class="xref py py-class docutils literal notranslate"><span class="pre">Cluster</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="n">cluster_name</span> <span class="o">=</span> <span class="s2">&quot;cluster_name&quot;</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cce</span><span class="o">.</span><span class="n">find_cluster</span><span class="p">(</span><span class="n">cluster_name</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">cce</span><span class="o">.</span><span class="n">delete_cluster</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="cce-node">
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">CCE Node</a><a class="headerlink" href="#cce-node" title="Permalink to this headline">¶</a></h2>
+<p>A CCE cluster node is the computing instance of a CCE cluster where
+containers are hosted. One cluster can manage several nodes which
+can be distributed over different availability zones to increase
+reliability.</p>
+<section id="list-cce-cluster-nodes">
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">List CCE Cluster Nodes</a><a class="headerlink" href="#list-cce-cluster-nodes" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to query all nodes of a CCE cluster
+and to filter the output with query parameters.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="n">cluster</span> <span class="o">=</span> <span class="s2">&quot;cluster_name_or_id&quot;</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cce</span><span class="o">.</span><span class="n">find_cluster</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">conn</span><span class="o">.</span><span class="n">cce</span><span class="o">.</span><span class="n">cluster_nodes</span><span class="p">(</span><span class="n">cluster</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="create-cce-cluster-node">
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">Create CCE Cluster Node</a><a class="headerlink" href="#create-cce-cluster-node" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to create a CCE cluster node instance with
+parameters.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;kind&#39;</span><span class="p">:</span> <span class="s1">&#39;Node&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;apiVersion&#39;</span><span class="p">:</span> <span class="s1">&#39;v3&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;metadata&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;myhost&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;labels&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;foo&#39;</span><span class="p">:</span> <span class="s1">&#39;bar&#39;</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;annotations&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;annotation1&#39;</span><span class="p">:</span> <span class="s1">&#39;abc&#39;</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;spec&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;flavor&#39;</span><span class="p">:</span> <span class="s1">&#39;s2.large.2&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;az&#39;</span><span class="p">:</span> <span class="s1">&#39;eu-de-02&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;login&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;sshKey&#39;</span><span class="p">:</span> <span class="s1">&#39;keypair-pub&#39;</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;rootVolume&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="mi">40</span><span class="p">,</span>
+            <span class="s1">&#39;volumetype&#39;</span><span class="p">:</span> <span class="s1">&#39;SATA&#39;</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;dataVolumes&#39;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+                <span class="s1">&#39;volumetype&#39;</span><span class="p">:</span> <span class="s1">&#39;SATA&#39;</span>
+            <span class="p">}</span>
+        <span class="p">],</span>
+        <span class="s1">&#39;userTags&#39;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;tag1&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="s1">&#39;aaaa&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="get-cce-cluster-node">
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">Get CCE Cluster Node</a><a class="headerlink" href="#get-cce-cluster-node" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to get a CCE cluster by ID
+or an instance of class
+<a class="reference internal" href="../resources/cce/v3/cluster_node.html#otcextensions.sdk.cce.v3.cluster_node.ClusterNode" title="otcextensions.sdk.cce.v3.cluster_node.ClusterNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClusterNode</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="n">cluster</span> <span class="o">=</span> <span class="s2">&quot;cluster_name_or_id&quot;</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cce</span><span class="o">.</span><span class="n">find_cluster</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span>
+<span class="n">node_id</span> <span class="o">=</span> <span class="s2">&quot;node_id&quot;</span>
+<span class="n">node</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cce</span><span class="o">.</span><span class="n">get_cluster_node</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span> <span class="n">node_id</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="find-cce-cluster-node">
+<h3><a class="toc-backref" href="#id11" role="doc-backlink">Find CCE Cluster Node</a><a class="headerlink" href="#find-cce-cluster-node" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to find a node of a CCE cluster by ID
+or name.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="n">cluster</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cce</span><span class="o">.</span><span class="n">find_cluster</span><span class="p">(</span><span class="n">cluster</span><span class="o">=</span><span class="s1">&#39;name_or_id&#39;</span><span class="p">)</span>
+<span class="n">node</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cce</span><span class="o">.</span><span class="n">find_cluster_node</span><span class="p">(</span><span class="n">cluster</span><span class="o">=</span><span class="n">cluster</span><span class="p">,</span> <span class="n">node</span><span class="o">=</span><span class="s1">&#39;name_or_id&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="delete-cce-cluster-node">
+<h3><a class="toc-backref" href="#id12" role="doc-backlink">Delete CCE Cluster Node</a><a class="headerlink" href="#delete-cce-cluster-node" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to delete a CCE cluster node by ID
+or an instance of class
+<a class="reference internal" href="../resources/cce/v3/cluster_node.html#otcextensions.sdk.cce.v3.cluster_node.ClusterNode" title="otcextensions.sdk.cce.v3.cluster_node.ClusterNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClusterNode</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="n">cluster</span> <span class="o">=</span> <span class="s2">&quot;cluster_name_or_id&quot;</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cce</span><span class="o">.</span><span class="n">find_cluster</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span>
+<span class="n">node_id</span> <span class="o">=</span> <span class="s2">&quot;node_id&quot;</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">cce</span><span class="o">.</span><span class="n">delete_cluster_node</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span> <span class="n">node_id</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="cce-node-pool">
+<h2><a class="toc-backref" href="#id13" role="doc-backlink">CCE Node Pool</a><a class="headerlink" href="#cce-node-pool" title="Permalink to this headline">¶</a></h2>
+<p>A node pool is a group of one or more nodes with identical configuration
+in a cluster. In CCE, the nodes configured during cluster creation are
+grouped into the default node pool. The default node pool is named
+DefaultPool and cannot be edited, deleted, or migrated. In CCE SDK,
+you can create custom node pools in a cluster to organize cluster nodes
+into different pools so that you can edit or delete a node pool
+individually without affecting the entire cluster. All nodes in a custom
+node pool have identical parameters and node type. You cannot configure
+a single node in a node pool; any configuration changes affect all nodes
+in the node pool.</p>
+<section id="list-cce-node-pools">
+<h3><a class="toc-backref" href="#id14" role="doc-backlink">List CCE Node Pools</a><a class="headerlink" href="#list-cce-node-pools" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to query all node pools of a CCE cluster
+and to filter the output with query parameters.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="n">cluster</span> <span class="o">=</span> <span class="s1">&#39;name_or_id&#39;</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cce</span><span class="o">.</span><span class="n">find_cluster</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">pool</span> <span class="ow">in</span> <span class="n">conn</span><span class="o">.</span><span class="n">cce</span><span class="o">.</span><span class="n">node_pools</span><span class="p">(</span><span class="n">cluster</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">pool</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="create-cce-node-pool">
+<h3><a class="toc-backref" href="#id15" role="doc-backlink">Create CCE Node Pool</a><a class="headerlink" href="#create-cce-node-pool" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to create a CCE node pool instance with
+parameters.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;metadata&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;test-node-pool&#39;</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;spec&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;initialNodeCount&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;vm&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;autoscaling&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;enable&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="s1">&#39;minNodeCount&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="s1">&#39;maxNodeCount&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+            <span class="s1">&#39;scaleDownCooldownTime&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+            <span class="s1">&#39;priority&#39;</span><span class="p">:</span> <span class="mi">1</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;nodeTemplate&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;flavor&#39;</span><span class="p">:</span> <span class="s1">&#39;s2.large.2&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;az&#39;</span><span class="p">:</span> <span class="s1">&#39;eu-de-01&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;os&#39;</span><span class="p">:</span> <span class="s1">&#39;CentOS 7.7&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;login&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;sshKey&#39;</span><span class="p">:</span> <span class="s1">&#39;sshkey-pub&#39;</span>
+            <span class="p">},</span>
+            <span class="s1">&#39;rootVolume&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;volumetype&#39;</span><span class="p">:</span> <span class="s1">&#39;SATA&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="mi">40</span>
+            <span class="p">},</span>
+            <span class="s1">&#39;dataVolumes&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;volumetype&#39;</span><span class="p">:</span> <span class="s1">&#39;SATA&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+                    <span class="s1">&#39;extendParam&#39;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s1">&#39;useType&#39;</span><span class="p">:</span> <span class="s1">&#39;docker&#39;</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">],</span>
+            <span class="s1">&#39;billingMode&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s1">&#39;extendParam&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;maxPods&#39;</span><span class="p">:</span> <span class="mi">110</span><span class="p">,</span>
+                <span class="s1">&#39;DockerLVMConfigOverride&#39;</span><span class="p">:</span> <span class="s1">&#39;dockerThinpool=vgpaas/90%VG;&#39;</span>
+                                           <span class="s1">&#39;kubernetesLV=vgpaas/10%VG;&#39;</span>
+                                           <span class="s1">&#39;diskType=evs;lvType=linear&#39;</span>
+            <span class="p">},</span>
+            <span class="s1">&#39;k8sTags&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;tag1&#39;</span><span class="p">:</span> <span class="s1">&#39;value1&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;tag2&#39;</span><span class="p">:</span> <span class="s1">&#39;value2&#39;</span>
+            <span class="p">},</span>
+            <span class="s1">&#39;taints&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;aaa&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="s1">&#39;bbb&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;effect&#39;</span><span class="p">:</span> <span class="s1">&#39;NoSchedule&#39;</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;ccc&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="s1">&#39;ddd&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;effect&#39;</span><span class="p">:</span> <span class="s1">&#39;NoSchedule&#39;</span>
+                <span class="p">}</span>
+            <span class="p">],</span>
+            <span class="s1">&#39;userTags&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;resource-tag1&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="s1">&#39;value1&#39;</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;resource-tag2&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="s1">&#39;value2&#39;</span>
+                <span class="p">}</span>
+            <span class="p">],</span>
+            <span class="s1">&#39;nodeNicSpec&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;primaryNic&#39;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s1">&#39;subnetId&#39;</span><span class="p">:</span> <span class="s1">&#39;subnet_id&#39;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="s1">&#39;name_or_id&#39;</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cce</span><span class="o">.</span><span class="n">find_cluster</span><span class="p">(</span><span class="n">name_or_id</span><span class="o">=</span><span class="n">cluster</span><span class="p">)</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">cce</span><span class="o">.</span><span class="n">create_node_pool</span><span class="p">(</span><span class="n">cluster</span><span class="o">=</span><span class="n">cluster</span><span class="p">,</span> <span class="o">**</span><span class="n">attrs</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="get-cce-node-pool">
+<h3><a class="toc-backref" href="#id16" role="doc-backlink">Get CCE Node Pool</a><a class="headerlink" href="#get-cce-node-pool" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to get a CCE node pool by ID
+or an instance of class
+<a class="reference internal" href="../resources/cce/v3/node_pool.html#otcextensions.sdk.cce.v3.node_pool.NodePool" title="otcextensions.sdk.cce.v3.node_pool.NodePool"><code class="xref py py-class docutils literal notranslate"><span class="pre">NodePool</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="n">cluster</span> <span class="o">=</span> <span class="s1">&#39;name_or_id&#39;</span>
+<span class="n">node_pool_id</span> <span class="o">=</span> <span class="s1">&#39;node_pool_id&#39;</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cce</span><span class="o">.</span><span class="n">find_cluster</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span>
+<span class="n">pool</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cce</span><span class="o">.</span><span class="n">get_node_pool</span><span class="p">(</span><span class="n">cluster</span><span class="o">=</span><span class="n">cluster</span><span class="p">,</span> <span class="n">node_pool_id</span><span class="o">=</span><span class="n">node_pool_id</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pool</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="find-cce-node-pool">
+<h3><a class="toc-backref" href="#id17" role="doc-backlink">Find CCE Node Pool</a><a class="headerlink" href="#find-cce-node-pool" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to find a node pool of a CCE cluster by ID
+or name.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="n">cluster</span> <span class="o">=</span> <span class="s1">&#39;name_or_id&#39;</span>
+<span class="n">node_pool</span> <span class="o">=</span> <span class="s1">&#39;name_or_id&#39;</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cce</span><span class="o">.</span><span class="n">find_cluster</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span>
+<span class="n">pool</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cce</span><span class="o">.</span><span class="n">find_node_pool</span><span class="p">(</span><span class="n">cluster</span><span class="o">=</span><span class="n">cluster</span><span class="p">,</span> <span class="n">node_pool</span><span class="o">=</span><span class="n">node_pool</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pool</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="delete-cce-node-pool">
+<h3><a class="toc-backref" href="#id18" role="doc-backlink">Delete CCE Node Pool</a><a class="headerlink" href="#delete-cce-node-pool" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to delete a CCE node pool by ID
+or an instance of class
+<a class="reference internal" href="../resources/cce/v3/node_pool.html#otcextensions.sdk.cce.v3.node_pool.NodePool" title="otcextensions.sdk.cce.v3.node_pool.NodePool"><code class="xref py py-class docutils literal notranslate"><span class="pre">NodePool</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="n">cluster</span> <span class="o">=</span> <span class="s1">&#39;name_or_id&#39;</span>
+<span class="n">node_pool</span> <span class="o">=</span> <span class="s1">&#39;name_or_id&#39;</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cce</span><span class="o">.</span><span class="n">find_cluster</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span>
+<span class="n">node_pool</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cce</span><span class="o">.</span><span class="n">find_node_pool</span><span class="p">(</span><span class="n">cluster</span><span class="o">=</span><span class="n">cluster</span><span class="p">,</span> <span class="n">node_pool</span><span class="o">=</span><span class="n">node_pool</span><span class="p">)</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">cce</span><span class="o">.</span><span class="n">delete_node_pool</span><span class="p">(</span><span class="n">cluster</span><span class="o">=</span><span class="n">cluster</span><span class="p">,</span> <span class="n">node_pool</span><span class="o">=</span><span class="n">node_pool</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="job-operations">
+<h2><a class="toc-backref" href="#id19" role="doc-backlink">Job Operations</a><a class="headerlink" href="#job-operations" title="Permalink to this headline">¶</a></h2>
+<p>Jobs are created while cluster creation and other similar operations
+have been started. Jobs have different phases and can be triggered by
+the following methods.</p>
+<section id="get-job">
+<h3><a class="toc-backref" href="#id20" role="doc-backlink">Get Job</a><a class="headerlink" href="#get-job" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to get a CCE Job by ID
+or an instance of class
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Job</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="n">job_id</span> <span class="o">=</span> <span class="s2">&quot;123456_job_id&quot;</span>
+<span class="n">job</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cce</span><span class="o">.</span><span class="n">get_job</span><span class="p">(</span><span class="n">job_id</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">job</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="wait-for-a-job">
+<h3><a class="toc-backref" href="#id21" role="doc-backlink">Wait for a Job</a><a class="headerlink" href="#wait-for-a-job" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to wait for a CCE Job until reaches a specific state
+by using ID or an instance of class
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Job</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="n">job_id</span> <span class="o">=</span> <span class="s2">&quot;123456_job_id&quot;</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">cce</span><span class="o">.</span><span class="n">wait_for_job</span><span class="p">(</span><span class="n">job_id</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="s1">&#39;success&#39;</span><span class="p">,</span>
+                      <span class="n">failures</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">wait</span><span class="o">=</span><span class="mi">3600</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+                </div>
+              </div>
+            </div>
+            <div class="docs-actions">
+            
+              <a href="cbr.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Cloud Backup and Recovery (CBR)"></i></a>
+            
+            
+              <a href="ces.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Cloud Eye Service (CES)"></i></a>
+            
+            </div>
+            <div class="row docs-byline bottom">
+              <div class="docs-updated">updated: 2021-12-08 13:15</div>
+            </div>
+          </div>
+  <div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 docs-sidebar">
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <a href="../../index.html" class="docs-sidebar-section-title"><h4>otcextensions 0.24.3.dev2</h4></a>
+      <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../install/index.html">1. Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../install/configuration.html">2. Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cli/index.html">3. OpenStack Client (CLI)</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">4. Using the OpenStack SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../architecture.html">Architecture Overview and Important Terms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Guides for SDK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proxies/index.html">Service Proxies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../resources/index.html">Resources and Attributes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributor/index.html">5. Contributing to the OTC Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../coverage.html">6. Service Coverage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendices/index.html">7. Appendices</a></li>
+</ul>
+
+    </div>
+
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="local-table-of-contents">
+      <h4 class="docs-sidebar-section-title">Page Contents</h4>
+      <ul>
+<li><a class="reference internal" href="#">Cloud Container Engine (CCE)</a><ul>
+<li><a class="reference internal" href="#cce-cluster">CCE Cluster</a><ul>
+<li><a class="reference internal" href="#list-cce-clusters">List CCE Clusters</a></li>
+<li><a class="reference internal" href="#create-cce-cluster">Create CCE Cluster</a></li>
+<li><a class="reference internal" href="#get-cce-cluster">Get CCE Cluster</a></li>
+<li><a class="reference internal" href="#find-cce-cluster">Find CCE Cluster</a></li>
+<li><a class="reference internal" href="#delete-cce-cluster">Delete CCE Cluster</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cce-node">CCE Node</a><ul>
+<li><a class="reference internal" href="#list-cce-cluster-nodes">List CCE Cluster Nodes</a></li>
+<li><a class="reference internal" href="#create-cce-cluster-node">Create CCE Cluster Node</a></li>
+<li><a class="reference internal" href="#get-cce-cluster-node">Get CCE Cluster Node</a></li>
+<li><a class="reference internal" href="#find-cce-cluster-node">Find CCE Cluster Node</a></li>
+<li><a class="reference internal" href="#delete-cce-cluster-node">Delete CCE Cluster Node</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cce-node-pool">CCE Node Pool</a><ul>
+<li><a class="reference internal" href="#list-cce-node-pools">List CCE Node Pools</a></li>
+<li><a class="reference internal" href="#create-cce-node-pool">Create CCE Node Pool</a></li>
+<li><a class="reference internal" href="#get-cce-node-pool">Get CCE Node Pool</a></li>
+<li><a class="reference internal" href="#find-cce-node-pool">Find CCE Node Pool</a></li>
+<li><a class="reference internal" href="#delete-cce-node-pool">Delete CCE Node Pool</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#job-operations">Job Operations</a><ul>
+<li><a class="reference internal" href="#get-job">Get Job</a></li>
+<li><a class="reference internal" href="#wait-for-a-job">Wait for a Job</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+  </div>
+</div>
+        </div>
+      </div>
+  </scale-app-shell>
+<scale-app-footer id="footer-shell" variant="standard" claim-lang="en">
+</scale-app-footer>
+<script>
+  const footer_shell = document.getElementById("footer-shell");
+  footer_shell.footerNavigation = [{"name":"Contact","id":"Contact","href":"https://cloud.telekom.de/en/contact/"},{"name":"Legal notice","id":"Legal notice","href":"https://cloud.telekom.de/en/imprint-adress"},{"name":"Data privacy","id":"Data privacy","href":"https://open-telekom-cloud.com/en/data-protection","icon":"alert-imprint-dataprivacy"}]</script>
+  <!-- jQuery -->
+<script type="text/javascript" src="../../_static/js/jquery-3.2.1.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script type="text/javascript" src="../../_static/js/bootstrap.min.js"></script>
+
+<!-- Telekom Scale -->
+<script type="module" src="https://unpkg.com/@telekom/scale-components@3.0.0-beta.32/dist/scale-components/scale-components.esm.js"></script>
+
+<!-- The rest of the JS -->
+<script type="text/javascript" src="../../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script type="text/javascript" src="../../_static/js/docs.js"></script>
+
+<!-- Popovers -->
+<script type="text/javascript" src="../../_static/js/webui-popover.js"></script>
+
+<!-- standard sphinx include libraries, which allow search highlighting -->
+<script type="text/javascript" src="../../_static/underscore.js"></script>
+<script type="text/javascript" src="../../_static/doctools.js"></script>
+<script type="text/javascript" src="../../_static/searchtools.js"></script>
+
+<script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.24.3.dev2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+</script>
+
+
+<!-- Javascript for page -->
+<script language="JavaScript">
+/* build a description of this page including SHA, source location on git repo,
+   build time and the project's launchpad bug tag. Set the HREF of the bug
+   buttons */
+</script>
+  
+  </body>
+</html>

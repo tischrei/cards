@@ -1,0 +1,911 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Cloud Backup and Recovery (CBR) &#8212; otcextensions 0.24.3.dev2 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/basic.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Cloud Container Engine (CCE)" href="cce.html" />
+    <link rel="prev" title="Auto-Scaling (AS)" href="auto_scaling.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap CSS -->
+<link href="../../_static/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../../_static/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="../../_static/css/combined.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../../_static/pygments.css" rel="stylesheet">
+
+<!-- Telekom Scale -->
+<link href="https://unpkg.com/@telekom/scale-components@3.0.0-beta.32/dist/scale-components/scale-components.css" rel="stylesheet">
+
+<!-- Otcdocstheme CSS -->
+<link href="../../_static/css/otcdocstheme.css" rel="stylesheet">
+
+
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-17511903-1', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+  </head><body>
+  
+<!-- SOURCE_FILE: sdk/guides/cbr.rst -->
+
+
+<scale-app-shell
+  id="app-shell"
+  claim-lang="en"
+  logo-title="PAGENAME"
+  logo-href="/"
+>
+
+
+
+<script>
+  const app_shell = document.getElementById(
+  'app-shell');
+  app_shell.mainNavigation = [
+    {
+      "name": "Software",
+      "id": "Software",
+      "children": [
+        {
+          "name": "Automation",
+          "id": "Automation",
+          "children": [
+            {
+              "name": "Terraform OTC Driver",
+              "id": "Terraform OTC Driver",
+              "href": "https://docs.otc-service.com/terraform-provider-opentelekomcloud"
+            },
+                      {
+              "name": "Ansible Collection Cloud",
+              "id": "Ansible Collection Cloud",
+              "href": "https://docs.otc-service.com/ansible-collection-cloud"
+            },
+          ]
+        },
+        {
+          "name": "Client Tools",
+          "id": "Client Tools",
+          "children": [
+            {
+              "name": "OTC Extensions",
+              "id": "OTC Extensions",
+              "href": "https://docs.otc-service.com/python-otcextensions"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Release Notes",
+      "id": "Release Notes",
+      "children": [
+        {
+          "name": "Automation",
+          "id": "Automation",
+          "children": [
+            {
+              "name": "Terraform OTC Driver",
+              "id": "Terraform OTC Driver",
+              "href": "https://docs.otc-service.com/releasenotes/terraform-provider-opentelekomcloud"
+            }
+          ]
+        },
+        {
+          "name": "Client Tools",
+          "id": "Client Tools",
+          "children": [
+            {
+              "name": "OTC Extensions",
+              "id": "OTC Extensions",
+              "href": "https://docs.otc-service.com/releasenotes/python-otcextensions"
+            }
+          ]
+        }
+      ]
+    }
+  ];
+</script>
+  
+      <div class="container docs-book-wrapper">
+        <div class="row">
+          <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
+  <div class="row docs-title">
+  <div class="col-lg-8">
+      <h1>Cloud Backup and Recovery (CBR)</h1>
+    
+  </div>
+  <div class="docs-actions">
+    
+    <a href="auto_scaling.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Auto-Scaling (AS)"></i></a>
+    
+    
+    <a href="cce.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Cloud Container Engine (CCE)"></i></a>
+    
+  </div>
+</div>
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="docs-body" role="main">
+  
+  <section id="cloud-backup-and-recovery-cbr">
+<h1>Cloud Backup and Recovery (CBR)<a class="headerlink" href="#cloud-backup-and-recovery-cbr" title="Permalink to this headline">¶</a></h1>
+<p>Cloud Backup and Recovery (CBR) enables you to back up Elastic Cloud Servers
+(ECSs) and Elastic Volume Service (EVS) disks with ease. If there is a
+virus intrusion, accidental deletion, or software or hardware fault, you
+can restore data to any point in the past when the data was backed up.
+CBR protects your services by ensuring the security and consistency of your
+data.</p>
+<nav class="contents local" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#backup" id="id1">Backup</a></p>
+<ul>
+<li><p><a class="reference internal" href="#list-cbr-backups" id="id2">List CBR Backups</a></p></li>
+<li><p><a class="reference internal" href="#get-cbr-backup" id="id3">Get CBR Backup</a></p></li>
+<li><p><a class="reference internal" href="#find-cbr-backup" id="id4">Find CBR Backup</a></p></li>
+<li><p><a class="reference internal" href="#delete-cbr-backup" id="id5">Delete CBR Backup</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#policy" id="id6">Policy</a></p>
+<ul>
+<li><p><a class="reference internal" href="#list-cbr-policies" id="id7">List CBR Policies</a></p></li>
+<li><p><a class="reference internal" href="#get-cbr-policy" id="id8">Get CBR Policy</a></p></li>
+<li><p><a class="reference internal" href="#create-cbr-policy" id="id9">Create CBR Policy</a></p></li>
+<li><p><a class="reference internal" href="#update-cbr-policy" id="id10">Update CBR Policy</a></p></li>
+<li><p><a class="reference internal" href="#delete-cbr-policy" id="id11">Delete CBR Policy</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#restore-point-checkpoint" id="id12">Restore Point (Checkpoint)</a></p>
+<ul>
+<li><p><a class="reference internal" href="#get-cbr-restore-point-checkpoint" id="id13">Get CBR Restore Point (Checkpoint)</a></p></li>
+<li><p><a class="reference internal" href="#create-cbr-restore-point-checkpoint" id="id14">Create CBR Restore Point (Checkpoint)</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#restore" id="id15">Restore</a></p>
+<ul>
+<li><p><a class="reference internal" href="#restore-data" id="id16">Restore Data</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#vault" id="id17">Vault</a></p>
+<ul>
+<li><p><a class="reference internal" href="#list-cbr-vaults" id="id18">List CBR Vaults</a></p></li>
+<li><p><a class="reference internal" href="#get-cbr-vault" id="id19">Get CBR Vault</a></p></li>
+<li><p><a class="reference internal" href="#create-cbr-vault" id="id20">Create CBR Vault</a></p></li>
+<li><p><a class="reference internal" href="#update-cbr-vault" id="id21">Update CBR Vault</a></p></li>
+<li><p><a class="reference internal" href="#delete-cbr-vault" id="id22">Delete CBR Vault</a></p></li>
+<li><p><a class="reference internal" href="#bind-policy-to-cbr-vault" id="id23">Bind Policy to CBR Vault</a></p></li>
+<li><p><a class="reference internal" href="#unbind-policy-to-cbr-vault" id="id24">Unbind Policy to CBR Vault</a></p></li>
+<li><p><a class="reference internal" href="#associate-resources-to-cbr-vault" id="id25">Associate resources to CBR Vault</a></p></li>
+<li><p><a class="reference internal" href="#dissociate-resources-from-cbr-vault" id="id26">Dissociate resources from CBR Vault</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#member" id="id27">Member</a></p>
+<ul>
+<li><p><a class="reference internal" href="#list-cbr-share-member" id="id28">List CBR Share Member</a></p></li>
+<li><p><a class="reference internal" href="#get-cbr-share-member" id="id29">Get CBR Share Member</a></p></li>
+<li><p><a class="reference internal" href="#add-cbr-share-member" id="id30">Add CBR Share Member</a></p></li>
+<li><p><a class="reference internal" href="#update-cbr-share-member" id="id31">Update CBR Share Member</a></p></li>
+<li><p><a class="reference internal" href="#delete-cbr-share-member" id="id32">Delete CBR Share Member</a></p></li>
+</ul>
+</li>
+</ul>
+</nav>
+<section id="backup">
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Backup</a><a class="headerlink" href="#backup" title="Permalink to this headline">¶</a></h2>
+<p>A backup is a copy of the original data that is backed up. A backup is used
+to restore the original data.</p>
+<section id="list-cbr-backups">
+<h3><a class="toc-backref" href="#id2" role="doc-backlink">List CBR Backups</a><a class="headerlink" href="#list-cbr-backups" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to query CBR backups and to filter
+the output with query parameters.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">backup</span> <span class="ow">in</span> <span class="n">conn</span><span class="o">.</span><span class="n">cbr</span><span class="o">.</span><span class="n">backups</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">backup</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="get-cbr-backup">
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">Get CBR Backup</a><a class="headerlink" href="#get-cbr-backup" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to get a CBR backup by ID or an instance of
+class <a class="reference internal" href="../resources/cbr/v3/backup.html#otcextensions.sdk.cbr.v3.backup.Backup" title="otcextensions.sdk.cbr.v3.backup.Backup"><code class="xref py py-class docutils literal notranslate"><span class="pre">Backup</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="n">backup</span> <span class="o">=</span> <span class="s1">&#39;backup_id&#39;</span>
+<span class="n">backup</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cbr</span><span class="o">.</span><span class="n">get_backup</span><span class="p">(</span><span class="n">backup</span><span class="o">=</span><span class="n">backup</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">backup</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="find-cbr-backup">
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">Find CBR Backup</a><a class="headerlink" href="#find-cbr-backup" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to find a CBR backup by name or ID. The return value
+is a instance of class
+<a class="reference internal" href="../resources/cbr/v3/backup.html#otcextensions.sdk.cbr.v3.backup.Backup" title="otcextensions.sdk.cbr.v3.backup.Backup"><code class="xref py py-class docutils literal notranslate"><span class="pre">Backup</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="n">name_or_id</span> <span class="o">=</span> <span class="s1">&#39;name_or_id&#39;</span>
+<span class="n">backup</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cbr</span><span class="o">.</span><span class="n">find_backup</span><span class="p">(</span><span class="n">name_or_id</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">backup</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="delete-cbr-backup">
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Delete CBR Backup</a><a class="headerlink" href="#delete-cbr-backup" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to delete a CBR backup instance by id
+or an instance of class
+<a class="reference internal" href="../resources/cbr/v3/backup.html#otcextensions.sdk.cbr.v3.backup.Backup" title="otcextensions.sdk.cbr.v3.backup.Backup"><code class="xref py py-class docutils literal notranslate"><span class="pre">Backup</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="n">name_or_id</span> <span class="o">=</span> <span class="s1">&#39;name_or_id&#39;</span>
+<span class="n">backup</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cbr</span><span class="o">.</span><span class="n">find_backup</span><span class="p">(</span><span class="n">name_or_id</span><span class="p">)</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">cbr</span><span class="o">.</span><span class="n">delete_backup</span><span class="p">(</span><span class="n">backup</span><span class="o">=</span><span class="n">backup</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="policy">
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Policy</a><a class="headerlink" href="#policy" title="Permalink to this headline">¶</a></h2>
+<section id="list-cbr-policies">
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">List CBR Policies</a><a class="headerlink" href="#list-cbr-policies" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to query CBR policies and to filter
+the output with query parameters.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">policies</span> <span class="ow">in</span> <span class="n">conn</span><span class="o">.</span><span class="n">cbr</span><span class="o">.</span><span class="n">policies</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">policies</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="get-cbr-policy">
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">Get CBR Policy</a><a class="headerlink" href="#get-cbr-policy" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to get a CBR policy by ID or an instance of
+class <a class="reference internal" href="../resources/cbr/v3/policy.html#otcextensions.sdk.cbr.v3.policy.Policy" title="otcextensions.sdk.cbr.v3.policy.Policy"><code class="xref py py-class docutils literal notranslate"><span class="pre">Policy</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="n">policy</span> <span class="o">=</span> <span class="s1">&#39;policy_id&#39;</span>
+<span class="n">policy</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cbr</span><span class="o">.</span><span class="n">get_policy</span><span class="p">(</span><span class="n">policy</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">policy</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="create-cbr-policy">
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">Create CBR Policy</a><a class="headerlink" href="#create-cbr-policy" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to create a CBR policy instance with
+parameters.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;enabled&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;my_policy&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;operation_definition&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;day_backups&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s1">&#39;month_backups&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s1">&#39;max_backups&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s1">&#39;timezone&#39;</span><span class="p">:</span> <span class="s1">&#39;UTC+08:00&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;week_backups&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s1">&#39;year_backups&#39;</span><span class="p">:</span> <span class="mi">0</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;operation_type&#39;</span><span class="p">:</span> <span class="s1">&#39;backup&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;trigger&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;properties&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;pattern&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s1">&#39;FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR,SA,SU;BYHOUR=14;BYMINUTE=00&#39;</span>
+            <span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">policy</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cbr</span><span class="o">.</span><span class="n">create_policy</span><span class="p">(</span><span class="o">**</span><span class="n">attrs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">policy</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="update-cbr-policy">
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">Update CBR Policy</a><a class="headerlink" href="#update-cbr-policy" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to update a CBR policy instance with
+parameters.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;enabled&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;policy001&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;operation_definition&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;day_backups&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s1">&#39;month_backups&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s1">&#39;max_backups&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s1">&#39;timezone&#39;</span><span class="p">:</span> <span class="s1">&#39;UTC+08:00&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;week_backups&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s1">&#39;year_backups&#39;</span><span class="p">:</span> <span class="mi">0</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;trigger&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;properties&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;pattern&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s1">&#39;FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR,SA,SU;BYHOUR=14;BYMINUTE=00&#39;</span>
+            <span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">policy</span> <span class="o">=</span> <span class="s1">&#39;name_or_id&#39;</span>
+<span class="n">policy</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cbr</span><span class="o">.</span><span class="n">find_policy</span><span class="p">(</span><span class="n">name_or_id</span><span class="o">=</span><span class="n">policy</span><span class="p">)</span>
+<span class="n">policy</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cbr</span><span class="o">.</span><span class="n">update_policy</span><span class="p">(</span><span class="n">policy</span><span class="o">=</span><span class="n">policy</span><span class="p">,</span> <span class="o">**</span><span class="n">attrs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">policy</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="delete-cbr-policy">
+<h3><a class="toc-backref" href="#id11" role="doc-backlink">Delete CBR Policy</a><a class="headerlink" href="#delete-cbr-policy" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to delete a CBR policy instance by id
+or an instance of class
+<a class="reference internal" href="../resources/cbr/v3/policy.html#otcextensions.sdk.cbr.v3.policy.Policy" title="otcextensions.sdk.cbr.v3.policy.Policy"><code class="xref py py-class docutils literal notranslate"><span class="pre">Policy</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="n">policy</span> <span class="o">=</span> <span class="s1">&#39;52606d56-d129-44d1-85da-1cc7b837942e&#39;</span>
+<span class="n">policy</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cbr</span><span class="o">.</span><span class="n">find_policy</span><span class="p">(</span><span class="n">name_or_id</span><span class="o">=</span><span class="n">policy</span><span class="p">)</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">cbr</span><span class="o">.</span><span class="n">delete_policy</span><span class="p">(</span><span class="n">policy</span><span class="o">=</span><span class="n">policy</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="restore-point-checkpoint">
+<h2><a class="toc-backref" href="#id12" role="doc-backlink">Restore Point (Checkpoint)</a><a class="headerlink" href="#restore-point-checkpoint" title="Permalink to this headline">¶</a></h2>
+<p>Restore points are used to create backups of resources attached to a vault.</p>
+<section id="get-cbr-restore-point-checkpoint">
+<h3><a class="toc-backref" href="#id13" role="doc-backlink">Get CBR Restore Point (Checkpoint)</a><a class="headerlink" href="#get-cbr-restore-point-checkpoint" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to get a CBR restore point by ID or an instance of
+class <a class="reference internal" href="../resources/cbr/v3/checkpoint.html#otcextensions.sdk.cbr.v3.checkpoint.Checkpoint" title="otcextensions.sdk.cbr.v3.checkpoint.Checkpoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Checkpoint</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="n">checkpoint</span> <span class="o">=</span> <span class="s1">&#39;checkpoint_id&#39;</span>
+<span class="n">checkpoint</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cbr</span><span class="o">.</span><span class="n">get_checkpoint</span><span class="p">(</span><span class="n">checkpoint</span><span class="o">=</span><span class="n">checkpoint</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">checkpoint</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="create-cbr-restore-point-checkpoint">
+<h3><a class="toc-backref" href="#id14" role="doc-backlink">Create CBR Restore Point (Checkpoint)</a><a class="headerlink" href="#create-cbr-restore-point-checkpoint" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to create a CBR Restore point instance with
+parameters.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;parameters&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;auto_trigger&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;backup_description&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;incremental&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;manual_backup&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;resources&#39;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s1">&#39;ecs_id&#39;</span>
+        <span class="p">]</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;vault_id&#39;</span><span class="p">:</span> <span class="s1">&#39;vault_id&#39;</span>
+<span class="p">}</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cbr</span><span class="o">.</span><span class="n">create_checkpoint</span><span class="p">(</span><span class="o">**</span><span class="n">attrs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="restore">
+<h2><a class="toc-backref" href="#id15" role="doc-backlink">Restore</a><a class="headerlink" href="#restore" title="Permalink to this headline">¶</a></h2>
+<section id="restore-data">
+<h3><a class="toc-backref" href="#id16" role="doc-backlink">Restore Data</a><a class="headerlink" href="#restore-data" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to restore data from a backup to server instances or
+volumes.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="n">backup</span> <span class="o">=</span> <span class="s1">&#39;name_or_id_backup&#39;</span>
+<span class="n">disk_backup</span> <span class="o">=</span> <span class="s1">&#39;name_or_id_disk_backup&#39;</span>
+<span class="n">ecs</span> <span class="o">=</span> <span class="s1">&#39;server_name_or_id&#39;</span>
+<span class="n">volume</span> <span class="o">=</span> <span class="s1">&#39;volume_id&#39;</span>
+
+<span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;mappings&#39;</span><span class="p">:</span> <span class="p">[{</span>
+        <span class="s1">&#39;backup_id&#39;</span><span class="p">:</span> <span class="n">disk_backup</span><span class="p">,</span>
+        <span class="s1">&#39;volume_id&#39;</span><span class="p">:</span> <span class="n">volume</span>
+    <span class="p">}],</span>
+    <span class="s1">&#39;power_on&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s1">&#39;server_id&#39;</span><span class="p">:</span> <span class="n">ecs</span>
+<span class="p">}</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cbr</span><span class="o">.</span><span class="n">restore_data</span><span class="p">(</span><span class="n">backup</span><span class="o">=</span><span class="n">backup</span><span class="p">,</span> <span class="o">**</span><span class="n">attrs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="vault">
+<h2><a class="toc-backref" href="#id17" role="doc-backlink">Vault</a><a class="headerlink" href="#vault" title="Permalink to this headline">¶</a></h2>
+<section id="list-cbr-vaults">
+<h3><a class="toc-backref" href="#id18" role="doc-backlink">List CBR Vaults</a><a class="headerlink" href="#list-cbr-vaults" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to query CBR vaults and to filter
+the output with query parameters.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">vault</span> <span class="ow">in</span> <span class="n">conn</span><span class="o">.</span><span class="n">cbr</span><span class="o">.</span><span class="n">vaults</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">vault</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="get-cbr-vault">
+<h3><a class="toc-backref" href="#id19" role="doc-backlink">Get CBR Vault</a><a class="headerlink" href="#get-cbr-vault" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to get a CBR vault by ID or an instance of
+class <a class="reference internal" href="../resources/cbr/v3/vault.html#otcextensions.sdk.cbr.v3.vault.Vault" title="otcextensions.sdk.cbr.v3.vault.Vault"><code class="xref py py-class docutils literal notranslate"><span class="pre">Vault</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="n">vault</span> <span class="o">=</span> <span class="s1">&#39;vault_id&#39;</span>
+<span class="n">vault</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cbr</span><span class="o">.</span><span class="n">get_vault</span><span class="p">(</span><span class="n">vault</span><span class="o">=</span><span class="n">vault</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">vault</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="create-cbr-vault">
+<h3><a class="toc-backref" href="#id20" role="doc-backlink">Create CBR Vault</a><a class="headerlink" href="#create-cbr-vault" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to create a CBR vault instance with
+parameters.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;my vault&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;auto_bind&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="s1">&#39;bind_rules&#39;</span><span class="p">:</span> <span class="p">{},</span>
+    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;vault-name&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;billing&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;protect_type&#39;</span><span class="p">:</span> <span class="s1">&#39;backup&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;object_type&#39;</span><span class="p">:</span> <span class="s1">&#39;server&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="mi">40</span><span class="p">,</span>
+        <span class="s1">&#39;cloud_type&#39;</span><span class="p">:</span> <span class="s1">&#39;public&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;consistent_level&#39;</span><span class="p">:</span> <span class="s1">&#39;crash_consistent&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;charging_mode&#39;</span><span class="p">:</span> <span class="s1">&#39;post_paid&#39;</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;auto_expand&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="s1">&#39;resources&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;server-name&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;OS::Nova::Server&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;server-id&#39;</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+
+<span class="n">vault</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cbr</span><span class="o">.</span><span class="n">create_vault</span><span class="p">(</span><span class="o">**</span><span class="n">attrs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">vault</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="update-cbr-vault">
+<h3><a class="toc-backref" href="#id21" role="doc-backlink">Update CBR Vault</a><a class="headerlink" href="#update-cbr-vault" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to update a CBR vault instance with
+parameters.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="n">attrs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;vault2&#39;</span>
+<span class="p">}</span>
+
+<span class="n">vault</span> <span class="o">=</span> <span class="s1">&#39;vault1&#39;</span>
+<span class="n">vault</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cbr</span><span class="o">.</span><span class="n">find_find</span><span class="p">(</span><span class="n">name_or_id</span><span class="o">=</span><span class="n">vault</span><span class="p">)</span>
+<span class="n">vault</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cbr</span><span class="o">.</span><span class="n">update_vault</span><span class="p">(</span><span class="n">vault</span><span class="o">=</span><span class="n">vault</span><span class="p">,</span> <span class="o">**</span><span class="n">attrs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">vault</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="delete-cbr-vault">
+<h3><a class="toc-backref" href="#id22" role="doc-backlink">Delete CBR Vault</a><a class="headerlink" href="#delete-cbr-vault" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to delete a CBR vault instance by id
+or an instance of class
+<a class="reference internal" href="../resources/cbr/v3/vault.html#otcextensions.sdk.cbr.v3.vault.Vault" title="otcextensions.sdk.cbr.v3.vault.Vault"><code class="xref py py-class docutils literal notranslate"><span class="pre">Vault</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="n">name_or_id</span> <span class="o">=</span> <span class="s1">&#39;name_or_id&#39;</span>
+<span class="n">vault</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cbr</span><span class="o">.</span><span class="n">find_vault</span><span class="p">(</span><span class="n">name_or_id</span><span class="p">)</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">cbr</span><span class="o">.</span><span class="n">delete_vault</span><span class="p">(</span><span class="n">vault</span><span class="o">=</span><span class="n">vault</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="bind-policy-to-cbr-vault">
+<h3><a class="toc-backref" href="#id23" role="doc-backlink">Bind Policy to CBR Vault</a><a class="headerlink" href="#bind-policy-to-cbr-vault" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to bind a CBR policy to a CBR vault.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="n">policy</span> <span class="o">=</span> <span class="s1">&#39;name_or_id&#39;</span>
+<span class="n">vault</span> <span class="o">=</span> <span class="s1">&#39;name_or_id&#39;</span>
+<span class="n">policy</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cbr</span><span class="o">.</span><span class="n">find_policy</span><span class="p">(</span><span class="n">policy</span><span class="p">)</span>
+<span class="n">vault</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cbr</span><span class="o">.</span><span class="n">find_vault</span><span class="p">(</span><span class="n">vault</span><span class="p">)</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">cbr</span><span class="o">.</span><span class="n">bind_policy</span><span class="p">(</span><span class="n">vault</span><span class="o">=</span><span class="n">vault</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">policy</span><span class="o">=</span><span class="n">policy</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="unbind-policy-to-cbr-vault">
+<h3><a class="toc-backref" href="#id24" role="doc-backlink">Unbind Policy to CBR Vault</a><a class="headerlink" href="#unbind-policy-to-cbr-vault" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to release a CBR policy from a CBR vault.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="n">policy</span> <span class="o">=</span> <span class="s1">&#39;name_or_id&#39;</span>
+<span class="n">vault</span> <span class="o">=</span> <span class="s1">&#39;name_or_id&#39;</span>
+<span class="n">policy</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cbr</span><span class="o">.</span><span class="n">find_policy</span><span class="p">(</span><span class="n">policy</span><span class="p">)</span>
+<span class="n">vault</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cbr</span><span class="o">.</span><span class="n">find_vault</span><span class="p">(</span><span class="n">vault</span><span class="p">)</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">cbr</span><span class="o">.</span><span class="n">unbind_policy</span><span class="p">(</span><span class="n">vault</span><span class="o">=</span><span class="n">vault</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">policy</span><span class="o">=</span><span class="n">policy</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="associate-resources-to-cbr-vault">
+<h3><a class="toc-backref" href="#id25" role="doc-backlink">Associate resources to CBR Vault</a><a class="headerlink" href="#associate-resources-to-cbr-vault" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to add resources to a CBR vault.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="n">vault</span> <span class="o">=</span> <span class="s1">&#39;vault_name_or_id&#39;</span>
+<span class="n">resources</span> <span class="o">=</span> <span class="p">[{</span>
+    <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;server_id&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;OS::Nova::Server&#39;</span><span class="p">}]</span>
+
+<span class="n">vault</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cbr</span><span class="o">.</span><span class="n">find_vault</span><span class="p">(</span><span class="n">vault</span><span class="p">)</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">cbr</span><span class="o">.</span><span class="n">associate_resources</span><span class="p">(</span><span class="n">vault</span><span class="o">=</span><span class="n">vault</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">resources</span><span class="o">=</span><span class="n">resources</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="dissociate-resources-from-cbr-vault">
+<h3><a class="toc-backref" href="#id26" role="doc-backlink">Dissociate resources from CBR Vault</a><a class="headerlink" href="#dissociate-resources-from-cbr-vault" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to remove resources from CBR vault.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="n">vault</span> <span class="o">=</span> <span class="s1">&#39;vault_name_or_id&#39;</span>
+<span class="n">resources</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;list_of_resource_ids&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">vault</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cbr</span><span class="o">.</span><span class="n">find_vault</span><span class="p">(</span><span class="n">vault</span><span class="p">)</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">cbr</span><span class="o">.</span><span class="n">dissociate_resources</span><span class="p">(</span><span class="n">vault</span><span class="o">=</span><span class="n">vault</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">resources</span><span class="o">=</span><span class="n">resources</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="member">
+<h2><a class="toc-backref" href="#id27" role="doc-backlink">Member</a><a class="headerlink" href="#member" title="Permalink to this headline">¶</a></h2>
+<p>This API is used to add a member with whom the backup can be shared. Only
+cloud server backups can be shared among tenants in the same region.</p>
+<section id="list-cbr-share-member">
+<h3><a class="toc-backref" href="#id28" role="doc-backlink">List CBR Share Member</a><a class="headerlink" href="#list-cbr-share-member" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to query CBR share members of an existing CBR Backup
+and to filter the output with query parameters.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+
+<span class="n">backup</span> <span class="o">=</span> <span class="s1">&#39;backup_name_or_id&#39;</span>
+<span class="n">backup</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cbr</span><span class="o">.</span><span class="n">find_backup</span><span class="p">(</span><span class="n">name_or_id</span><span class="o">=</span><span class="n">backup</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">member</span> <span class="ow">in</span> <span class="n">conn</span><span class="o">.</span><span class="n">cbr</span><span class="o">.</span><span class="n">members</span><span class="p">(</span><span class="n">backup</span><span class="o">=</span><span class="n">backup</span><span class="o">.</span><span class="n">id</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">member</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="get-cbr-share-member">
+<h3><a class="toc-backref" href="#id29" role="doc-backlink">Get CBR Share Member</a><a class="headerlink" href="#get-cbr-share-member" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to get a CBR share member by ID or an instance of
+class <a class="reference internal" href="../resources/cbr/v3/member.html#otcextensions.sdk.cbr.v3.member.Member" title="otcextensions.sdk.cbr.v3.member.Member"><code class="xref py py-class docutils literal notranslate"><span class="pre">Member</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="n">backup</span> <span class="o">=</span> <span class="s1">&#39;name_or_id&#39;</span>
+<span class="n">member</span> <span class="o">=</span> <span class="s1">&#39;member_id&#39;</span>
+<span class="n">backup</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cbr</span><span class="o">.</span><span class="n">find_backup</span><span class="p">(</span><span class="n">name_or_id</span><span class="o">=</span><span class="n">backup</span><span class="p">)</span>
+<span class="n">member</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cbr</span><span class="o">.</span><span class="n">get_member</span><span class="p">(</span><span class="n">backup</span><span class="o">=</span><span class="n">backup</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">member</span><span class="o">=</span><span class="n">member</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">member</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="add-cbr-share-member">
+<h3><a class="toc-backref" href="#id30" role="doc-backlink">Add CBR Share Member</a><a class="headerlink" href="#add-cbr-share-member" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to add a list of destination project IDs as share
+member to a given CBR backup in a source project.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="n">backup</span> <span class="o">=</span> <span class="s1">&#39;backup_id&#39;</span>
+<span class="n">members</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;list_of_project_ids&#39;</span><span class="p">]</span>
+<span class="n">backup</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cbr</span><span class="o">.</span><span class="n">find_backup</span><span class="p">(</span><span class="n">name_or_id</span><span class="o">=</span><span class="n">backup</span><span class="p">)</span>
+<span class="n">member</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cbr</span><span class="o">.</span><span class="n">add_members</span><span class="p">(</span><span class="n">backup</span><span class="o">=</span><span class="n">backup</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">members</span><span class="o">=</span><span class="n">members</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="update-cbr-share-member">
+<h3><a class="toc-backref" href="#id31" role="doc-backlink">Update CBR Share Member</a><a class="headerlink" href="#update-cbr-share-member" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to update a CBR share member instance with
+parameters.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="n">member</span> <span class="o">=</span> <span class="s1">&#39;member_id&#39;</span>
+<span class="n">backup</span> <span class="o">=</span> <span class="s1">&#39;backup_id&#39;</span>
+<span class="n">vault</span> <span class="o">=</span> <span class="s1">&#39;vault_id&#39;</span>
+<span class="n">member</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cbr</span><span class="o">.</span><span class="n">update_member</span><span class="p">(</span>
+    <span class="n">member</span><span class="o">=</span><span class="n">member</span><span class="p">,</span>
+    <span class="n">backup</span><span class="o">=</span><span class="n">backup</span><span class="p">,</span>
+    <span class="n">status</span><span class="o">=</span><span class="s1">&#39;accepted&#39;</span><span class="p">,</span>
+    <span class="n">vault</span><span class="o">=</span><span class="n">vault</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="delete-cbr-share-member">
+<h3><a class="toc-backref" href="#id32" role="doc-backlink">Delete CBR Share Member</a><a class="headerlink" href="#delete-cbr-share-member" title="Permalink to this headline">¶</a></h3>
+<p>This interface is used to delete a CBR share member instance by id
+or an instance of class
+<a class="reference internal" href="../resources/cbr/v3/member.html#otcextensions.sdk.cbr.v3.member.Member" title="otcextensions.sdk.cbr.v3.member.Member"><code class="xref py py-class docutils literal notranslate"><span class="pre">Member</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openstack</span>
+
+<span class="n">openstack</span><span class="o">.</span><span class="n">enable_logging</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">openstack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="s1">&#39;otc&#39;</span><span class="p">)</span>
+
+<span class="n">backup</span> <span class="o">=</span> <span class="s1">&#39;name_or_id&#39;</span>
+<span class="n">member</span> <span class="o">=</span> <span class="s1">&#39;member_id&#39;</span>
+<span class="n">backup</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cbr</span><span class="o">.</span><span class="n">find_backup</span><span class="p">(</span><span class="n">name_or_id</span><span class="o">=</span><span class="n">backup</span><span class="p">)</span>
+<span class="n">member</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cbr</span><span class="o">.</span><span class="n">delete_member</span><span class="p">(</span><span class="n">backup</span><span class="o">=</span><span class="n">backup</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">member</span><span class="o">=</span><span class="n">member</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">member</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+                </div>
+              </div>
+            </div>
+            <div class="docs-actions">
+            
+              <a href="auto_scaling.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Auto-Scaling (AS)"></i></a>
+            
+            
+              <a href="cce.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Cloud Container Engine (CCE)"></i></a>
+            
+            </div>
+            <div class="row docs-byline bottom">
+              <div class="docs-updated">updated: 2021-12-08 13:15</div>
+            </div>
+          </div>
+  <div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 docs-sidebar">
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <a href="../../index.html" class="docs-sidebar-section-title"><h4>otcextensions 0.24.3.dev2</h4></a>
+      <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../install/index.html">1. Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../install/configuration.html">2. Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cli/index.html">3. OpenStack Client (CLI)</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">4. Using the OpenStack SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../architecture.html">Architecture Overview and Important Terms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Guides for SDK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../proxies/index.html">Service Proxies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../resources/index.html">Resources and Attributes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributor/index.html">5. Contributing to the OTC Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../coverage.html">6. Service Coverage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendices/index.html">7. Appendices</a></li>
+</ul>
+
+    </div>
+
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="local-table-of-contents">
+      <h4 class="docs-sidebar-section-title">Page Contents</h4>
+      <ul>
+<li><a class="reference internal" href="#">Cloud Backup and Recovery (CBR)</a><ul>
+<li><a class="reference internal" href="#backup">Backup</a><ul>
+<li><a class="reference internal" href="#list-cbr-backups">List CBR Backups</a></li>
+<li><a class="reference internal" href="#get-cbr-backup">Get CBR Backup</a></li>
+<li><a class="reference internal" href="#find-cbr-backup">Find CBR Backup</a></li>
+<li><a class="reference internal" href="#delete-cbr-backup">Delete CBR Backup</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#policy">Policy</a><ul>
+<li><a class="reference internal" href="#list-cbr-policies">List CBR Policies</a></li>
+<li><a class="reference internal" href="#get-cbr-policy">Get CBR Policy</a></li>
+<li><a class="reference internal" href="#create-cbr-policy">Create CBR Policy</a></li>
+<li><a class="reference internal" href="#update-cbr-policy">Update CBR Policy</a></li>
+<li><a class="reference internal" href="#delete-cbr-policy">Delete CBR Policy</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#restore-point-checkpoint">Restore Point (Checkpoint)</a><ul>
+<li><a class="reference internal" href="#get-cbr-restore-point-checkpoint">Get CBR Restore Point (Checkpoint)</a></li>
+<li><a class="reference internal" href="#create-cbr-restore-point-checkpoint">Create CBR Restore Point (Checkpoint)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#restore">Restore</a><ul>
+<li><a class="reference internal" href="#restore-data">Restore Data</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#vault">Vault</a><ul>
+<li><a class="reference internal" href="#list-cbr-vaults">List CBR Vaults</a></li>
+<li><a class="reference internal" href="#get-cbr-vault">Get CBR Vault</a></li>
+<li><a class="reference internal" href="#create-cbr-vault">Create CBR Vault</a></li>
+<li><a class="reference internal" href="#update-cbr-vault">Update CBR Vault</a></li>
+<li><a class="reference internal" href="#delete-cbr-vault">Delete CBR Vault</a></li>
+<li><a class="reference internal" href="#bind-policy-to-cbr-vault">Bind Policy to CBR Vault</a></li>
+<li><a class="reference internal" href="#unbind-policy-to-cbr-vault">Unbind Policy to CBR Vault</a></li>
+<li><a class="reference internal" href="#associate-resources-to-cbr-vault">Associate resources to CBR Vault</a></li>
+<li><a class="reference internal" href="#dissociate-resources-from-cbr-vault">Dissociate resources from CBR Vault</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#member">Member</a><ul>
+<li><a class="reference internal" href="#list-cbr-share-member">List CBR Share Member</a></li>
+<li><a class="reference internal" href="#get-cbr-share-member">Get CBR Share Member</a></li>
+<li><a class="reference internal" href="#add-cbr-share-member">Add CBR Share Member</a></li>
+<li><a class="reference internal" href="#update-cbr-share-member">Update CBR Share Member</a></li>
+<li><a class="reference internal" href="#delete-cbr-share-member">Delete CBR Share Member</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+  </div>
+</div>
+        </div>
+      </div>
+  </scale-app-shell>
+<scale-app-footer id="footer-shell" variant="standard" claim-lang="en">
+</scale-app-footer>
+<script>
+  const footer_shell = document.getElementById("footer-shell");
+  footer_shell.footerNavigation = [{"name":"Contact","id":"Contact","href":"https://cloud.telekom.de/en/contact/"},{"name":"Legal notice","id":"Legal notice","href":"https://cloud.telekom.de/en/imprint-adress"},{"name":"Data privacy","id":"Data privacy","href":"https://open-telekom-cloud.com/en/data-protection","icon":"alert-imprint-dataprivacy"}]</script>
+  <!-- jQuery -->
+<script type="text/javascript" src="../../_static/js/jquery-3.2.1.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script type="text/javascript" src="../../_static/js/bootstrap.min.js"></script>
+
+<!-- Telekom Scale -->
+<script type="module" src="https://unpkg.com/@telekom/scale-components@3.0.0-beta.32/dist/scale-components/scale-components.esm.js"></script>
+
+<!-- The rest of the JS -->
+<script type="text/javascript" src="../../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script type="text/javascript" src="../../_static/js/docs.js"></script>
+
+<!-- Popovers -->
+<script type="text/javascript" src="../../_static/js/webui-popover.js"></script>
+
+<!-- standard sphinx include libraries, which allow search highlighting -->
+<script type="text/javascript" src="../../_static/underscore.js"></script>
+<script type="text/javascript" src="../../_static/doctools.js"></script>
+<script type="text/javascript" src="../../_static/searchtools.js"></script>
+
+<script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.24.3.dev2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        SOURCELINK_SUFFIX: '.txt',
+        HAS_SOURCE:  true
+      };
+</script>
+
+
+<!-- Javascript for page -->
+<script language="JavaScript">
+/* build a description of this page including SHA, source location on git repo,
+   build time and the project's launchpad bug tag. Set the HREF of the bug
+   buttons */
+</script>
+  
+  </body>
+</html>
