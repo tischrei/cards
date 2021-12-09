@@ -231,3 +231,28 @@ h5 {
     color: var(--scl-color-primary-active) !important;
     text-decoration: none;
 }
+
+/* Cards */
+
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row; 
+    justify-content: flex-start;
+    
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+  
+  .flex-item {
+    margin: 10px;
+    background: tomato;
+    width: 200px;
+    height: 200px;
+    line-height: 200px;
+    color: white;
+    font-weight: bold;
+    font-size: 3em;
+    text-align: center;
+  }
